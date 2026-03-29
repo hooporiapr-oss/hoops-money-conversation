@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Your Profile — Hoops.Money</title>
+<link rel="icon" href="/gostar.png">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+input,select,textarea{font-family:inherit}
+:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a;--green:#22c55e;--purple:#a855f7;--blue:#3b82f6}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 24px;background:rgba(10,10,10,.9);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-brand{font-family:-apple-system,sans-serif;font-size:1.3rem;font-weight:900;letter-spacing:.01em}
+.nav-brand .dot{color:var(--orange)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-right a{font-size:.8rem;color:var(--gray);font-weight:600}
+.nav-right a:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+.card{background:#fff;border-radius:16px;padding:40px;max-width:540px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.4);margin-top:80px}
+.card h1{font-size:1.5rem;font-weight:900;color:#000;text-align:center;margin-bottom:4px}
+.card .subtitle{font-size:.85rem;color:#666;text-align:center;margin-bottom:28px}
+
+.steps-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px}
+.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;background:#eee;color:#999;transition:all .3s}
+.step-dot.active{background:var(--orange);color:#fff}
+.step-dot.done{background:var(--green);color:#fff}
+.step-line{width:32px;height:2px;background:#eee;border-radius:2px}
+.step-line.active{background:var(--orange)}
+
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.8rem;font-weight:700;color:#000;margin-bottom:5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;font-size:.9rem;font-weight:500;color:#000;background:#fff;border:2px solid #ccc;border-radius:10px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--orange)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#aaa;font-weight:400}
+.form-group .hint{font-size:.7rem;color:#888;margin-top:4px}
+.form-group textarea{resize:vertical;min-height:60px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.section-label{font-size:.8rem;font-weight:800;color:var(--purple);margin:20px 0 12px;padding-top:16px;border-top:1px solid #eee}
+
+.btn-row{display:flex;gap:12px;margin-top:24px}
+.btn-primary{width:100%;padding:14px;background:var(--orange);color:#fff;border-radius:10px;font-size:.95rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:all .25s;text-align:center}
+.btn-primary:hover{background:var(--orange-light)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-back{padding:14px 24px;background:#eee;color:#333;border-radius:10px;font-size:.95rem;font-weight:700;transition:all .2s}
+.btn-back:hover{background:#ddd}
+
+.error-msg{background:#fef2f2;border:1px solid #fca5a5;color:#dc2626;padding:10px 14px;border-radius:8px;font-size:.8rem;font-weight:600;margin-bottom:12px;display:none}
+.success-msg{background:#f0fdf4;border:1px solid #86efac;color:#16a34a;padding:10px 14px;border-radius:8px;font-size:.8rem;font-weight:600;margin-bottom:12px;display:none}
+
+.step-panel{display:none}
+.step-panel.active{display:block}
+
+.success-screen{text-align:center}
+.success-screen .check{font-size:3rem;margin-bottom:12px}
+.success-screen h2{color:#000;font-size:1.4rem;font-weight:900;margin-bottom:8px}
+.success-screen p{color:#666;font-size:.85rem;margin-bottom:20px}
+.link-box{background:#f5f5f5;border:2px solid #ddd;border-radius:10px;padding:14px;font-size:.95rem;font-weight:700;color:var(--orange);word-break:break-all;margin-bottom:20px}
+
+.login-link{text-align:center;margin-top:20px;font-size:.85rem;color:#666}
+.login-link a{color:var(--orange);font-weight:700}
+
+@media(max-width:520px){
+  .card{padding:28px 20px}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)})}
+</script>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/" class="nav-brand">HOOPS<span class="dot">.</span>MONEY</a>
+  <div class="nav-right">
+    <a href="/login.html" class="en">Log In</a>
+    <a href="/login.html" class="es">Entrar</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="steps-bar">
+    <div class="step-dot active" id="dot1">1</div>
+    <div class="step-line" id="line1"></div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-line" id="line2"></div>
+    <div class="step-dot" id="dot3">3</div>
+  </div>
+
+  <div class="error-msg" id="errorMsg"></div>
+
+  <!-- STEP 1: Account -->
+  <div class="step-panel active" id="step1">
+    <h1 class="en">Create Your Profile</h1>
+    <h1 class="es">Crea Tu Perfil</h1>
+    <p class="subtitle en">Step 1 — Your account</p>
+    <p class="subtitle es">Paso 1 — Tu cuenta</p>
+    <div class="form-group">
+      <label class="en">Email</label><label class="es">Correo</label>
+      <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="en">Password</label><label class="es">Contraseña</label>
+      <input type="password" id="password" placeholder="Minimum 8 characters" autocomplete="new-password">
+      <div class="hint en">At least 8 characters</div>
+      <div class="hint es">Mínimo 8 caracteres</div>
+    </div>
+    <div class="form-group">
+      <label class="en">Confirm Password</label><label class="es">Confirmar Contraseña</label>
+      <input type="password" id="confirmPw" placeholder="Re-enter password" autocomplete="new-password">
+    </div>
+    <button class="btn-primary" onclick="goStep(2)"><span class="en">Next</span><span class="es">Siguiente</span></button>
+    <div class="login-link"><span class="en">Already have a profile? <a href="/login.html">Log in</a></span><span class="es">¿Ya tienes perfil? <a href="/login.html">Entrar</a></span></div>
+  </div>
+
+  <!-- STEP 2: Player Info -->
+  <div class="step-panel" id="step2">
+    <h1 class="en">Player Info</h1>
+    <h1 class="es">Info del Jugador</h1>
+    <p class="subtitle en">Step 2 — Your basketball profile</p>
+    <p class="subtitle es">Paso 2 — Tu perfil de baloncesto</p>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">First Name</label><label class="es">Nombre</label>
+        <input type="text" id="firstName" placeholder="Marcus">
+      </div>
+      <div class="form-group">
+        <label class="en">Last Name</label><label class="es">Apellido</label>
+        <input type="text" id="lastName" placeholder="Rivera">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="en">Profile Slug (URL)</label><label class="es">Slug del Perfil (URL)</label>
+      <input type="text" id="slug" placeholder="marcus-rivera" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'');document.getElementById('slugPreview').textContent=this.value||'your-name'">
+      <div class="hint">hoops.money/player/<span id="slugPreview">your-name</span></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Position</label><label class="es">Posición</label>
+        <select id="position"><option value="">--</option><option value="PG">PG</option><option value="SG">SG</option><option value="SF">SF</option><option value="PF">PF</option><option value="C">C</option><option value="G">G</option><option value="F">F</option></select>
+      </div>
+      <div class="form-group">
+        <label class="en">Jersey #</label><label class="es"># Camiseta</label>
+        <input type="text" id="jersey" placeholder="23">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Height</label><label class="es">Altura</label>
+        <input type="text" id="height" placeholder="6'1&quot;">
+      </div>
+      <div class="form-group">
+        <label class="en">Weight</label><label class="es">Peso</label>
+        <input type="text" id="weight" placeholder="175 lbs">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="en">Age</label><label class="es">Edad</label>
+        <input type="number" id="age" placeholder="16">
+      </div>
+      <div class="form-group">
+        <label class="en">Grad Year</label><label class="es">Año Graduación</label>
+        <input type="number" id="gradYear" placeholder="2027">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="en">School</label><label class="es">Escuela</label>
+      <input type="text" id="school" placeholder="San Juan Academy">
+    </div>
+
+    <div class="section-label">📊 <span class="en">Stats</span><span class="es">Estadísticas</span></div>
+    <div class="form-row">
+      <div class="form-group"><label>PPG</label><input type="number" id="ppg" step="0.1" placeholder="12.5"></div>
+      <div class="form-group"><label>RPG</label><input type="number" id="rpg" step="0.1" placeholder="5.2"></div>
+    </div>
+    <div class="form-group"><label>APG</label><input type="number" id="apg" step="0.1" placeholder="3.1"></div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(1)">←</button>
+      <button class="btn-primary" onclick="goStep(3)" style="flex:1"><span class="en">Next</span><span class="es">Siguiente</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 3: NIL & Socials -->
+  <div class="step-panel" id="step3">
+    <h1 class="en">NIL & Socials</h1>
+    <h1 class="es">NIL y Redes</h1>
+    <p class="subtitle en">Step 3 — Build your brand</p>
+    <p class="subtitle es">Paso 3 — Construye tu marca</p>
+
+    <div class="form-group">
+      <label class="en">Highlight Reel Link</label><label class="es">Link de Highlights</label>
+      <input type="url" id="highlight" placeholder="https://youtube.com/watch?v=...">
+    </div>
+
+    <div class="section-label">📣 <span class="en">Social Media</span><span class="es">Redes Sociales</span></div>
+    <div class="form-row">
+      <div class="form-group"><label>Instagram</label><input type="text" id="instagram" placeholder="@handle"></div>
+      <div class="form-group"><label>TikTok</label><input type="text" id="tiktok" placeholder="@handle"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Twitter / X</label><input type="text" id="twitter" placeholder="@handle"></div>
+      <div class="form-group"><label>YouTube</label><input type="url" id="youtube" placeholder="Channel URL"></div>
+    </div>
+
+    <div class="section-label">💼 <span class="en">NIL Contact</span><span class="es">Contacto NIL</span></div>
+    <div class="form-group">
+      <label class="en">NIL Contact Email</label><label class="es">Email de Contacto NIL</label>
+      <input type="email" id="nilEmail" placeholder="athlete@email.com">
+      <div class="hint en">Scouts and brands will use this to reach you</div>
+      <div class="hint es">Scouts y marcas usarán este email para contactarte</div>
+    </div>
+    <div class="form-group">
+      <label class="en">NIL Bio</label><label class="es">Bio NIL</label>
+      <textarea id="nilBio" placeholder="Tell scouts and brands about yourself..." rows="3"></textarea>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:10px;margin:20px 0 0;padding-top:16px;border-top:1px solid #eee">
+      <input type="checkbox" id="ageConsent" style="width:20px;height:20px;margin-top:2px;accent-color:var(--orange);flex-shrink:0">
+      <label for="ageConsent" style="font-size:.8rem;color:#555;font-weight:500;line-height:1.5"><span class="en">I am 13 years or older, or my parent/guardian is creating this profile with me. I agree to the <a href="/terms.html" style="color:var(--orange);font-weight:600">Terms of Service</a> and <a href="/privacy.html" style="color:var(--orange);font-weight:600">Privacy Policy</a>.</span><span class="es">Tengo 13 años o más, o mi padre/tutor está creando este perfil conmigo. Acepto los <a href="/terms.html" style="color:var(--orange);font-weight:600">Términos de Servicio</a> y la <a href="/privacy.html" style="color:var(--orange);font-weight:600">Política de Privacidad</a>.</span></label>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-back" onclick="goStep(2)">←</button>
+      <button class="btn-primary" onclick="submitProfile()" id="submitBtn" style="flex:1"><span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span></button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Success -->
+  <div class="step-panel" id="step4">
+    <div class="success-screen">
+      <div class="check">⭐</div>
+      <h2 class="en">You're Live!</h2>
+      <h2 class="es">¡Estás en Vivo!</h2>
+      <p class="en">Your NIL profile is live. Share this link with coaches, scouts, and brands:</p>
+      <p class="es">Tu perfil NIL está activo. Comparte este enlace con coaches, scouts y marcas:</p>
+      <div class="link-box" id="profileLink"></div>
+      <a href="/my-profile.html" class="btn-primary" style="display:inline-block;width:100%">
+        <span class="en">Go to My Profile</span><span class="es">Ir a Mi Perfil</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
+var sb=null;
+var currentStep=1;
+
+async function loadSB(){
+  if(sb)return sb;
+  await new Promise(function(res,rej){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s)});
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  return sb;
+}
+
+function showError(msg){var e=document.getElementById('errorMsg');e.textContent=msg;e.style.display='block'}
+function hideError(){document.getElementById('errorMsg').style.display='none'}
+
+function goStep(step){
+  hideError();
+  if(step===2&&currentStep===1){
+    var email=document.getElementById('email').value.trim();
+    var pw=document.getElementById('password').value;
+    var pw2=document.getElementById('confirmPw').value;
+    if(!email||!email.includes('@'))return showError(currentLang==='es'?'Correo inválido':'Valid email required');
+    if(pw.length<8)return showError(currentLang==='es'?'Mínimo 8 caracteres':'Password must be at least 8 characters');
+    if(pw!==pw2)return showError(currentLang==='es'?'Las contraseñas no coinciden':'Passwords do not match');
+  }
+  if(step===3&&currentStep===2){
+    var fn=document.getElementById('firstName').value.trim();
+    var ln=document.getElementById('lastName').value.trim();
+    var slug=document.getElementById('slug').value.trim();
+    if(!fn||!ln)return showError(currentLang==='es'?'Nombre y apellido requeridos':'First and last name required');
+    if(!slug||slug.length<3)return showError(currentLang==='es'?'Slug mínimo 3 caracteres':'Slug must be at least 3 characters');
+  }
+  currentStep=step;
+  document.querySelectorAll('.step-panel').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('step'+step).classList.add('active');
+  for(var i=1;i<=3;i++){
+    var dot=document.getElementById('dot'+i);
+    dot.classList.remove('active','done');
+    if(i<step)dot.classList.add('done');
+    else if(i===step)dot.classList.add('active');
+  }
+  for(var i=1;i<=2;i++)document.getElementById('line'+i).classList.toggle('active',i<step);
+}
+
+async function submitProfile(){
+  hideError();
+  if(!document.getElementById('ageConsent').checked)return showError(currentLang==='es'?'Debes aceptar los términos':'You must agree to the terms');
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  btn.textContent=currentLang==='es'?'Creando...':'Creating...';
+
+  try{
+    var client=await loadSB();
+    var email=document.getElementById('email').value.trim();
+    var password=document.getElementById('password').value;
+    var slug=document.getElementById('slug').value.trim();
+
+    // Check slug availability
+    var{data:existing}=await client.from('players').select('id').eq('slug',slug).maybeSingle();
+    if(existing){
+      btn.disabled=false;
+      btn.innerHTML='<span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span>';
+      return showError(currentLang==='es'?'Este slug ya está en uso':'This profile URL is already taken');
+    }
+
+    // Create auth account
+    var{data:authData,error:authErr}=await client.auth.signUp({email,password});
+    if(authErr)throw authErr;
+
+    // Insert player profile
+    var{error:insertErr}=await client.from('players').insert({
+      auth_user_id:authData.user.id,
+      slug:slug,
+      first_name:document.getElementById('firstName').value.trim(),
+      last_name:document.getElementById('lastName').value.trim(),
+      jersey_number:document.getElementById('jersey').value.trim(),
+      position:document.getElementById('position').value,
+      height:document.getElementById('height').value.trim(),
+      weight:document.getElementById('weight').value.trim(),
+      age:parseInt(document.getElementById('age').value)||null,
+      grad_year:parseInt(document.getElementById('gradYear').value)||null,
+      school:document.getElementById('school').value.trim(),
+      stats_ppg:parseFloat(document.getElementById('ppg').value)||0,
+      stats_rpg:parseFloat(document.getElementById('rpg').value)||0,
+      stats_apg:parseFloat(document.getElementById('apg').value)||0,
+      highlight_link:document.getElementById('highlight').value.trim(),
+      instagram:document.getElementById('instagram').value.trim(),
+      tiktok:document.getElementById('tiktok').value.trim(),
+      twitter:document.getElementById('twitter').value.trim(),
+      youtube:document.getElementById('youtube').value.trim(),
+      nil_available:true,
+      nil_contact_email:document.getElementById('nilEmail').value.trim()||email,
+      nil_bio:document.getElementById('nilBio').value.trim(),
+      profile_tier:'free'
+    });
+    if(insertErr)throw insertErr;
+
+    document.getElementById('profileLink').textContent='hoops.money/player/'+slug;
+    goStep(4);
+  }catch(e){
+    btn.disabled=false;
+    btn.innerHTML='<span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span>';
+    showError(e.message||'Something went wrong');
+  }
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(currentStep===1)goStep(2);
+    else if(currentStep===2)goStep(3);
+    else if(currentStep===3)submitProfile();
+  }
+});
+</script>
+</body>
+</html>
