@@ -3,22 +3,365 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hoops.Money — The Business of Basketball</title>
+<title>Hoops.Money — The Business of Basketball Starts Here</title>
+<meta name="description" content="The grassroots NIL platform. Build your brand, get discovered by scouts, connect with sponsors. The business of basketball starts here.">
 <link rel="icon" href="/gostar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=General+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('hm-lang',l)}catch(e){}}
+</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
-h1{font-size:clamp(2rem,6vw,4rem);font-weight:900;margin-bottom:12px}
-h1 span{color:#e8611a}
-p{color:#8a8a8a;font-size:1.1rem;max-width:500px;margin:0 auto 32px}
-.badge{display:inline-block;padding:6px 18px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(232,97,26,.1);color:#e8611a;border:1px solid rgba(232,97,26,.2);margin-bottom:24px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a;--green:#22c55e;--purple:#a855f7;--blue:#3b82f6;--gold:#f4c542}
+html{scroll-behavior:smooth}
+body{font-family:'General Sans',sans-serif;background:var(--black);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+a{text-decoration:none;color:inherit}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(232,97,26,.2)}50%{box-shadow:0 0 40px rgba(232,97,26,.4)}}
+.fu{opacity:0;animation:fadeUp .8s ease forwards}
+.fd1{animation-delay:.1s}.fd2{animation-delay:.2s}.fd3{animation-delay:.35s}.fd4{animation-delay:.5s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.02em}
+.nav-brand .dot{color:var(--orange)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-link{font-size:.8rem;font-weight:600;color:var(--gray);transition:color .2s}
+.nav-link:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
+.lang-btn.active{background:var(--orange);color:#fff}
+.nav-cta{padding:8px 20px;border-radius:8px;font-size:.8rem;font-weight:700;background:var(--orange);color:#fff;border:none;cursor:pointer;transition:all .2s}
+.nav-cta:hover{background:var(--orange-light)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'💰';position:absolute;top:15%;left:8%;font-size:4rem;opacity:.05;animation:float 4s ease infinite}
+.hero::after{content:'🏀';position:absolute;bottom:20%;right:10%;font-size:3.5rem;opacity:.05;animation:float 5s ease infinite 1s}
+.hero-badge{display:inline-block;padding:8px 20px;border-radius:20px;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(168,85,247,.1);color:var(--purple);border:1px solid rgba(168,85,247,.2);margin-bottom:24px}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7rem);line-height:.9;margin-bottom:8px;letter-spacing:-.02em}
+.hero h1 .dot{color:var(--orange)}
+.hero h2{font-family:'Syne',sans-serif;font-size:clamp(1rem,3vw,1.5rem);font-weight:700;color:var(--orange);margin-bottom:20px}
+.hero-sub{font-size:1.1rem;color:var(--gray);max-width:540px;margin:0 auto 36px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-block;padding:16px 36px;border-radius:10px;font-size:.95rem;font-weight:700;background:var(--orange);color:#fff;transition:all .2s;animation:glow 3s ease infinite}
+.btn-p:hover{background:var(--orange-light);transform:translateY(-2px)}
+.btn-s{display:inline-block;padding:16px 36px;border-radius:10px;font-size:.95rem;font-weight:700;background:rgba(255,255,255,.06);color:var(--white);border:1px solid rgba(255,255,255,.1);transition:all .2s}
+.btn-s:hover{background:rgba(255,255,255,.1)}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+
+/* STATS */
+.stats-bar{padding:48px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--orange);margin-bottom:4px}
+.stat-label{font-size:.75rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+
+/* SECTION */
+.section{padding:80px 0}
+.section-badge{display:inline-block;padding:5px 14px;border-radius:16px;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+.section-badge.orange{background:rgba(232,97,26,.1);color:var(--orange);border:1px solid rgba(232,97,26,.15)}
+.section-badge.purple{background:rgba(168,85,247,.1);color:var(--purple);border:1px solid rgba(168,85,247,.15)}
+.section-title{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:16px;line-height:1.15}
+.section-sub{color:var(--gray);font-size:1rem;max-width:560px;margin-bottom:40px}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:32px 24px;text-align:center;transition:all .3s}
+.step:hover{border-color:rgba(232,97,26,.2);transform:translateY(-4px)}
+.step-icon{font-size:2.5rem;margin-bottom:16px}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:rgba(232,97,26,.15);margin-bottom:8px}
+.step h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.step p{font-size:.85rem;color:var(--gray)}
+
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.feature{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:28px 24px;display:flex;gap:16px;align-items:flex-start;transition:all .3s}
+.feature:hover{border-color:rgba(168,85,247,.2)}
+.feature-icon{font-size:1.6rem;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(168,85,247,.08);border-radius:10px}
+.feature h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.feature p{font-size:.8rem;color:var(--gray)}
+
+/* AUDIENCE */
+.audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.audience-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:28px 24px;text-align:center;transition:all .3s}
+.audience-card:hover{border-color:rgba(232,97,26,.2);transform:translateY(-4px)}
+.audience-icon{font-size:2.5rem;margin-bottom:12px}
+.audience-card h4{font-size:1rem;font-weight:700;margin-bottom:6px}
+.audience-card p{font-size:.8rem;color:var(--gray)}
+
+/* PROFILE PREVIEW */
+.profile-preview{background:var(--black2);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px;max-width:400px;margin:0 auto}
+.pp-top{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.pp-avatar{width:64px;height:64px;border-radius:16px;background:rgba(232,97,26,.12);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:900;color:var(--orange)}
+.pp-name{font-size:1.2rem;font-weight:800}
+.pp-info{font-size:.8rem;color:var(--gray)}
+.pp-stats{display:flex;gap:16px;margin-bottom:16px;padding:16px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.pp-stat{text-align:center;flex:1}
+.pp-stat .num{font-size:1.3rem;font-weight:800;color:var(--green)}
+.pp-stat .label{font-size:.65rem;color:var(--gray);font-weight:600;text-transform:uppercase}
+.pp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.pp-tag{padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700}
+.pp-tag.pos{background:rgba(232,97,26,.1);color:var(--orange)}
+.pp-tag.grad{background:rgba(59,130,246,.1);color:var(--blue)}
+.pp-tag.school{background:rgba(168,85,247,.1);color:var(--purple)}
+.pp-tag.nil{background:rgba(34,197,94,.1);color:var(--green)}
+.pp-socials{display:flex;gap:6px}
+.pp-social{padding:6px 12px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(255,255,255,.06);color:var(--gray)}
+
+/* CTA */
+.cta{padding:80px 0}
+.cta-box{background:linear-gradient(135deg,rgba(232,97,26,.08),rgba(168,85,247,.06));border:1px solid rgba(232,97,26,.15);border-radius:20px;padding:60px 40px;text-align:center;max-width:700px;margin:0 auto}
+.cta-box h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4rem);margin-bottom:8px;line-height:1}
+.cta-box h2 .dot{color:var(--orange)}
+.cta-sub{font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:8px}
+.cta-desc{color:var(--gray);font-size:.9rem;margin-bottom:32px}
+
+/* POWERED BY */
+.powered{text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,.06)}
+.powered-label{font-size:.7rem;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.powered-logos{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
+.powered-item{font-size:.8rem;color:var(--gray);font-weight:700}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.06);padding:32px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:1.2rem}
+.footer-brand .dot{color:var(--orange)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.8rem;color:var(--gray);transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:.7rem;color:#555}
+
+@media(max-width:768px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .steps{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .audience-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-inner{flex-direction:column;text-align:center}
+  .nav-link{display:none}
+  .hero{padding:80px 20px 40px}
+  .hero h1{font-size:clamp(3rem,9vw,6rem)}
+  .hero-btns{flex-direction:column;width:100%;max-width:300px}
+  .btn-p,.btn-s{width:100%;text-align:center}
+  .cta-box{padding:40px 24px}
+  .section{padding:48px 0}
+  .section-title{font-size:1.5rem}
+}
 </style>
 </head>
 <body>
-<div>
-  <div class="badge">Coming Soon</div>
-  <h1>HOOPS<span>.</span>MONEY</h1>
-  <p>The grassroots NIL platform. Where young basketball players build their brand, get discovered by scouts, and learn the business of basketball.</p>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">HOOPS<span class="dot">.</span>MONEY</div>
+    <div class="nav-right">
+      <a href="/discover.html" class="nav-link en">Discover</a>
+      <a href="/discover.html" class="nav-link es">Descubrir</a>
+      <a href="/login.html" class="nav-link en">Log In</a>
+      <a href="/login.html" class="nav-link es">Entrar</a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
+      </div>
+      <a href="/join.html"><button class="nav-cta"><span class="en">Create Profile</span><span class="es">Crear Perfil</span></button></a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge fu fd1"><span class="en">📣 Grassroots NIL Platform</span><span class="es">📣 Plataforma NIL Comunitaria</span></div>
+  <h1 class="fu fd2">HOOPS<span class="dot">.</span>MONEY</h1>
+  <h2 class="fu fd2"><span class="en">The Business of Basketball Starts Here</span><span class="es">El Negocio del Baloncesto Comienza Aquí</span></h2>
+  <p class="hero-sub fu fd3"><span class="en">Build your player brand. Get discovered by college scouts. Connect with sponsors. Your game has value — show the world.</span><span class="es">Construye tu marca como jugador. Sé descubierto por scouts universitarios. Conecta con patrocinadores. Tu juego tiene valor — muéstraselo al mundo.</span></p>
+  <div class="hero-btns fu fd4">
+    <a href="/join.html" class="btn-p"><span class="en">Create Your Profile — Free</span><span class="es">Crea Tu Perfil — Gratis</span></a>
+    <a href="#how" class="btn-s"><span class="en">How It Works</span><span class="es">Cómo Funciona</span></a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div><div class="stat-num">NIL</div><div class="stat-label"><span class="en">Profile Builder</span><span class="es">Constructor de Perfil</span></div></div>
+      <div><div class="stat-num">FREE</div><div class="stat-label"><span class="en">To Start</span><span class="es">Para Comenzar</span></div></div>
+      <div><div class="stat-num">EN/ES</div><div class="stat-label"><span class="en">Bilingual</span><span class="es">Bilingüe</span></div></div>
+      <div><div class="stat-num">LIVE</div><div class="stat-label"><span class="en">Tournament Stats</span><span class="es">Stats de Torneos</span></div></div>
+    </div>
+  </div>
 </div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-badge orange"><span class="en">How It Works</span><span class="es">Cómo Funciona</span></div>
+    <h2 class="section-title"><span class="en">Three Steps to Getting Discovered</span><span class="es">Tres Pasos Para Ser Descubierto</span></h2>
+    <p class="section-sub"><span class="en">Your game has value. Build your brand and let the world find you.</span><span class="es">Tu juego tiene valor. Construye tu marca y deja que el mundo te encuentre.</span></p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">📝</div>
+        <div class="step-num">01</div>
+        <h3><span class="en">Create Your Profile</span><span class="es">Crea Tu Perfil</span></h3>
+        <p><span class="en">Sign up free. Add your stats, measurables, position, school, grad year, highlight reel, and social media. Your profile is your basketball resume.</span><span class="es">Regístrate gratis. Agrega tus estadísticas, medidas, posición, escuela, año de graduación, highlights y redes sociales. Tu perfil es tu currículum de baloncesto.</span></p>
+      </div>
+      <div class="step">
+        <div class="step-icon">🏀</div>
+        <div class="step-num">02</div>
+        <h3><span class="en">Compete & Build</span><span class="es">Compite y Construye</span></h3>
+        <p><span class="en">Play in organized tournaments. Your stats update automatically from real events. The more you play, the stronger your profile gets.</span><span class="es">Juega en torneos organizados. Tus estadísticas se actualizan automáticamente. Mientras más juegas, más fuerte tu perfil.</span></p>
+      </div>
+      <div class="step">
+        <div class="step-icon">⭐</div>
+        <div class="step-num">03</div>
+        <h3><span class="en">Get Discovered</span><span class="es">Sé Descubierto</span></h3>
+        <p><span class="en">College scouts and brands browse our platform daily. Your profile, your highlights, your social presence — all in one place. One click to connect.</span><span class="es">Scouts universitarios y marcas navegan nuestra plataforma diariamente. Tu perfil, tus highlights, tu presencia social — todo en un lugar. Un click para conectar.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE PREVIEW -->
+<section class="section" style="padding-top:0">
+  <div class="wrap" style="display:flex;align-items:center;gap:60px;flex-wrap:wrap">
+    <div style="flex:1;min-width:280px">
+      <div class="section-badge purple"><span class="en">Your NIL Profile</span><span class="es">Tu Perfil NIL</span></div>
+      <h2 class="section-title"><span class="en">Your Game. Your Brand. Your Money.</span><span class="es">Tu Juego. Tu Marca. Tu Dinero.</span></h2>
+      <p class="section-sub" style="margin-bottom:20px"><span class="en">Every player gets a professional NIL profile — stats, highlights, social links, and direct contact for scouts and brands. This is your basketball business card.</span><span class="es">Cada jugador recibe un perfil NIL profesional — estadísticas, highlights, redes sociales y contacto directo para scouts y marcas. Esta es tu tarjeta de presentación del baloncesto.</span></p>
+      <a href="/join.html" class="btn-p" style="animation:none"><span class="en">Build Yours Free</span><span class="es">Crea El Tuyo Gratis</span></a>
+    </div>
+    <div style="flex:1;min-width:280px">
+      <div class="profile-preview">
+        <div class="pp-top">
+          <div class="pp-avatar">#23</div>
+          <div><div class="pp-name">Marcus Rivera</div><div class="pp-info">San Juan Warriors · PG · 6'1"</div></div>
+        </div>
+        <div class="pp-stats">
+          <div class="pp-stat"><div class="num">18.5</div><div class="label">PPG</div></div>
+          <div class="pp-stat"><div class="num">4.2</div><div class="label">RPG</div></div>
+          <div class="pp-stat"><div class="num">7.1</div><div class="label">APG</div></div>
+          <div class="pp-stat"><div class="num">6'1"</div><div class="label">HT</div></div>
+        </div>
+        <div class="pp-tags">
+          <span class="pp-tag pos">PG</span>
+          <span class="pp-tag grad">Class of 2027</span>
+          <span class="pp-tag school">Academia San Juan</span>
+          <span class="pp-tag nil">📣 NIL Available</span>
+        </div>
+        <div class="pp-socials">
+          <span class="pp-social">IG @mrivera23</span>
+          <span class="pp-social">🎥 Highlights</span>
+          <span class="pp-social">✉ Contact</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NIL EDUCATION -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-badge purple"><span class="en">NIL Education</span><span class="es">Educación NIL</span></div>
+    <h2 class="section-title"><span class="en">Learn the Business While You Play</span><span class="es">Aprende el Negocio Mientras Juegas</span></h2>
+    <p class="section-sub"><span class="en">NIL isn't just for D1 stars. It starts here — on the court, at the grassroots level. Every player who competes on our platform learns to build their brand by doing it.</span><span class="es">NIL no es solo para estrellas D1. Comienza aquí — en la cancha, a nivel comunitario. Cada jugador que compite en nuestra plataforma aprende a construir su marca haciéndolo.</span></p>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">📣</div>
+        <div><h4><span class="en">Build Your Brand</span><span class="es">Construye Tu Marca</span></h4><p><span class="en">Your profile, your stats, your socials — all in one place. Learn what scouts and brands look for. Present yourself like a pro from day one.</span><span class="es">Tu perfil, tus estadísticas, tus redes — todo en un lugar. Aprende qué buscan scouts y marcas. Preséntate como un profesional desde el día uno.</span></p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎥</div>
+        <div><h4><span class="en">Showcase Your Game</span><span class="es">Muestra Tu Juego</span></h4><p><span class="en">Link your highlight reels, YouTube channel, and social content. Let your game speak for itself — on and off the court.</span><span class="es">Enlaza tus highlights, canal de YouTube y contenido social. Deja que tu juego hable por sí mismo — dentro y fuera de la cancha.</span></p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🤝</div>
+        <div><h4><span class="en">Connect with Brands</span><span class="es">Conecta con Marcas</span></h4><p><span class="en">Brands and sponsors browse our platform looking for authentic grassroots athletes. Your NIL contact info puts you one click away from opportunities.</span><span class="es">Marcas y patrocinadores navegan nuestra plataforma buscando atletas auténticos. Tu info de contacto NIL te pone a un click de oportunidades.</span></p></div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <div><h4><span class="en">Real Tournament Stats</span><span class="es">Estadísticas Reales</span></h4><p><span class="en">Your stats come from real organized events — not self-reported. Verified performance data from tournaments powered by GoStar Digital.</span><span class="es">Tus estadísticas vienen de eventos organizados reales — no auto-reportados. Datos de rendimiento verificados de torneos impulsados por GoStar Digital.</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO ITS FOR -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-badge orange"><span class="en">Who It's For</span><span class="es">Para Quién Es</span></div>
+    <h2 class="section-title"><span class="en">Everyone Has a Role in the Game</span><span class="es">Todos Tienen un Rol en el Juego</span></h2>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="audience-icon">🏀</div>
+        <h4><span class="en">Players</span><span class="es">Jugadores</span></h4>
+        <p><span class="en">Build your NIL profile. Showcase your stats, highlights, and social presence. Get discovered.</span><span class="es">Construye tu perfil NIL. Muestra tus estadísticas, highlights y presencia social. Sé descubierto.</span></p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">🎓</div>
+        <h4><span class="en">College Scouts</span><span class="es">Scouts</span></h4>
+        <p><span class="en">Browse verified talent with real tournament stats. Filter by position, grad year, location. One click to connect.</span><span class="es">Navega talento verificado con estadísticas reales. Filtra por posición, año, ubicación. Un click para conectar.</span></p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">💼</div>
+        <h4><span class="en">Brands & Sponsors</span><span class="es">Marcas</span></h4>
+        <p><span class="en">Find grassroots athletes before anyone else. Authentic connections with young talent building their brand.</span><span class="es">Encuentra atletas comunitarios antes que nadie. Conexiones auténticas con jóvenes talentos.</span></p>
+      </div>
+      <div class="audience-card">
+        <div class="audience-icon">👨‍👩‍👦</div>
+        <h4><span class="en">Parents & Families</span><span class="es">Familias</span></h4>
+        <p><span class="en">Help your kid build their basketball brand early. Manage their profile, control visibility, prepare them for the next level.</span><span class="es">Ayuda a tu hijo a construir su marca temprano. Maneja su perfil, controla la visibilidad, prepáralo para el siguiente nivel.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-box">
+    <h2><span class="en">YOUR GAME<span class="dot">.</span><br>YOUR BRAND<span class="dot">.</span><br>YOUR MONEY<span class="dot">.</span></span><span class="es">TU JUEGO<span class="dot">.</span><br>TU MARCA<span class="dot">.</span><br>TU DINERO<span class="dot">.</span></span></h2>
+    <p class="cta-sub"><span class="en">The Business of Basketball Starts Here</span><span class="es">El Negocio del Baloncesto Comienza Aquí</span></p>
+    <p class="cta-desc"><span class="en">Free to start. Build your profile in 5 minutes. Get seen by scouts and brands.</span><span class="es">Gratis para comenzar. Crea tu perfil en 5 minutos. Sé visto por scouts y marcas.</span></p>
+    <a href="/join.html" class="btn-p" style="animation:none"><span class="en">Create Your Profile</span><span class="es">Crea Tu Perfil</span></a>
+  </div>
+</section>
+
+<!-- POWERED BY -->
+<div class="powered">
+  <div class="powered-label"><span class="en">Powered By</span><span class="es">Impulsado Por</span></div>
+  <div class="powered-logos">
+    <span class="powered-item">GoStar Digital</span>
+    <span class="powered-item">3Man Basketball</span>
+    <span class="powered-item">TrueBounce</span>
+    <span class="powered-item">Project Backboard</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">HOOPS<span class="dot">.</span>MONEY</div>
+      <div class="footer-links">
+        <a href="/privacy.html"><span class="en">Privacy</span><span class="es">Privacidad</span></a>
+        <a href="/terms.html"><span class="en">Terms</span><span class="es">Términos</span></a>
+        <a href="https://gostar.digital"><span class="en">GoStar Digital</span><span class="es">GoStar Digital</span></a>
+      </div>
+      <div class="footer-copy">&copy; 2025 GoStar Digital LLC</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+try{var sl=localStorage.getItem('hm-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
+</script>
 </body>
 </html>
