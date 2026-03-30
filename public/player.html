@@ -73,6 +73,15 @@ html[lang="es"] .en{display:none!important}
 
 .views{text-align:center;font-size:.75rem;color:#555;margin-top:16px}
 
+.cog-card{background:var(--black3);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px;text-align:center;transition:all .2s}
+.cog-card:hover{border-color:rgba(255,255,255,.15)}
+.cog-icon{font-size:1.2rem;margin-bottom:6px}
+.cog-name{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.cog-level{font-size:1.4rem;font-weight:900;margin-bottom:2px}
+.cog-detail{font-size:.6rem;color:var(--gray)}
+.cog-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:8px;overflow:hidden}
+.cog-bar-fill{height:100%;border-radius:2px;transition:width .5s}
+
 .footer{text-align:center;padding:40px 24px;color:var(--gray);font-size:.75rem}
 .footer a{color:var(--orange)}
 .cta-join{background:linear-gradient(135deg,rgba(232,97,26,.08),rgba(168,85,247,.06));border:1px solid rgba(232,97,26,.15);border-radius:16px;padding:32px;text-align:center;margin-bottom:24px}
@@ -133,6 +142,19 @@ html[lang="es"] .en{display:none!important}
       <div id="pBio" class="bio" style="display:none"></div>
 
       <div class="socials" id="pSocials"></div>
+    </div>
+
+    <!-- COGNITIVE SCORES -->
+    <div id="cogSection" style="display:none;background:var(--black2);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;margin-bottom:20px">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gray);margin-bottom:6px"><span class="en">COGNITIVE PROFILE</span><span class="es">PERFIL COGNITIVO</span></div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px" id="cogOverall">—</div>
+        <div style="font-size:.7rem;color:var(--gray)"><span class="en">RITNOME™ Overall Rating</span><span class="es">Calificación General RITNOME™</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px" id="cogGrid"></div>
+      <div style="text-align:center;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)">
+        <div style="font-size:.6rem;color:#555"><span class="en">Powered by RITNOME™ Cognitive Assessment</span><span class="es">Impulsado por Evaluación Cognitiva RITNOME™</span></div>
+      </div>
     </div>
 
     <div class="cta-join">
@@ -238,6 +260,48 @@ var sb=null;
 
     // Views
     document.getElementById('pViews').textContent=(player.profile_views||0)+' profile views';
+
+    // Cognitive Scores
+    try{
+      var{data:cogData}=await sb.from('cognitive_scores').select('*').eq('player_id',player.id);
+      if(cogData&&cogData.length>0){
+        document.getElementById('cogSection').style.display='block';
+        var testConfig={
+          react:{icon:'🟣',name:'THE REACT',color:'#9B59B6',label_en:'Reaction & Rhythm',label_es:'Reacción y Ritmo'},
+          recall:{icon:'🟠',name:'THE RECALL',color:'#FF6B35',label_en:'Working Memory',label_es:'Memoria de Trabajo'},
+          reflex:{icon:'🔵',name:'THE REFLEX',color:'#00CED1',label_en:'Visual Processing',label_es:'Procesamiento Visual'},
+          replay:{icon:'🟢',name:'THE REPLAY',color:'#00D9A5',label_en:'Sequence Memory',label_es:'Memoria Secuencial'}
+        };
+        // Get best score per test (highest level across all speeds)
+        var bestByTest={};
+        cogData.forEach(function(s){
+          if(!bestByTest[s.test_name]||s.level>bestByTest[s.test_name].level||(s.level===bestByTest[s.test_name].level&&s.score>bestByTest[s.test_name].score)){
+            bestByTest[s.test_name]=s;
+          }
+        });
+        var grid=document.getElementById('cogGrid');
+        var totalLevel=0,testCount=0;
+        var speedLabels={slow:'Training',med:'Tempo',fast:'Elite'};
+        ['react','recall','reflex','replay'].forEach(function(testName){
+          var cfg=testConfig[testName];
+          var best=bestByTest[testName];
+          if(best){
+            totalLevel+=best.level;
+            testCount++;
+            grid.innerHTML+='<div class="cog-card"><div class="cog-icon">'+cfg.icon+'</div><div class="cog-name" style="color:'+cfg.color+'">'+cfg.name+'</div><div class="cog-level" style="color:'+cfg.color+'">L'+best.level+'</div><div class="cog-detail">'+(currentLang==='es'?cfg.label_es:cfg.label_en)+'</div><div class="cog-detail" style="margin-top:4px">'+speedLabels[best.speed]+' · '+best.score+' pts</div><div class="cog-bar"><div class="cog-bar-fill" style="width:'+(best.level*10)+'%;background:'+cfg.color+'"></div></div></div>';
+          } else {
+            grid.innerHTML+='<div class="cog-card" style="opacity:.3"><div class="cog-icon">'+cfg.icon+'</div><div class="cog-name" style="color:'+cfg.color+'">'+cfg.name+'</div><div class="cog-level" style="color:#555">—</div><div class="cog-detail" style="color:#444">'+(currentLang==='es'?'No evaluado':'Not tested')+'</div><div class="cog-bar"><div class="cog-bar-fill" style="width:0%;background:'+cfg.color+'"></div></div></div>';
+          }
+        });
+        // Overall rating
+        if(testCount>0){
+          var avgLevel=Math.round(totalLevel/testCount);
+          var ratingLabels={1:'Rookie',2:'Developing',3:'Solid',4:'Advanced',5:'Elite',6:'Pro',7:'All-Star',8:'MVP',9:'Hall of Fame',10:'GOAT'};
+          var ratingColor=avgLevel>=8?'var(--gold)':avgLevel>=5?'var(--green)':'var(--orange)';
+          document.getElementById('cogOverall').innerHTML='<span style="color:'+ratingColor+'">L'+avgLevel+' — '+(ratingLabels[avgLevel]||'Level '+avgLevel)+'</span>';
+        }
+      }
+    }catch(e){console.error('Cognitive load error:',e)}
 
     // Show
     document.getElementById('loading').style.display='none';
