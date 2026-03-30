@@ -76,6 +76,8 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .challenge-card.replay:hover{box-shadow:0 8px 40px rgba(0,217,165,0.15)}
 .challenge-card.ritmo::before{background:linear-gradient(90deg,var(--lime),#B8E050)}
 .challenge-card.ritmo:hover{box-shadow:0 8px 40px rgba(154,205,50,0.15)}
+.challenge-card.beat::before{background:linear-gradient(90deg,var(--gold),var(--orange))}
+.challenge-card.beat:hover{box-shadow:0 8px 40px rgba(255,215,0,0.15)}
 
 .card-icon{width:80px;height:80px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
 .react .card-icon{background:rgba(155,89,182,0.12);border:1px solid rgba(155,89,182,0.2)}
@@ -83,6 +85,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .reflex .card-icon{background:rgba(0,206,209,0.12);border:1px solid rgba(0,206,209,0.2)}
 .replay .card-icon{background:rgba(0,217,165,0.12);border:1px solid rgba(0,217,165,0.2)}
 .ritmo .card-icon{background:rgba(154,205,50,0.12);border:1px solid rgba(154,205,50,0.2)}
+.beat .card-icon{background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.2)}
 
 .card-body{min-width:0}
 .card-header{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
@@ -92,6 +95,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .reflex .card-name{color:var(--cyan)}
 .replay .card-name{color:var(--teal)}
 .ritmo .card-name{color:var(--lime)}
+.beat .card-name{color:var(--gold)}
 
 .card-tag{font-size:0.55rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:4px 10px;border-radius:6px}
 .react .card-tag{background:rgba(155,89,182,0.12);color:var(--purple)}
@@ -99,6 +103,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .reflex .card-tag{background:rgba(0,206,209,0.12);color:var(--cyan)}
 .replay .card-tag{background:rgba(0,217,165,0.12);color:var(--teal)}
 .ritmo .card-tag{background:rgba(154,205,50,0.12);color:var(--lime)}
+.beat .card-tag{background:rgba(255,215,0,0.12);color:var(--gold)}
 
 .card-measures{font-size:0.8rem;color:var(--text);line-height:1.5;margin-bottom:12px;font-weight:400}
 .card-basketball{font-size:0.75rem;color:var(--muted);line-height:1.5;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;border-left:3px solid}
@@ -107,6 +112,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .reflex .card-basketball{border-color:var(--cyan)}
 .replay .card-basketball{border-color:var(--teal)}
 .ritmo .card-basketball{border-color:var(--lime)}
+.beat .card-basketball{border-color:var(--gold)}
 .card-basketball strong{color:var(--gold);font-weight:700}
 
 .card-play{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:10px 24px;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:3px;color:var(--dark);font-weight:700;transition:all 0.3s}
@@ -115,6 +121,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .reflex .card-play{background:linear-gradient(135deg,var(--cyan),#40E0D0)}
 .replay .card-play{background:linear-gradient(135deg,var(--teal),#00B894)}
 .ritmo .card-play{background:linear-gradient(135deg,var(--lime),#B8E050)}
+.beat .card-play{background:linear-gradient(135deg,var(--gold),var(--orange))}
 .card-play:hover{transform:translateX(4px)}
 
 /* === HOW IT WORKS === */
@@ -192,7 +199,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
   </h1>
   <p class="hero-sub" data-en="Train the most important muscle in basketball — <strong>your hoops mindset</strong>. Five challenges that measure reaction time, working memory, visual processing, sequence recall, and change detection." data-es="Entrena el músculo más importante del baloncesto — <strong>tu mentalidad de cancha</strong>. Cinco desafíos que miden tiempo de reacción, memoria de trabajo, procesamiento visual, memoria secuencial y detección de cambios.">Train the most important muscle in basketball — <strong>your hoops mindset</strong>. Five challenges that measure reaction time, working memory, visual processing, sequence recall, and change detection.</p>
   <div class="hero-stats">
-    <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label" data-en="CHALLENGES" data-es="DESAFÍOS">CHALLENGES</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label" data-en="CHALLENGES" data-es="DESAFÍOS">CHALLENGES</div></div>
     <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label" data-en="SPEEDS" data-es="VELOCIDADES">SPEEDS</div></div>
     <div class="hero-stat"><div class="hero-stat-num">10</div><div class="hero-stat-label" data-en="LEVELS" data-es="NIVELES">LEVELS</div></div>
   </div>
@@ -232,8 +239,8 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 
 <!-- CHALLENGES -->
 <section class="section" id="challenges">
-  <div class="section-label" data-en="5 COGNITIVE CHALLENGES" data-es="5 DESAFÍOS COGNITIVOS">5 COGNITIVE CHALLENGES</div>
-  <h2 class="section-title" data-en="TRAIN YOUR BASKETBALL BRAIN" data-es="ENTRENA TU CEREBRO BALONCESTO">TRAIN YOUR BASKETBALL BRAIN</h2>
+  <div class="section-label" data-en="6 COGNITIVE CHALLENGES" data-es="6 DESAFÍOS COGNITIVOS">6 COGNITIVE CHALLENGES</div>
+  <h2 class="section-title" data-en="TRAIN YOUR BASKETBALL MINDSET" data-es="ENTRENA TU MENTALIDAD DE CANCHA">TRAIN YOUR BASKETBALL MINDSET</h2>
   <p class="section-desc" data-en="Each challenge targets a different cognitive function critical to basketball performance. No other NIL platform on earth has this." data-es="Cada desafío apunta a una función cognitiva diferente y crítica para el rendimiento en el baloncesto. Ninguna otra plataforma NIL en el mundo tiene esto.">Each challenge targets a different cognitive function critical to basketball performance. No other NIL platform on earth has this.</p>
 
   <div class="challenges">
@@ -308,10 +315,22 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
       </div>
     </a>
 
+    <!-- THE BEAT -->
+    <a href="/the-beat.html" class="challenge-card beat">
+      <div class="card-icon">🏀</div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="card-name">THE BEAT OF THE GAME</div>
+          <span class="card-tag" data-en="RHYTHM & TIMING" data-es="RITMO Y TIMING">RHYTHM & TIMING</span>
+        </div>
+        <div class="card-measures" data-en="Basketballs light up to Latin rhythms — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Tap on the beat. 5 modes: Warmup, Playbook (memory), Crunch Time (60s survival), Nothing But Net (10 perfects), Shootaround." data-es="Balones se iluminan al ritmo Latino — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Toca en el beat. 5 modos: Calentamiento, Playbook (memoria), Crunch Time (60s), Nothing But Net (10 perfectos), Shootaround.">Basketballs light up to Latin rhythms — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Tap on the beat. 5 modes: Warmup, Playbook (memory), Crunch Time (60s survival), Nothing But Net (10 perfects), Shootaround.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Game tempo, rhythm, flow state</strong> — Basketball is rhythm. Dribbling is rhythm. Pick and roll timing is rhythm. The players who play ON BEAT with the game are the ones who dominate." data-es="🏀 <strong>Tempo del juego, ritmo, estado de flujo</strong> — El baloncesto es ritmo. El dribling es ritmo. El timing del pick and roll es ritmo. Los jugadores que juegan EN RITMO con el juego son los que dominan.">🏀 <strong>Game tempo, rhythm, flow state</strong> — Basketball is rhythm. Dribbling is rhythm. Pick and roll timing is rhythm. The players who play ON BEAT with the game are the ones who dominate.</div>
+        <div class="card-play">▶ PLAY NOW →</div>
+      </div>
+    </a>
+
   </div>
 </section>
-
-<!-- RATING SCALE -->
 <section class="section rating-section">
   <div class="section-label" data-en="RITNOME™ RATING SCALE" data-es="ESCALA RITNOME™">RITNOME™ RATING SCALE</div>
   <h2 class="section-title" data-en="L1 ROOKIE → L10 GOAT" data-es="L1 NOVATO → L10 GOAT">L1 ROOKIE → L10 GOAT</h2>
@@ -332,8 +351,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 
 <!-- FINAL CTA -->
 <section class="final-cta">
-  <span class="emoji-big">🏀🧠</span>
-  <h2 data-en="YOUR GAME. YOUR BRAIN. YOUR EDGE." data-es="TU JUEGO. TU CEREBRO. TU VENTAJA.">YOUR GAME. YOUR BRAIN. YOUR EDGE.</h2>
+  <h2 data-en="YOUR GAME. YOUR MINDSET. YOUR EDGE." data-es="TU JUEGO. TU MENTALIDAD. TU VENTAJA.">YOUR GAME. YOUR MINDSET. YOUR EDGE.</h2>
   <p data-en="No other NIL platform measures cognitive performance. You just got the edge." data-es="Ninguna otra plataforma NIL mide el rendimiento cognitivo. Acabas de obtener la ventaja.">No other NIL platform measures cognitive performance. You just got the edge.</p>
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
     <a href="#challenges" class="btn-primary" data-en="▶ START NOW — FREE" data-es="▶ EMPIEZA — GRATIS">▶ START NOW — FREE</a>
