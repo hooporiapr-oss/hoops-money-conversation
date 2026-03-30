@@ -630,7 +630,7 @@ var LEVEL_CELLS={1:5,2:6,3:7,4:8,5:9,6:10,7:11,8:12,9:13,10:14};
 
 function getSpeedKey(speed,key){return'lc-match-'+speed+'-'+key}
 function loadSpeedState(speed){return{level:parseInt(localStorage.getItem(getSpeedKey(speed,'level')))||1,tier:parseInt(localStorage.getItem(getSpeedKey(speed,'tier')))||1,roundsCompleted:parseInt(localStorage.getItem(getSpeedKey(speed,'rounds')))||0,score:parseInt(localStorage.getItem(getSpeedKey(speed,'score')))||0,streak:parseInt(localStorage.getItem(getSpeedKey(speed,'streak')))||0}}
-function saveSpeedStateif(typeof syncCognitiveScore==='function')syncCognitiveScore(gameState.speed,gameState.level,gameState.score,gameState.streak,gameState.tier||1);(){localStorage.setItem(getSpeedKey(gameState.speed,'level'),gameState.level);localStorage.setItem(getSpeedKey(gameState.speed,'tier'),gameState.tier);localStorage.setItem(getSpeedKey(gameState.speed,'rounds'),gameState.roundsCompleted);localStorage.setItem(getSpeedKey(gameState.speed,'score'),gameState.score);localStorage.setItem(getSpeedKey(gameState.speed,'streak'),gameState.streak)}
+function saveSpeedState(){localStorage.setItem(getSpeedKey(gameState.speed,'level'),gameState.level);localStorage.setItem(getSpeedKey(gameState.speed,'tier'),gameState.tier);localStorage.setItem(getSpeedKey(gameState.speed,'rounds'),gameState.roundsCompleted);localStorage.setItem(getSpeedKey(gameState.speed,'score'),gameState.score);localStorage.setItem(getSpeedKey(gameState.speed,'streak'),gameState.streak)}
 
 function renderStars(tier){var s='';for(var i=0;i<10;i++)s+=i<tier?'⭐':'☆';return s}
 
