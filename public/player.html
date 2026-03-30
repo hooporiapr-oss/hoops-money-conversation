@@ -151,7 +151,7 @@ html[lang="es"] .en{display:none!important}
         <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px" id="cogOverall">—</div>
         <div style="font-size:.7rem;color:var(--gray)"><span class="en">RITNOME™ Overall Rating</span><span class="es">Calificación General RITNOME™</span></div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px" id="cogGrid"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" id="cogGrid"></div>
       <div style="text-align:center;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)">
         <div style="font-size:.6rem;color:#555"><span class="en">Powered by RITNOME™ Cognitive Assessment</span><span class="es">Impulsado por Evaluación Cognitiva RITNOME™</span></div>
       </div>
@@ -270,7 +270,8 @@ var sb=null;
           react:{icon:'🟣',name:'THE REACT',color:'#9B59B6',label_en:'Reaction & Rhythm',label_es:'Reacción y Ritmo'},
           recall:{icon:'🟠',name:'THE RECALL',color:'#FF6B35',label_en:'Working Memory',label_es:'Memoria de Trabajo'},
           reflex:{icon:'🔵',name:'THE REFLEX',color:'#00CED1',label_en:'Visual Processing',label_es:'Procesamiento Visual'},
-          replay:{icon:'🟢',name:'THE REPLAY',color:'#00D9A5',label_en:'Sequence Memory',label_es:'Memoria Secuencial'}
+          replay:{icon:'🟢',name:'THE REPLAY',color:'#00D9A5',label_en:'Sequence Memory',label_es:'Memoria Secuencial'},
+          ritmo:{icon:'🟡',name:'THE RITMO',color:'#9ACD32',label_en:'Change Detection',label_es:'Detección de Cambios'}
         };
         // Get best score per test (highest level across all speeds)
         var bestByTest={};
@@ -282,7 +283,7 @@ var sb=null;
         var grid=document.getElementById('cogGrid');
         var totalLevel=0,testCount=0;
         var speedLabels={slow:'Training',med:'Tempo',fast:'Elite'};
-        ['react','recall','reflex','replay'].forEach(function(testName){
+        ['react','recall','reflex','replay','ritmo'].forEach(function(testName){
           var cfg=testConfig[testName];
           var best=bestByTest[testName];
           if(best){
