@@ -111,6 +111,54 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--green);color:var(--black);padding:12px 24px;border-radius:10px;font-size:.85rem;font-weight:700;z-index:200;transition:transform .3s;box-shadow:0 4px 20px rgba(34,197,94,.3)}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
+/* TIMELINE */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),rgba(255,215,0,.1))}
+.tl-item{position:relative;margin-bottom:20px;padding-left:20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:8px;width:12px;height:12px;border-radius:50%;border:2px solid var(--gold);background:var(--black)}
+.tl-item.highlight::before{background:var(--gold);box-shadow:0 0 10px rgba(255,215,0,.4)}
+.tl-year{font-family:'Bebas Neue',sans-serif;font-size:.75rem;color:var(--gold);letter-spacing:2px;margin-bottom:4px}
+.tl-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px;transition:all .2s}
+.tl-card:hover{border-color:rgba(255,215,0,.15)}
+.tl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.tl-name{font-size:.95rem;font-weight:700}
+.tl-type{padding:3px 10px;border-radius:12px;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.tl-type.school{background:rgba(59,130,246,.1);color:#3b82f6}
+.tl-type.aau{background:rgba(255,107,53,.1);color:var(--orange)}
+.tl-type.league{background:rgba(34,197,94,.1);color:var(--green)}
+.tl-type.tournament{background:rgba(155,89,182,.1);color:var(--purple)}
+.tl-type.camp{background:rgba(0,206,209,.1);color:var(--cyan)}
+.tl-type.clinic{background:rgba(154,205,50,.1);color:var(--lime)}
+.tl-type.other{background:rgba(255,255,255,.05);color:var(--gray-light)}
+.tl-meta{font-size:.75rem;color:var(--gray);margin-bottom:8px}
+.tl-stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.tl-stat{text-align:center;padding:6px 10px;background:rgba(255,255,255,.03);border-radius:8px;min-width:45px}
+.tl-stat .v{font-size:.95rem;font-weight:800;color:var(--green)}.tl-stat .l{font-size:.5rem;color:var(--gray);text-transform:uppercase}
+.tl-awards{font-size:.78rem;color:var(--gold);font-weight:600;margin-top:6px}
+.tl-notes{font-size:.78rem;color:var(--gray-light);margin-top:4px;font-style:italic}
+.tl-actions{display:flex;gap:6px;margin-top:8px}
+.tl-edit-btn,.tl-del-btn{padding:6px 12px;border-radius:6px;font-size:.68rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+.tl-edit-btn{background:rgba(255,215,0,.08);color:var(--gold);border:1px solid rgba(255,215,0,.15)}
+.tl-del-btn{background:rgba(239,68,68,.08);color:var(--red);border:1px solid rgba(239,68,68,.15)}
+.tl-empty{text-align:center;padding:40px 20px;color:var(--gray)}
+.tl-empty-icon{font-size:2.5rem;margin-bottom:12px}
+.tl-empty-text{font-size:.85rem;margin-bottom:16px}
+
+/* ADD SEASON FORM */
+.season-form{background:var(--black2);border:1.5px solid rgba(255,215,0,.15);border-radius:16px;padding:20px;margin-bottom:20px;display:none}
+.season-form.show{display:block}
+.sf-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold);margin-bottom:16px}
+.sf-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.sf-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.sf-field label{display:block;font-size:.65rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sf-field input,.sf-field select,.sf-field textarea{width:100%;padding:10px 12px;font-size:.82rem;color:var(--white);background:var(--surface);border:1.5px solid rgba(255,255,255,.08);border-radius:8px;outline:none;font-family:'Outfit',sans-serif}
+.sf-field input:focus,.sf-field select:focus,.sf-field textarea:focus{border-color:var(--gold)}
+.sf-field select{appearance:none}
+.sf-field textarea{resize:vertical;min-height:50px}
+.sf-btns{display:flex;gap:8px;margin-top:14px}
+.sf-save{padding:12px 24px;border-radius:8px;font-size:.82rem;font-weight:700;background:var(--gold);color:var(--black);border:none;cursor:pointer}
+.sf-cancel{padding:12px 24px;border-radius:8px;font-size:.82rem;font-weight:700;background:rgba(255,255,255,.05);color:var(--gray);border:1px solid rgba(255,255,255,.08);cursor:pointer}
+
 /* MEDIA UPLOADS */
 .upload-zone{border:2px dashed rgba(255,255,255,.1);border-radius:14px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
 .upload-zone:hover{border-color:var(--gold);background:rgba(255,215,0,.03)}
@@ -208,6 +256,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <div class="tabs">
 <div class="tab active" onclick="showTab('overview',this)" data-en="Overview" data-es="Resumen">Overview</div>
 <div class="tab" onclick="showTab('stats',this)" data-en="Stats" data-es="Estadísticas">Stats</div>
+<div class="tab" onclick="showTab('timeline',this)" data-en="📅 Timeline" data-es="📅 Historia">📅 Timeline</div>
 <div class="tab" onclick="showTab('profile',this)" data-en="Profile" data-es="Perfil">Profile</div>
 <div class="tab" onclick="showTab('nil',this)" data-en="NIL & Socials" data-es="NIL y Redes">NIL & Socials</div>
 <div class="tab" onclick="showTab('media',this)" data-en="📸 Media" data-es="📸 Media">📸 Media</div>
@@ -226,7 +275,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <div class="quick-links">
 <a href="/cognitive-hoops.html" class="quick-link"><span class="ql-icon">🧠</span> <span data-en="Train Mindset" data-es="Entrenar Mentalidad">Train Mindset</span></a>
 <a href="#" class="quick-link" onclick="showTab('stats',document.querySelector('.tab:nth-child(2)'));return false"><span class="ql-icon">📊</span> <span data-en="Update Stats" data-es="Actualizar Stats">Update Stats</span></a>
-<a href="#" class="quick-link" onclick="showTab('nil',document.querySelector('.tab:nth-child(4)'));return false"><span class="ql-icon">📣</span> <span data-en="Edit NIL Info" data-es="Editar Info NIL">Edit NIL Info</span></a>
+<a href="#" class="quick-link" onclick="showTab('timeline',document.querySelector('.tab:nth-child(3)'));return false"><span class="ql-icon">📅</span> <span data-en="Add Season" data-es="Agregar Temporada">Add Season</span></a>
 <a href="#" class="quick-link" onclick="showTab('media',document.querySelector('.tab:nth-child(5)'));return false"><span class="ql-icon">📸</span> <span data-en="Upload Media" data-es="Subir Media">Upload Media</span></a>
 </div>
 </div>
@@ -278,6 +327,61 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <button class="btn-save" onclick="saveMeasurables()" data-en="Save Measurables" data-es="Guardar Medidas">Save Measurables</button>
 <span class="save-status" id="measSaved">✓</span>
 </div>
+</div>
+
+<!-- TIMELINE TAB -->
+<div class="tab-panel" id="tab-timeline">
+<div class="card">
+<div class="card-title" data-en="📅 YOUR BASKETBALL TIMELINE" data-es="📅 TU HISTORIA DE BALONCESTO">📅 YOUR BASKETBALL TIMELINE</div>
+<p style="font-size:.82rem;color:var(--gray);margin-bottom:16px" data-en="Every season, every tournament, every camp. Your basketball story — forever." data-es="Cada temporada, cada torneo, cada campamento. Tu historia de baloncesto — para siempre.">Every season, every tournament, every camp. Your basketball story — forever.</p>
+<button class="btn-save" onclick="toggleSeasonForm()" id="addSeasonBtn" data-en="+ Add Season / Event" data-es="+ Agregar Temporada / Evento">+ Add Season / Event</button>
+</div>
+
+<!-- ADD SEASON FORM -->
+<div class="season-form" id="seasonForm">
+<div class="sf-title" data-en="📅 ADD SEASON / EVENT" data-es="📅 AGREGAR TEMPORADA / EVENTO">📅 ADD SEASON / EVENT</div>
+<div class="sf-row">
+<div class="sf-field"><label data-en="Season / Event Name" data-es="Nombre de Temporada / Evento">Season / Event Name</label><input type="text" id="sfName" placeholder="Sophomore Season 2025"></div>
+<div class="sf-field"><label data-en="Year" data-es="Año">Year</label><input type="text" id="sfYear" placeholder="2025"></div>
+</div>
+<div class="sf-row">
+<div class="sf-field"><label data-en="Type" data-es="Tipo">Type</label>
+<select id="sfType"><option value="school" data-en="School" data-es="Escuela">School</option><option value="aau">AAU</option><option value="league" data-en="League" data-es="Liga">League</option><option value="tournament" data-en="Tournament" data-es="Torneo">Tournament</option><option value="camp" data-en="Camp" data-es="Campamento">Camp</option><option value="clinic" data-en="Clinic" data-es="Clínica">Clinic</option><option value="other" data-en="Other" data-es="Otro">Other</option></select></div>
+<div class="sf-field"><label data-en="Team Name" data-es="Nombre del Equipo">Team Name</label><input type="text" id="sfTeam" placeholder="San Juan Warriors"></div>
+</div>
+<div class="sf-row">
+<div class="sf-field"><label data-en="Organization / League" data-es="Organización / Liga">Organization / League</label><input type="text" id="sfOrg" placeholder="AAU, BSN, FIBA"></div>
+<div class="sf-field"><label data-en="Games Played" data-es="Juegos Jugados">Games Played</label><input type="number" id="sfGP" placeholder="0"></div>
+</div>
+
+<div style="font-size:.72rem;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin:16px 0 10px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)" data-en="STATS FOR THIS EVENT" data-es="ESTADÍSTICAS DE ESTE EVENTO">STATS FOR THIS EVENT</div>
+<div class="sf-row-3">
+<div class="sf-field"><label>PPG</label><input type="number" step="0.1" id="sfPPG" placeholder="0.0"></div>
+<div class="sf-field"><label>RPG</label><input type="number" step="0.1" id="sfRPG" placeholder="0.0"></div>
+<div class="sf-field"><label>APG</label><input type="number" step="0.1" id="sfAPG" placeholder="0.0"></div>
+</div>
+<div class="sf-row-3">
+<div class="sf-field"><label>SPG</label><input type="number" step="0.1" id="sfSPG" placeholder="0.0"></div>
+<div class="sf-field"><label>BPG</label><input type="number" step="0.1" id="sfBPG" placeholder="0.0"></div>
+<div class="sf-field"><label>FG%</label><input type="number" step="0.1" id="sfFG" placeholder="0.0"></div>
+</div>
+<div class="sf-row-3">
+<div class="sf-field"><label>3PT%</label><input type="number" step="0.1" id="sf3PT" placeholder="0.0"></div>
+<div class="sf-field"><label>FT%</label><input type="number" step="0.1" id="sfFT" placeholder="0.0"></div>
+<div class="sf-field"><label></label><div></div></div>
+</div>
+
+<div class="sf-field" style="margin-top:10px"><label data-en="Awards & Honors" data-es="Premios y Honores">Awards & Honors</label><input type="text" id="sfAwards" placeholder="MVP, All-Tournament, All-State"></div>
+<div class="sf-field"><label data-en="Notes / Memories" data-es="Notas / Recuerdos">Notes / Memories</label><textarea id="sfNotes" placeholder="The game where I hit the buzzer beater... The coach who believed in me..." rows="3"></textarea></div>
+
+<div class="sf-btns">
+<button class="sf-save" onclick="saveSeason()" data-en="Save to Timeline" data-es="Guardar en Historia">Save to Timeline</button>
+<button class="sf-cancel" onclick="toggleSeasonForm()" data-en="Cancel" data-es="Cancelar">Cancel</button>
+</div>
+</div>
+
+<!-- TIMELINE LIST -->
+<div id="timelineList"></div>
 </div>
 
 <!-- PROFILE TAB -->
@@ -465,6 +569,7 @@ document.getElementById('authGate').style.display='none';
 document.getElementById('dashboard').style.display='block';
 populateDashboard();
 loadCognitiveScores();
+loadSeasons();
 initMediaTab();
 setLang(currentLang);
 }catch(e){console.error(e);document.getElementById('authMsg').textContent='Error loading profile. Try refreshing.';document.querySelector('.spinner').style.display='none'}
@@ -607,6 +712,150 @@ document.getElementById('oCOG').textContent='L'+avg;
 }
 }catch(e){console.error('Cognitive load error:',e)}
 }
+
+// ========== TIMELINE FUNCTIONS ==========
+var seasons=[];
+
+function toggleSeasonForm(){
+var f=document.getElementById('seasonForm');
+f.classList.toggle('show');
+if(f.classList.contains('show')){clearSeasonForm();window.scrollTo({top:f.offsetTop-80,behavior:'smooth'})}
+}
+
+function clearSeasonForm(){
+['sfName','sfYear','sfTeam','sfOrg','sfGP','sfPPG','sfRPG','sfAPG','sfSPG','sfBPG','sfFG','sf3PT','sfFT','sfAwards','sfNotes'].forEach(function(id){document.getElementById(id).value=''});
+document.getElementById('sfType').value='school';
+document.getElementById('seasonForm').removeAttribute('data-edit-id');
+}
+
+async function loadSeasons(){
+if(!player)return;
+var{data}=await sb.from('player_seasons').select('*').eq('player_id',player.id).order('season_year',{ascending:false});
+seasons=data||[];
+renderTimeline();
+}
+
+function renderTimeline(){
+var el=document.getElementById('timelineList');
+if(!seasons.length){
+el.innerHTML='<div class="tl-empty"><div class="tl-empty-icon">📅</div><div class="tl-empty-text" data-en="No seasons yet. Start building your basketball story!" data-es="Sin temporadas aún. ¡Empieza a construir tu historia!">No seasons yet. Start building your basketball story!</div></div>';
+setLang(currentLang);return;
+}
+var html='<div class="timeline">';
+var typeLabelsEn={school:'School',aau:'AAU',league:'League',tournament:'Tournament',camp:'Camp',clinic:'Clinic',other:'Other'};
+var typeLabelsEs={school:'Escuela',aau:'AAU',league:'Liga',tournament:'Torneo',camp:'Campamento',clinic:'Clínica',other:'Otro'};
+seasons.forEach(function(s){
+var hasStats=s.stats_ppg||s.stats_rpg||s.stats_apg;
+var hasAwards=s.awards&&s.awards.trim();
+html+='<div class="tl-item'+(hasAwards?' highlight':'')+'">';
+html+='<div class="tl-year">'+(s.season_year||'—')+'</div>';
+html+='<div class="tl-card">';
+html+='<div class="tl-header"><div class="tl-name">'+esc(s.season_name)+'</div>';
+html+='<span class="tl-type '+(s.season_type||'other')+'">'+(currentLang==='es'?(typeLabelsEs[s.season_type]||s.season_type):(typeLabelsEn[s.season_type]||s.season_type))+'</span></div>';
+var meta=[];
+if(s.team_name)meta.push(esc(s.team_name));
+if(s.organization)meta.push(esc(s.organization));
+if(s.games_played)meta.push(s.games_played+' '+(currentLang==='es'?'juegos':'games'));
+if(meta.length)html+='<div class="tl-meta">'+meta.join(' · ')+'</div>';
+if(hasStats){
+html+='<div class="tl-stats">';
+if(s.stats_ppg)html+='<div class="tl-stat"><div class="v">'+s.stats_ppg+'</div><div class="l">PPG</div></div>';
+if(s.stats_rpg)html+='<div class="tl-stat"><div class="v">'+s.stats_rpg+'</div><div class="l">RPG</div></div>';
+if(s.stats_apg)html+='<div class="tl-stat"><div class="v">'+s.stats_apg+'</div><div class="l">APG</div></div>';
+if(s.stats_spg)html+='<div class="tl-stat"><div class="v">'+s.stats_spg+'</div><div class="l">SPG</div></div>';
+if(s.stats_bpg)html+='<div class="tl-stat"><div class="v">'+s.stats_bpg+'</div><div class="l">BPG</div></div>';
+if(s.fg_pct)html+='<div class="tl-stat"><div class="v">'+s.fg_pct+'%</div><div class="l">FG</div></div>';
+if(s.three_pct)html+='<div class="tl-stat"><div class="v">'+s.three_pct+'%</div><div class="l">3PT</div></div>';
+if(s.ft_pct)html+='<div class="tl-stat"><div class="v">'+s.ft_pct+'%</div><div class="l">FT</div></div>';
+html+='</div>';
+}
+if(hasAwards)html+='<div class="tl-awards">🏆 '+esc(s.awards)+'</div>';
+if(s.notes)html+='<div class="tl-notes">"'+esc(s.notes)+'"</div>';
+html+='<div class="tl-actions">';
+html+='<button class="tl-edit-btn" onclick="editSeason(\''+s.id+'\')" data-en="Edit" data-es="Editar">Edit</button>';
+html+='<button class="tl-del-btn" onclick="deleteSeason(\''+s.id+'\')" data-en="Delete" data-es="Eliminar">Delete</button>';
+html+='</div>';
+html+='</div></div>';
+});
+html+='</div>';
+el.innerHTML=html;
+setLang(currentLang);
+}
+
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+async function saveSeason(){
+var editId=document.getElementById('seasonForm').getAttribute('data-edit-id');
+var data={
+player_id:player.id,
+season_name:document.getElementById('sfName').value.trim(),
+season_type:document.getElementById('sfType').value,
+season_year:document.getElementById('sfYear').value.trim(),
+team_name:document.getElementById('sfTeam').value.trim(),
+organization:document.getElementById('sfOrg').value.trim(),
+games_played:parseInt(document.getElementById('sfGP').value)||0,
+stats_ppg:parseFloat(document.getElementById('sfPPG').value)||0,
+stats_rpg:parseFloat(document.getElementById('sfRPG').value)||0,
+stats_apg:parseFloat(document.getElementById('sfAPG').value)||0,
+stats_spg:parseFloat(document.getElementById('sfSPG').value)||0,
+stats_bpg:parseFloat(document.getElementById('sfBPG').value)||0,
+fg_pct:parseFloat(document.getElementById('sfFG').value)||0,
+three_pct:parseFloat(document.getElementById('sf3PT').value)||0,
+ft_pct:parseFloat(document.getElementById('sfFT').value)||0,
+awards:document.getElementById('sfAwards').value.trim(),
+notes:document.getElementById('sfNotes').value.trim(),
+updated_at:new Date().toISOString()
+};
+if(!data.season_name){showToast(currentLang==='es'?'Nombre requerido':'Name required');return}
+try{
+if(editId){
+var{error}=await sb.from('player_seasons').update(data).eq('id',editId);
+if(error)throw error;
+showToast(currentLang==='es'?'¡Temporada actualizada!':'Season updated!');
+}else{
+var{error}=await sb.from('player_seasons').insert(data);
+if(error)throw error;
+showToast(currentLang==='es'?'¡Temporada agregada!':'Season added!');
+}
+toggleSeasonForm();
+await loadSeasons();
+}catch(e){console.error(e);showToast('Error: '+e.message)}
+}
+
+function editSeason(id){
+var s=seasons.find(function(x){return x.id===id});
+if(!s)return;
+document.getElementById('sfName').value=s.season_name||'';
+document.getElementById('sfType').value=s.season_type||'school';
+document.getElementById('sfYear').value=s.season_year||'';
+document.getElementById('sfTeam').value=s.team_name||'';
+document.getElementById('sfOrg').value=s.organization||'';
+document.getElementById('sfGP').value=s.games_played||'';
+document.getElementById('sfPPG').value=s.stats_ppg||'';
+document.getElementById('sfRPG').value=s.stats_rpg||'';
+document.getElementById('sfAPG').value=s.stats_apg||'';
+document.getElementById('sfSPG').value=s.stats_spg||'';
+document.getElementById('sfBPG').value=s.stats_bpg||'';
+document.getElementById('sfFG').value=s.fg_pct||'';
+document.getElementById('sf3PT').value=s.three_pct||'';
+document.getElementById('sfFT').value=s.ft_pct||'';
+document.getElementById('sfAwards').value=s.awards||'';
+document.getElementById('sfNotes').value=s.notes||'';
+document.getElementById('seasonForm').setAttribute('data-edit-id',id);
+document.getElementById('seasonForm').classList.add('show');
+window.scrollTo({top:document.getElementById('seasonForm').offsetTop-80,behavior:'smooth'});
+}
+
+async function deleteSeason(id){
+if(!confirm(currentLang==='es'?'¿Eliminar esta temporada?':'Delete this season?'))return;
+try{
+var{error}=await sb.from('player_seasons').delete().eq('id',id);
+if(error)throw error;
+showToast(currentLang==='es'?'Temporada eliminada':'Season deleted');
+await loadSeasons();
+}catch(e){showToast('Error: '+e.message)}
+}
+// ========== END TIMELINE ==========
 
 // ========== MEDIA FUNCTIONS ==========
 var SB_STORAGE_URL=SB_URL+'/storage/v1/object/public/';
