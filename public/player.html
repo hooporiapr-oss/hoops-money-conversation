@@ -91,12 +91,44 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 
 .powered{text-align:center;padding:24px;margin-top:12px}.powered a{font-size:.7rem;color:var(--gray);font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}.powered img{height:16px;opacity:.5}
 
+/* COVER PHOTO */
+.cover-banner{width:100%;height:200px;border-radius:24px 24px 0 0;object-fit:cover;display:block;margin-bottom:-24px;position:relative;z-index:0}
+.hero-card.has-cover{border-radius:0 0 24px 24px;margin-top:0}
+.hero-card.has-cover.premium{border-radius:0 0 24px 24px}
+
+/* AVATAR IMAGE */
+.hero-avatar img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gallery-item{aspect-ratio:1;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s;border:1px solid rgba(255,255,255,.04)}
+.gallery-item:hover{transform:scale(1.03)}
+.gallery-item img{width:100%;height:100%;object-fit:cover}
+
+/* VIDEO SECTION */
+.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.video-card{border-radius:12px;overflow:hidden;background:var(--black2);border:1px solid rgba(255,255,255,.04);transition:all .2s}
+.video-card:hover{border-color:rgba(255,215,0,.15)}
+.video-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;display:block}
+.video-card .vc-label{padding:8px 10px;font-size:.7rem;color:var(--gray);font-weight:600}
+.video-link-card{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px;color:var(--white);font-size:.82rem;font-weight:600;transition:all .2s}
+.video-link-card:hover{border-color:rgba(255,215,0,.15);background:rgba(255,255,255,.04)}
+.vl-icon{font-size:1.3rem;flex-shrink:0}
+.vl-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vl-platform{font-size:.6rem;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;align-items:center;justify-content:center;cursor:pointer}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90%;max-height:90%;border-radius:12px;object-fit:contain}
+.lightbox-close{position:absolute;top:20px;right:24px;color:var(--white);font-size:1.5rem;cursor:pointer;background:rgba(255,255,255,.1);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none}
+
+@media(max-width:600px){.hero-top{flex-direction:column;text-align:center}.hero-name{justify-content:center}.tags{justify-content:center}.stat{min-width:48px;padding:8px 4px}.stat .val{font-size:1.1rem}.cog-grid{grid-template-columns:repeat(2,1fr)}.meas-row{grid-template-columns:repeat(2,1fr)}.socials{justify-content:center}.nav-link{display:none}.gallery-grid{grid-template-columns:repeat(2,1fr)}.video-grid{grid-template-columns:1fr}.cover-banner{height:140px}}
+
 .not-found{text-align:center;padding:100px 24px}
 .not-found h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:8px}
 .not-found p{color:var(--gray);margin-bottom:24px}
 .nf-btn{display:inline-block;padding:12px 28px;border-radius:10px;font-size:.85rem;font-weight:700;background:var(--gold);color:var(--black)}
-
-@media(max-width:600px){.hero-top{flex-direction:column;text-align:center}.hero-name{justify-content:center}.tags{justify-content:center}.stat{min-width:48px;padding:8px 4px}.stat .val{font-size:1.1rem}.cog-grid{grid-template-columns:repeat(2,1fr)}.meas-row{grid-template-columns:repeat(2,1fr)}.socials{justify-content:center}.nav-link{display:none}}
 </style>
 </head>
 <body>
@@ -114,6 +146,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <div id="profileOut" style="display:none"></div>
 <div id="notFound" style="display:none" class="not-found"><h2>🏀</h2><h2 data-en="Player Not Found" data-es="Jugador No Encontrado">Player Not Found</h2><p data-en="This profile doesn't exist." data-es="Este perfil no existe.">This profile doesn't exist.</p><a href="/discover.html" class="nf-btn" data-en="Browse Players" data-es="Buscar Jugadores">Browse Players</a></div>
 </div>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')"><button class="lightbox-close">✕</button><img id="lightboxImg" src="" alt=""></div>
 
 <script>
 var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
@@ -143,9 +177,13 @@ render(p,pm,bt);
 })();
 
 function render(p,pm,bt){var h='';
+// COVER PHOTO
+if(p.cover_url)h+='<img class="cover-banner" src="'+esc(p.cover_url)+'" alt="Cover">';
 // HERO
-h+='<div class="hero-card '+(pm?'premium':'')+'">';
-h+='<div class="hero-top"><div class="hero-avatar '+(pm?'premium':'free')+'">#'+(p.jersey_number||'—')+'</div>';
+h+='<div class="hero-card '+(pm?'premium':'')+(p.cover_url?' has-cover':'')+'">';
+h+='<div class="hero-top">';
+if(p.avatar_url){h+='<div class="hero-avatar '+(pm?'premium':'free')+'"><img src="'+esc(p.avatar_url)+'" alt=""></div>'}
+else{h+='<div class="hero-avatar '+(pm?'premium':'free')+'">#'+(p.jersey_number||'—')+'</div>'}
 h+='<div class="hero-info"><div class="hero-name">'+esc(p.first_name)+' '+esc(p.last_name);
 if(pm)h+=' <span class="verified-badge">✓ VERIFIED</span>';
 h+='</div><div class="hero-meta">'+(p.position||'')+(p.height?' · '+esc(p.height):'')+(p.weight?' · '+esc(p.weight):'')+'</div>';
@@ -199,9 +237,24 @@ h+='<div class="mindset-cta"><h3 data-en="🧠 TRAIN YOUR BASKETBALL MINDSET" da
 h+='<p data-en="6 challenges. 3 speeds. 10 levels. How high can you climb?" data-es="6 desafíos. 3 velocidades. 10 niveles. ¿Qué tan alto puedes llegar?">6 challenges. 3 speeds. 10 levels. How high can you climb?</p>';
 h+='<a href="/cognitive-hoops.html" class="mcta-btn" data-en="🧠 Play Now — Free" data-es="🧠 Juega Ahora — Gratis">🧠 Play Now — Free</a></div>';
 
-// HIGHLIGHTS
-if(p.highlight_link){h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="🎥 Highlights" data-es="🎥 Highlights">🎥 Highlights</div>';
-h+='<a href="'+esc(p.highlight_link)+'" target="_blank" class="hl-link">▶ <span data-en="Watch Highlight Reel" data-es="Ver Highlights">Watch Highlight Reel</span></a></div>'}
+// HIGHLIGHTS & VIDEO LINKS
+var hasHL=p.highlight_link;
+var hasVL=p.video_links&&p.video_links.length;
+var hasVU=p.video_urls&&p.video_urls.length;
+if(hasHL||hasVL||hasVU){
+h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="🎥 Highlights & Videos" data-es="🎥 Highlights y Videos">🎥 Highlights & Videos</div>';
+if(hasHL)h+='<a href="'+esc(p.highlight_link)+'" target="_blank" class="video-link-card"><span class="vl-icon">▶</span><div><div class="vl-text" data-en="Watch Highlight Reel" data-es="Ver Highlights">Watch Highlight Reel</div><div class="vl-platform">'+detectPlatform(p.highlight_link)+'</div></div></a>';
+if(hasVL)p.video_links.forEach(function(vl){if(vl)h+='<a href="'+esc(vl)+'" target="_blank" class="video-link-card"><span class="vl-icon">'+platformIcon(vl)+'</span><div><div class="vl-text">'+shortenUrl(vl)+'</div><div class="vl-platform">'+detectPlatform(vl)+'</div></div></a>'});
+if(hasVU){h+='<div class="video-grid" style="margin-top:12px">';p.video_urls.forEach(function(vu,i){h+='<div class="video-card"><video src="'+esc(vu)+'" controls preload="metadata" playsinline></video><div class="vc-label">Clip '+(i+1)+'</div></div>'});h+='</div>'}
+h+='</div>'}
+
+// PHOTO GALLERY
+var hasGal=p.gallery_urls&&p.gallery_urls.length;
+if(hasGal){
+h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="📷 Photos" data-es="📷 Fotos">📷 Photos</div>';
+h+='<div class="gallery-grid">';
+p.gallery_urls.forEach(function(url,i){h+='<div class="gallery-item" onclick="openLightbox(\''+esc(url)+'\')"><img src="'+esc(url)+'" alt="Photo '+(i+1)+'" loading="lazy"></div>'});
+h+='</div></div>'}
 
 // NIL BIO (Premium)
 if(pm&&p.nil_bio){h+='<div class="card pc"><div class="card-title" data-en="💼 About" data-es="💼 Acerca de">💼 About</div><div class="nil-bio">'+esc(p.nil_bio)+'</div></div>'}
@@ -233,6 +286,16 @@ document.getElementById('profileOut').style.display='block';
 document.getElementById('profileOut').innerHTML=h;
 setLang(currentLang);
 }
+
+function detectPlatform(url){if(!url)return'';url=url.toLowerCase();if(url.indexOf('youtube')>-1||url.indexOf('youtu.be')>-1)return'YouTube';if(url.indexOf('instagram')>-1)return'Instagram';if(url.indexOf('tiktok')>-1)return'TikTok';if(url.indexOf('x.com')>-1||url.indexOf('twitter')>-1)return'Twitter/X';return'Video'}
+function platformIcon(url){var p=detectPlatform(url);if(p==='YouTube')return'📺';if(p==='Instagram')return'📸';if(p==='TikTok')return'🎵';return'▶'}
+function shortenUrl(url){try{var u=new URL(url);return u.hostname+u.pathname.substring(0,30)+(u.pathname.length>30?'...':'')}catch(e){return url.substring(0,40)}}
+
+window.openLightbox=function(url){
+var lb=document.getElementById('lightbox');
+document.getElementById('lightboxImg').src=url;
+lb.classList.add('show');
+};
 </script>
 </body>
 </html>
