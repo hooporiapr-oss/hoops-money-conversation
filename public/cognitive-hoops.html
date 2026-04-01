@@ -17,7 +17,6 @@
 html{scroll-behavior:smooth}
 body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-/* === HERO === */
 .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:40px 20px 60px;padding-top:calc(50px + env(safe-area-inset-top,0px) + 16px);overflow:hidden;text-align:center}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 30%,rgba(155,89,182,0.12),transparent 70%),radial-gradient(ellipse 60% 50% at 20% 80%,rgba(0,206,209,0.08),transparent),radial-gradient(ellipse 60% 50% at 80% 70%,rgba(255,107,53,0.06),transparent);pointer-events:none}
 .hero::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='%23ffffff' stroke-opacity='0.02' stroke-width='1'/%3E%3C/svg%3E");pointer-events:none}
@@ -51,13 +50,11 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .scroll-arrow{width:20px;height:20px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);animation:bounce 2s ease-in-out infinite}
 @keyframes bounce{0%,100%{transform:rotate(45deg) translate(0,0)}50%{transform:rotate(45deg) translate(4px,4px)}}
 
-/* === SECTION HEADERS === */
 .section{padding:80px 20px}
 .section-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:4px;color:var(--gold);text-align:center;margin-bottom:12px}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,6vw,3rem);letter-spacing:4px;text-align:center;margin-bottom:16px}
 .section-desc{font-size:0.9rem;color:var(--muted);text-align:center;max-width:600px;margin:0 auto 50px;line-height:1.6}
 
-/* === CHALLENGE CARDS === */
 .challenges{display:flex;flex-direction:column;gap:24px;max-width:800px;margin:0 auto}
 
 .challenge-card{position:relative;display:grid;grid-template-columns:auto 1fr;gap:24px;padding:28px;background:var(--card);border:1px solid var(--border);border-radius:20px;transition:all 0.4s;overflow:hidden;text-decoration:none;color:var(--text)}
@@ -124,14 +121,12 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .beat .card-play{background:linear-gradient(135deg,var(--gold),var(--orange))}
 .card-play:hover{transform:translateX(4px)}
 
-/* === HOW IT WORKS === */
 .how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:800px;margin:0 auto}
 .how-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center}
 .how-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;background:linear-gradient(to bottom,var(--gold),rgba(255,215,0,0.3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
 .how-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;margin-bottom:8px}
 .how-text{font-size:0.75rem;color:var(--muted);line-height:1.5}
 
-/* === RATING SCALE === */
 .rating-section{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .rating-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-width:800px;margin:0 auto}
 .rating-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid var(--border);transition:all 0.2s}
@@ -139,14 +134,11 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .rating-level{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;min-width:28px}
 .rating-name{font-size:0.7rem;color:var(--muted);font-weight:600}
 
-/* === FOOTER CTA === */
 .final-cta{text-align:center;padding:80px 20px 100px;position:relative}
 .final-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 100%,rgba(255,215,0,0.06),transparent);pointer-events:none}
-.final-cta .emoji-big{font-size:4rem;margin-bottom:20px;display:block}
 .final-cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,6vw,3rem);letter-spacing:4px;margin-bottom:12px}
 .final-cta p{color:var(--muted);margin-bottom:30px;font-size:0.9rem}
 
-/* === NAV === */
 .top-bar{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,15,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding-top:calc(12px + env(safe-area-inset-top))}
 .top-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .top-logo img{height:28px;width:auto}
@@ -156,12 +148,19 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 .top-link:hover{border-color:var(--gold);color:var(--gold)}
 .top-link.gold{background:rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.3);color:var(--gold)}
 
-/* === LANG TOGGLE === */
 .lang-toggle{display:flex;gap:2px}
 .lang-btn{padding:6px 10px;border:1px solid var(--border);background:transparent;color:var(--muted);border-radius:6px;font-size:0.6rem;font-weight:700;cursor:pointer;transition:all 0.2s}
 .lang-btn.active{border-color:var(--gold);color:var(--gold)}
 
-/* === RESPONSIVE === */
+/* PREMIUM LOCKS */
+.challenge-card.locked{pointer-events:none;opacity:.45;position:relative}
+.challenge-card.locked .card-play{background:rgba(255,255,255,.1)!important;color:var(--muted)}
+.lock-overlay{position:absolute;inset:0;background:rgba(10,10,15,.7);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;gap:8px;pointer-events:auto}
+.lock-overlay .lock-icon{font-size:2rem}
+.lock-overlay .lock-text{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold)}
+.lock-overlay .lock-btn{padding:10px 24px;border-radius:10px;font-size:.8rem;font-weight:700;background:var(--gold);color:var(--dark);text-decoration:none}
+.lock-overlay .lock-sub{font-size:.7rem;color:var(--muted)}
+
 @media(max-width:640px){
   .challenge-card{grid-template-columns:1fr;gap:16px;padding:20px}
   .card-icon{width:60px;height:60px;font-size:1.5rem}
@@ -173,7 +172,6 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="top-bar">
   <a href="/" class="top-logo">
     <img src="/hooporia.png" alt="Hooporia">
@@ -189,7 +187,6 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-badge"><span class="dot"></span> <span data-en="HOOPORIA™ COGNITIVE CHALLENGES" data-es="DESAFÍOS COGNITIVOS HOOPORIA™">HOOPORIA™ COGNITIVE CHALLENGES</span></div>
   <img src="/hooporia.png" alt="Hooporia" style="width:120px;height:auto;margin-bottom:16px;animation:fadeDown 0.8s ease-out 0.05s both;filter:drop-shadow(0 0 30px rgba(255,215,0,0.3))">
@@ -197,7 +194,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
     <span class="word-cognitive" data-en="COGNITIVE" data-es="COGNITIVO">COGNITIVE</span>
     <span class="word-hoops">HOOPS</span>
   </h1>
-  <p class="hero-sub" data-en="Train the most important muscle in basketball — <strong>your hoops mindset</strong>. Five challenges that measure reaction time, working memory, visual processing, sequence recall, and change detection." data-es="Entrena el músculo más importante del baloncesto — <strong>tu mentalidad de cancha</strong>. Cinco desafíos que miden tiempo de reacción, memoria de trabajo, procesamiento visual, memoria secuencial y detección de cambios.">Train the most important muscle in basketball — <strong>your hoops mindset</strong>. Five challenges that measure reaction time, working memory, visual processing, sequence recall, and change detection.</p>
+  <p class="hero-sub" data-en="Train the most important muscle in basketball — <strong>your hoops mindset</strong>. Six challenges that measure reaction time, working memory, visual processing, sequence recall, change detection, and game rhythm." data-es="Entrena el músculo más importante del baloncesto — <strong>tu mentalidad de cancha</strong>. Seis desafíos que miden tiempo de reacción, memoria de trabajo, procesamiento visual, memoria secuencial, detección de cambios y ritmo de juego.">Train the most important muscle in basketball — <strong>your hoops mindset</strong>. Six challenges that measure reaction time, working memory, visual processing, sequence recall, change detection, and game rhythm.</p>
   <div class="hero-stats">
     <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label" data-en="CHALLENGES" data-es="DESAFÍOS">CHALLENGES</div></div>
     <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label" data-en="SPEEDS" data-es="VELOCIDADES">SPEEDS</div></div>
@@ -213,7 +210,6 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
 <section class="section">
   <div class="section-label" data-en="HOW IT WORKS" data-es="CÓMO FUNCIONA">HOW IT WORKS</div>
   <h2 class="section-title" data-en="YOUR COGNITIVE EDGE" data-es="TU VENTAJA COGNITIVA">YOUR COGNITIVE EDGE</h2>
@@ -222,7 +218,7 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
     <div class="how-card">
       <div class="how-num">01</div>
       <div class="how-title" data-en="PLAY THE CHALLENGES" data-es="JUEGA LOS DESAFÍOS">PLAY THE CHALLENGES</div>
-      <div class="how-text" data-en="Five tests, three speeds each. Train at 60 BPM, compete at 120 BPM." data-es="Cinco pruebas, tres velocidades. Entrena a 60 BPM, compite a 120 BPM.">Five tests, three speeds each. Train at 60 BPM, compete at 120 BPM.</div>
+      <div class="how-text" data-en="Six tests, three speeds each. Train at 60 BPM, compete at 120 BPM." data-es="Seis pruebas, tres velocidades. Entrena a 60 BPM, compite a 120 BPM.">Six tests, three speeds each. Train at 60 BPM, compete at 120 BPM.</div>
     </div>
     <div class="how-card">
       <div class="how-num">02</div>
@@ -237,7 +233,6 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
   </div>
 </section>
 
-<!-- CHALLENGES -->
 <section class="section" id="challenges">
   <div class="section-label" data-en="6 COGNITIVE CHALLENGES" data-es="6 DESAFÍOS COGNITIVOS">6 COGNITIVE CHALLENGES</div>
   <h2 class="section-title" data-en="TRAIN YOUR BASKETBALL MINDSET" data-es="ENTRENA TU MENTALIDAD DE CANCHA">TRAIN YOUR BASKETBALL MINDSET</h2>
@@ -245,92 +240,69 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
 
   <div class="challenges">
 
-    <!-- THE REACT -->
     <a href="/the-react.html" class="challenge-card react">
       <div class="card-icon">🟣</div>
       <div class="card-body">
-        <div class="card-header">
-          <div class="card-name">THE REACT</div>
-          <span class="card-tag" data-en="REACTION & RHYTHM" data-es="REACCIÓN Y RITMO">REACTION & RHYTHM</span>
-        </div>
+        <div class="card-header"><div class="card-name">THE REACT</div><span class="card-tag" data-en="REACTION & RHYTHM" data-es="REACCIÓN Y RITMO">REACTION & RHYTHM</span></div>
         <div class="card-measures" data-en="Watch the pattern flash 3 times, then tap cells AS they light up on the beat. Tests reaction time, rhythmic timing, and anticipation under pressure." data-es="Observa el patrón destellar 3 veces, luego toca las celdas CUANDO se iluminen en el ritmo. Evalúa tiempo de reacción, sincronización rítmica y anticipación bajo presión.">Watch the pattern flash 3 times, then tap cells AS they light up on the beat. Tests reaction time, rhythmic timing, and anticipation under pressure.</div>
-        <div class="card-basketball" data-en="🏀 <strong>Game speed, tempo, clutch timing</strong> — Can you play at 120 BPM when the game is on the line? This is the difference between a player who reacts and one who anticipates." data-es="🏀 <strong>Velocidad de juego, tempo, timing en momentos clave</strong> — ¿Puedes jugar a 120 BPM cuando el partido está en la línea? Esta es la diferencia entre un jugador que reacciona y uno que anticipa.">🏀 <strong>Game speed, tempo, clutch timing</strong> — Can you play at 120 BPM when the game is on the line? This is the difference between a player who reacts and one who anticipates.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Game speed, tempo, clutch timing</strong> — Can you play at 120 BPM when the game is on the line?" data-es="🏀 <strong>Velocidad de juego, tempo, timing en momentos clave</strong> — ¿Puedes jugar a 120 BPM cuando el partido está en la línea?">🏀 <strong>Game speed, tempo, clutch timing</strong> — Can you play at 120 BPM when the game is on the line?</div>
         <div class="card-play">▶ PLAY NOW →</div>
       </div>
     </a>
 
-    <!-- THE RECALL -->
     <a href="/the-recall.html" class="challenge-card recall">
       <div class="card-icon">🟠</div>
       <div class="card-body">
-        <div class="card-header">
-          <div class="card-name">THE RECALL</div>
-          <span class="card-tag" data-en="WORKING MEMORY" data-es="MEMORIA DE TRABAJO">WORKING MEMORY</span>
-        </div>
-        <div class="card-measures" data-en="Numbered cells flash on a grid — memorize which cell has which number, then tap them back in order: 1, 2, 3, 4, 5. Scales from 5 to 14 cells." data-es="Celdas numeradas destellan en la cuadrícula — memoriza qué celda tiene qué número, luego tócalas en orden: 1, 2, 3, 4, 5. Escala de 5 a 14 celdas.">Numbered cells flash on a grid — memorize which cell has which number, then tap them back in order: 1, 2, 3, 4, 5. Scales from 5 to 14 cells.</div>
-        <div class="card-basketball" data-en="🏀 <strong>Play execution, basketball IQ</strong> — Coach calls a play with 5 positions. Can you remember where everyone goes? The kid who runs the play right every time has elite working memory." data-es="🏀 <strong>Ejecución de jugadas, IQ de baloncesto</strong> — El coach llama una jugada con 5 posiciones. ¿Puedes recordar dónde va cada quien? El jugador que ejecuta bien cada vez tiene memoria de trabajo elite.">🏀 <strong>Play execution, basketball IQ</strong> — Coach calls a play with 5 positions. Can you remember where everyone goes? The kid who runs the play right every time has elite working memory.</div>
+        <div class="card-header"><div class="card-name">THE RECALL</div><span class="card-tag" data-en="WORKING MEMORY" data-es="MEMORIA DE TRABAJO">WORKING MEMORY</span></div>
+        <div class="card-measures" data-en="Numbered cells flash on a grid — memorize which cell has which number, then tap them back in order. Scales from 5 to 14 cells." data-es="Celdas numeradas destellan en la cuadrícula — memoriza qué celda tiene qué número, luego tócalas en orden. Escala de 5 a 14 celdas.">Numbered cells flash on a grid — memorize which cell has which number, then tap them back in order. Scales from 5 to 14 cells.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Play execution, basketball IQ</strong> — Coach calls a play with 5 positions. Can you remember where everyone goes?" data-es="🏀 <strong>Ejecución de jugadas, IQ de baloncesto</strong> — El coach llama una jugada con 5 posiciones. ¿Puedes recordar dónde va cada quien?">🏀 <strong>Play execution, basketball IQ</strong> — Coach calls a play with 5 positions. Can you remember where everyone goes?</div>
         <div class="card-play">▶ PLAY NOW →</div>
       </div>
     </a>
 
-    <!-- THE REFLEX -->
     <a href="/the-reflex.html" class="challenge-card reflex">
       <div class="card-icon">🔵</div>
       <div class="card-body">
-        <div class="card-header">
-          <div class="card-name">THE REFLEX</div>
-          <span class="card-tag" data-en="VISUAL PROCESSING" data-es="PROCESAMIENTO VISUAL">VISUAL PROCESSING</span>
-        </div>
-        <div class="card-measures" data-en="Multiple cells flash ALL AT ONCE — capture the whole picture in a split second, then find them all. Flash times shrink from 2.5s to 0.8s at Elite speed." data-es="Múltiples celdas destellan TODAS A LA VEZ — captura toda la imagen en un instante, luego encuéntralas todas. El tiempo de destello se reduce de 2.5s a 0.8s en velocidad Elite.">Multiple cells flash ALL AT ONCE — capture the whole picture in a split second, then find them all. Flash times shrink from 2.5s to 0.8s at Elite speed.</div>
-        <div class="card-basketball" data-en="🏀 <strong>Court vision, fast break reads</strong> — Can you see all 5 defenders in a split second? The play develops in 0.8 seconds — you're driving the lane, where are your teammates?" data-es="🏀 <strong>Visión de cancha, lectura de contraataque</strong> — ¿Puedes ver a los 5 defensores en un instante? La jugada se desarrolla en 0.8 segundos — estás penetrando, ¿dónde están tus compañeros?">🏀 <strong>Court vision, fast break reads</strong> — Can you see all 5 defenders in a split second? The play develops in 0.8 seconds — you're driving the lane, where are your teammates?</div>
+        <div class="card-header"><div class="card-name">THE REFLEX</div><span class="card-tag" data-en="VISUAL PROCESSING" data-es="PROCESAMIENTO VISUAL">VISUAL PROCESSING</span></div>
+        <div class="card-measures" data-en="Multiple cells flash ALL AT ONCE — capture the whole picture in a split second, then find them all. Flash times shrink from 2.5s to 0.8s." data-es="Múltiples celdas destellan TODAS A LA VEZ — captura toda la imagen en un instante, luego encuéntralas todas. El tiempo se reduce de 2.5s a 0.8s.">Multiple cells flash ALL AT ONCE — capture the whole picture in a split second, then find them all. Flash times shrink from 2.5s to 0.8s.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Court vision, fast break reads</strong> — Can you see all 5 defenders in a split second?" data-es="🏀 <strong>Visión de cancha, lectura de contraataque</strong> — ¿Puedes ver a los 5 defensores en un instante?">🏀 <strong>Court vision, fast break reads</strong> — Can you see all 5 defenders in a split second?</div>
         <div class="card-play">▶ PLAY NOW →</div>
       </div>
     </a>
 
-    <!-- THE REPLAY -->
-    <a href="/the-replay.html" class="challenge-card replay">
+    <a href="/the-replay.html" class="challenge-card replay" id="card-replay">
       <div class="card-icon">🟢</div>
       <div class="card-body">
-        <div class="card-header">
-          <div class="card-name">THE REPLAY</div>
-          <span class="card-tag" data-en="SEQUENCE MEMORY" data-es="MEMORIA SECUENCIAL">SEQUENCE MEMORY</span>
-        </div>
-        <div class="card-measures" data-en="Watch cells light up one by one with unique tones — then replay the exact sequence in order. Each cell has its own sound, adding auditory encoding. Sequences scale from 5 to 25 steps." data-es="Observa las celdas iluminarse una por una con tonos únicos — luego repite la secuencia exacta en orden. Cada celda tiene su propio sonido. Las secuencias escalan de 5 a 25 pasos.">Watch cells light up one by one with unique tones — then replay the exact sequence in order. Each cell has its own sound, adding auditory encoding. Sequences scale from 5 to 25 steps.</div>
-        <div class="card-basketball" data-en="🏀 <strong>Play recall, muscle memory</strong> — Your coach drills a 12-step play. Can you run it from memory? The players who master complex sequences are the ones who execute under pressure." data-es="🏀 <strong>Memoria de jugadas, memoria muscular</strong> — Tu coach ensaya una jugada de 12 pasos. ¿Puedes ejecutarla de memoria? Los jugadores que dominan secuencias complejas son los que ejecutan bajo presión.">🏀 <strong>Play recall, muscle memory</strong> — Your coach drills a 12-step play. Can you run it from memory? The players who master complex sequences are the ones who execute under pressure.</div>
+        <div class="card-header"><div class="card-name">THE REPLAY</div><span class="card-tag" data-en="SEQUENCE MEMORY" data-es="MEMORIA SECUENCIAL">SEQUENCE MEMORY</span></div>
+        <div class="card-measures" data-en="Watch cells light up one by one with unique tones — then replay the exact sequence in order. Sequences scale from 5 to 25 steps." data-es="Observa las celdas iluminarse una por una con tonos únicos — luego repite la secuencia exacta en orden. Las secuencias escalan de 5 a 25 pasos.">Watch cells light up one by one with unique tones — then replay the exact sequence in order. Sequences scale from 5 to 25 steps.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Play recall, muscle memory</strong> — Your coach drills a 12-step play. Can you run it from memory?" data-es="🏀 <strong>Memoria de jugadas, memoria muscular</strong> — Tu coach ensaya una jugada de 12 pasos. ¿Puedes ejecutarla de memoria?">🏀 <strong>Play recall, muscle memory</strong> — Your coach drills a 12-step play. Can you run it from memory?</div>
         <div class="card-play">▶ PLAY NOW →</div>
       </div>
     </a>
 
-    <!-- THE RITMO -->
-    <a href="/the-ritmo.html" class="challenge-card ritmo">
+    <a href="/the-ritmo.html" class="challenge-card ritmo" id="card-ritmo">
       <div class="card-icon">🟡</div>
       <div class="card-body">
-        <div class="card-header">
-          <div class="card-name">THE RITMO</div>
-          <span class="card-tag" data-en="CHANGE DETECTION" data-es="DETECCIÓN DE CAMBIOS">CHANGE DETECTION</span>
-        </div>
-        <div class="card-measures" data-en="Watch an original pattern, then watch the echo — ONE cell is different. Find the change before time runs out. You have 4 beats. Patterns scale from 3 to 12 cells." data-es="Observa el patrón original, luego observa el eco — UNA celda es diferente. Encuentra el cambio antes de que acabe el tiempo. Tienes 4 pulsos. Los patrones escalan de 3 a 12 celdas.">Watch an original pattern, then watch the echo — ONE cell is different. Find the change before time runs out. You have 4 beats. Patterns scale from 3 to 12 cells.</div>
-        <div class="card-basketball" data-en="🏀 <strong>Reading defensive shifts</strong> — Defense rotated. Who moved? Where's the open man now? The best playmakers see what changed before anyone else on the court." data-es="🏀 <strong>Lectura de cambios defensivos</strong> — La defensa rotó. ¿Quién se movió? ¿Dónde está el hombre abierto? Los mejores creadores de juego ven lo que cambió antes que nadie en la cancha.">🏀 <strong>Reading defensive shifts</strong> — Defense rotated. Who moved? Where's the open man now? The best playmakers see what changed before anyone else on the court.</div>
+        <div class="card-header"><div class="card-name">THE RITMO</div><span class="card-tag" data-en="CHANGE DETECTION" data-es="DETECCIÓN DE CAMBIOS">CHANGE DETECTION</span></div>
+        <div class="card-measures" data-en="Watch an original pattern, then watch the echo — ONE cell is different. Find the change before time runs out. Patterns scale from 3 to 12 cells." data-es="Observa el patrón original, luego observa el eco — UNA celda es diferente. Encuentra el cambio antes de que acabe el tiempo. Los patrones escalan de 3 a 12 celdas.">Watch an original pattern, then watch the echo — ONE cell is different. Find the change before time runs out. Patterns scale from 3 to 12 cells.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Reading defensive shifts</strong> — Defense rotated. Who moved? Where's the open man now?" data-es="🏀 <strong>Lectura de cambios defensivos</strong> — La defensa rotó. ¿Quién se movió? ¿Dónde está el hombre abierto?">🏀 <strong>Reading defensive shifts</strong> — Defense rotated. Who moved? Where's the open man now?</div>
         <div class="card-play">▶ PLAY NOW →</div>
       </div>
     </a>
 
-    <!-- THE BEAT -->
-    <a href="/the-beat.html" class="challenge-card beat">
+    <a href="/the-beat.html" class="challenge-card beat" id="card-beat">
       <div class="card-icon">🏀</div>
       <div class="card-body">
-        <div class="card-header">
-          <div class="card-name">THE BEAT OF THE GAME</div>
-          <span class="card-tag" data-en="RHYTHM & TIMING" data-es="RITMO Y TIMING">RHYTHM & TIMING</span>
-        </div>
-        <div class="card-measures" data-en="Basketballs light up to Latin rhythms — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Tap on the beat. 5 modes: Warmup, Playbook (memory), Crunch Time (60s survival), Nothing But Net (10 perfects), Shootaround." data-es="Balones se iluminan al ritmo Latino — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Toca en el beat. 5 modos: Calentamiento, Playbook (memoria), Crunch Time (60s), Nothing But Net (10 perfectos), Shootaround.">Basketballs light up to Latin rhythms — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Tap on the beat. 5 modes: Warmup, Playbook (memory), Crunch Time (60s survival), Nothing But Net (10 perfects), Shootaround.</div>
-        <div class="card-basketball" data-en="🏀 <strong>Game tempo, rhythm, flow state</strong> — Basketball is rhythm. Dribbling is rhythm. Pick and roll timing is rhythm. The players who play ON BEAT with the game are the ones who dominate." data-es="🏀 <strong>Tempo del juego, ritmo, estado de flujo</strong> — El baloncesto es ritmo. El dribling es ritmo. El timing del pick and roll es ritmo. Los jugadores que juegan EN RITMO con el juego son los que dominan.">🏀 <strong>Game tempo, rhythm, flow state</strong> — Basketball is rhythm. Dribbling is rhythm. Pick and roll timing is rhythm. The players who play ON BEAT with the game are the ones who dominate.</div>
+        <div class="card-header"><div class="card-name">THE BEAT OF THE GAME</div><span class="card-tag" data-en="RHYTHM & TIMING" data-es="RITMO Y TIMING">RHYTHM & TIMING</span></div>
+        <div class="card-measures" data-en="Basketballs light up to Latin rhythms — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Tap on the beat. 5 modes including Crunch Time and Nothing But Net." data-es="Balones se iluminan al ritmo Latino — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Toca en el beat. 5 modos incluyendo Crunch Time y Nothing But Net.">Basketballs light up to Latin rhythms — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Tap on the beat. 5 modes including Crunch Time and Nothing But Net.</div>
+        <div class="card-basketball" data-en="🏀 <strong>Game tempo, rhythm, flow state</strong> — Basketball is rhythm. The players who play ON BEAT dominate." data-es="🏀 <strong>Tempo del juego, ritmo, estado de flujo</strong> — El baloncesto es ritmo. Los jugadores que juegan EN RITMO dominan.">🏀 <strong>Game tempo, rhythm, flow state</strong> — Basketball is rhythm. The players who play ON BEAT dominate.</div>
         <div class="card-play">▶ PLAY NOW →</div>
       </div>
     </a>
 
   </div>
 </section>
+
 <section class="section rating-section">
   <div class="section-label" data-en="RITNOME™ RATING SCALE" data-es="ESCALA RITNOME™">RITNOME™ RATING SCALE</div>
   <h2 class="section-title" data-en="L1 ROOKIE → L10 GOAT" data-es="L1 NOVATO → L10 GOAT">L1 ROOKIE → L10 GOAT</h2>
@@ -349,7 +321,6 @@ body{min-height:100vh;font-family:'Outfit',sans-serif;background:var(--dark);col
   </div>
 </section>
 
-<!-- FINAL CTA -->
 <section class="final-cta">
   <h2 data-en="YOUR GAME. YOUR MINDSET. YOUR EDGE." data-es="TU JUEGO. TU MENTALIDAD. TU VENTAJA.">YOUR GAME. YOUR MINDSET. YOUR EDGE.</h2>
   <p data-en="No other NIL platform measures cognitive performance. You just got the edge." data-es="Ninguna otra plataforma NIL mide el rendimiento cognitivo. Acabas de obtener la ventaja.">No other NIL platform measures cognitive performance. You just got the edge.</p>
@@ -382,6 +353,26 @@ function setLang(l) {
 }
 
 setLang(currentLang);
+
+// Premium lock for Replay, Ritmo, Beat
+(async function checkCogLocks(){
+try{
+await new Promise(function(r,j){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';s.onload=r;s.onerror=j;document.head.appendChild(s)});
+var sb=window.supabase.createClient('https://rhsszirtbyvalugmbecm.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs');
+var{data:{user}}=await sb.auth.getUser();
+if(user){
+var{data:pl}=await sb.from('players').select('profile_tier').eq('auth_user_id',user.id);
+if(pl&&pl.length&&(pl[0].profile_tier==='premium'||pl[0].profile_tier==='pro'))return;
+}
+['card-replay','card-ritmo','card-beat'].forEach(function(id){
+var el=document.getElementById(id);if(!el)return;
+el.classList.add('locked');el.removeAttribute('href');
+var ov=document.createElement('div');ov.className='lock-overlay';
+ov.innerHTML='<div class="lock-icon">🔒</div><div class="lock-text">PREMIUM CHALLENGE</div><a href="https://buy.stripe.com/eVq28s8yrgwuaMEgP88Zq03" class="lock-btn">⭐ Unlock — $49/yr</a><div class="lock-sub">or <a href="https://buy.stripe.com/00wdRa7un2FEf2U0Qa8Zq02" style="color:var(--gold)">$7/month</a></div>';
+el.appendChild(ov);
+});
+}catch(e){console.log('Lock check skipped')}
+})();
 
 // Intersection Observer for card animations
 var observer = new IntersectionObserver(function(entries) {
