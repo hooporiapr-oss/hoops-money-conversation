@@ -303,7 +303,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 
 <!-- MINDSET -->
 <div class="tab-panel" id="tab-mindset"><div id="cogContent">
-<div class="cog-overall" id="cogOverallCard"><div class="cog-overall-label">HOOPS MINDSET — OVERALL RATING</div><div class="cog-overall-value" id="cogOverallValue">—</div><div class="cog-overall-rating" id="cogOverallRating">Play challenges to build your rating</div></div>
+<div class="cog-overall" id="cogOverallCard"><div class="cog-overall-label">HOOPS MINDSET — OVERALL RATING</div><div class="cog-overall-value" id="cogOverallValue">—</div><div class="cog-overall-rating" id="cogOverallRating">Play drills to build your rating</div></div>
 <div class="cog-grid" id="cogGrid"></div>
 <div id="cogReportSection" style="display:none;margin-bottom:20px">
 <div style="background:var(--surface);border:1px solid rgba(255,215,0,.1);border-radius:16px;padding:24px;text-align:center">
@@ -326,7 +326,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 </div>
 </div>
 </div>
-<div style="text-align:center"><a href="/cognitive-hoops.html" class="btn-view" style="display:inline-block;padding:14px 32px;font-size:.9rem">🧠 Train Your Mindset</a><div style="margin-top:10px"><a href="/cognitive-report.html" style="font-size:.78rem;font-weight:600;color:var(--gold);border-bottom:1px dashed rgba(255,215,0,.3);display:inline-block;padding-bottom:2px">📋 Learn About AI Scouting Reports →</a></div></div>
+<div style="text-align:center"><a href="/cognitive-hoops.html" class="btn-view" style="display:inline-block;padding:14px 32px;font-size:.9rem">🧠 Train Your Mindset</a></div>
 </div></div>
 </div></div>
 <div class="toast" id="toast"></div>
@@ -461,7 +461,7 @@ var bestByTest={};
 if(cogData)cogData.forEach(function(s){if(!bestByTest[s.test_name]||s.level>bestByTest[s.test_name].level)bestByTest[s.test_name]=s});
 var scores={};
 ['react','recall','reflex','replay','ritmo','beat'].forEach(function(t){if(bestByTest[t])scores[t]={level:bestByTest[t].level,speed:bestByTest[t].speed,score:bestByTest[t].score}});
-if(Object.keys(scores).length===0){loading.style.display='none';btn.style.display='';showToast('Play challenges first to generate a report');return}
+if(Object.keys(scores).length===0){loading.style.display='none';btn.style.display='';showToast('Play drills first to generate a report');return}
 var res=await fetch('/api/cognitive-report',{
 method:'POST',
 headers:{'Content-Type':'application/json'},
