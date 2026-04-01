@@ -1,0 +1,133 @@
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  var apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'API key not configured' });
+  }
+
+  var body = req.body;
+  var playerName = body.name || 'Player';
+  var position = body.position || '';
+  var age = body.age || '';
+  var height = body.height || '';
+  var scores = body.scores || {};
+
+  // Build the score summary
+  var scoreLines = [];
+  var testDescriptions = {
+    react: 'THE REACT — Reaction & Rhythm (reaction time, rhythmic timing, anticipation)',
+    recall: 'THE RECALL — Working Memory (memorizing positions, executing plays)',
+    reflex: 'THE REFLEX — Visual Processing / Court Vision (seeing the whole floor instantly)',
+    replay: 'THE REPLAY — Sequence Memory / Play Recall (memorizing and executing complex sequences)',
+    ritmo: 'THE RITMO — Change Detection (spotting defensive shifts and rotations)',
+    beat: 'THE BEAT — Game Rhythm & Timing (playing on tempo, flow state, timing)'
+  };
+  var ratingLabels = {
+    1: 'Rookie', 2: 'Developing', 3: 'Solid', 4: 'Advanced', 5: 'Elite',
+    6: 'Pro', 7: 'All-Star', 8: 'MVP', 9: 'Hall of Fame', 10: 'GOAT'
+  };
+
+  var totalLevel = 0;
+  var testCount = 0;
+
+  ['react', 'recall', 'reflex', 'replay', 'ritmo', 'beat'].forEach(function(test) {
+    var s = scores[test];
+    if (s && s.level) {
+      var rating = ratingLabels[s.level] || 'Level ' + s.level;
+      var speed = s.speed === 'fast' ? 'Elite (120 BPM)' : s.speed === 'med' ? 'Tempo (90 BPM)' : 'Training (60 BPM)';
+      scoreLines.push(testDescriptions[test] + '\n  Level: L' + s.level + ' (' + rating + ') | Speed: ' + speed + ' | Score: ' + s.score + ' pts');
+      totalLevel += s.level;
+      testCount++;
+    }
+  });
+
+  var overallLevel = testCount > 0 ? Math.round(totalLevel / testCount) : 0;
+  var overallRating = ratingLabels[overallLevel] || 'Not Rated';
+
+  if (scoreLines.length === 0) {
+    return res.status(400).json({ error: 'No cognitive scores to analyze' });
+  }
+
+  var prompt = 'You are a basketball cognitive performance analyst for Hooporia, the only NIL platform that measures basketball mindset through cognitive challenges.\n\n' +
+    'Generate a PROFESSIONAL COGNITIVE SCOUTING REPORT for this player. Write it like a real scout would — direct, specific, actionable. This report will be shown to coaches, scouts, and brands.\n\n' +
+    'PLAYER PROFILE:\n' +
+    'Name: ' + playerName + '\n' +
+    (position ? 'Position: ' + position + '\n' : '') +
+    (age ? 'Age: ' + age + '\n' : '') +
+    (height ? 'Height: ' + height + '\n' : '') +
+    '\nCOGNITIVE SCORES (Hooporia RITNOME™ Scale: L1 Rookie → L10 GOAT):\n' +
+    'Overall: L' + overallLevel + ' (' + overallRating + ')\n\n' +
+    scoreLines.join('\n\n') + '\n\n' +
+    'REPORT FORMAT (use these exact headers):\n\n' +
+    '🧠 COGNITIVE SCOUTING REPORT\n' +
+    'Player: [name] | Position: [pos] | Overall: L[X] [Rating]\n\n' +
+    '📊 EXECUTIVE SUMMARY\n' +
+    '2-3 sentences. What kind of basketball mind does this player have? What is their cognitive identity?\n\n' +
+    '💪 COGNITIVE STRENGTHS\n' +
+    'Their top 2-3 cognitive abilities. Translate each into specific basketball situations where this player would excel. Be specific — mention plays, scenarios, game situations.\n\n' +
+    '⚡ AREAS FOR DEVELOPMENT\n' +
+    'Their 1-2 weakest areas. Frame constructively — what drills or game situations would help them improve? Be specific.\n\n' +
+    '🏀 ON-COURT TRANSLATION\n' +
+    'How do these cognitive scores translate to actual basketball performance? What should a coach expect from this player in:\n' +
+    '- Transition offense/defense\n' +
+    '- Half-court execution\n' +
+    '- Pressure situations (clutch moments)\n' +
+    '- Team play and communication\n\n' +
+    '🎯 COACH RECOMMENDATION\n' +
+    '2-3 specific recommendations for how a coach should use this player based on their cognitive profile. Include offensive and defensive roles.\n\n' +
+    '📈 DEVELOPMENT PATH\n' +
+    'What should this player focus on to reach the next cognitive level? Specific cognitive training recommendations.\n\n' +
+    'RULES:\n' +
+    '- Write like a professional scout, not an AI\n' +
+    '- Be direct and specific — no generic filler\n' +
+    '- Reference actual basketball scenarios and plays\n' +
+    '- If position is PG, talk about floor general duties. If C, talk about rim protection reads. Etc.\n' +
+    '- Keep it under 500 words total\n' +
+    '- Do NOT use markdown formatting — use plain text with the emoji headers above\n' +
+    '- This is a premium feature — make it feel worth paying for';
+
+  try {
+    var response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [
+          { role: 'user', content: prompt }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      var errText = await response.text();
+      console.error('Anthropic API error:', errText);
+      return res.status(500).json({ error: 'Report generation failed' });
+    }
+
+    var data = await response.json();
+    var reportText = '';
+    if (data.content && data.content.length) {
+      data.content.forEach(function(block) {
+        if (block.type === 'text') reportText += block.text;
+      });
+    }
+
+    return res.status(200).json({
+      report: reportText,
+      overall_level: overallLevel,
+      overall_rating: overallRating,
+      generated_at: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('Report generation error:', err);
+    return res.status(500).json({ error: 'Failed to generate report' });
+  }
+};
