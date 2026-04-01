@@ -215,7 +215,11 @@ function filterPlayers(){
   var sort=document.getElementById('fSort').value;
   var nilOnly=document.getElementById('fNIL').value;
 
+  var thirtyDaysAgo=new Date();thirtyDaysAgo.setDate(thirtyDaysAgo.getDate()-30);
+
   var filtered=allPlayers.filter(function(p){
+    // Hide free profiles older than 30 days
+    if(p.profile_tier!=='premium'&&p.profile_tier!=='pro'&&p.created_at&&new Date(p.created_at)<thirtyDaysAgo)return false;
     if(search&&!(p.first_name+' '+p.last_name).toLowerCase().includes(search))return false;
     if(pos&&p.position!==pos)return false;
     if(nilOnly==='nil'&&!p.nil_contact_email)return false;
