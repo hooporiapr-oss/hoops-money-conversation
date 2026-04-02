@@ -148,10 +148,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .contact-email{display:inline-block;padding:12px 28px;border-radius:10px;font-size:.9rem;font-weight:700;background:rgba(255,215,0,.08);border:1.5px solid rgba(255,215,0,.2);color:var(--gold);margin-top:12px}
 
 footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
-.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.footer-brand{display:flex;align-items:center;gap:8px}
-.footer-brand img{height:22px}
-.footer-brand span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 .footer-links{display:flex;gap:20px}
 .footer-links a{font-size:.78rem;color:var(--gray);transition:color .2s}
 .footer-links a:hover{color:var(--white)}
@@ -301,7 +298,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <a href="/cognitive-hoops.html" class="btn-outline" data-en="🧠 Try the Drills" data-es="🧠 Prueba los Drills">🧠 Try the Drills</a>
 </div>
 <p class="final-note" data-en="Questions about Hooporia for your program? We're here to help." data-es="¿Preguntas sobre Hooporia para tu programa? Estamos aquí para ayudar.">Questions about Hooporia for your program? We're here to help.</p>
-<a href="/cdn-cgi/l/email-protection#cca5a2aaa38ca4a3a3bca3bea5ade2afa3a1" class="contact-email"><span class="__cf_email__" data-cfemail="9cf5f2faf3dcf4f3f3ecf3eef5fdb2fff3f1">[email&#160;protected]</span></a>
+<a href="mailto:programs@hooporia.com" class="contact-email">programs@hooporia.com</a>
 <div style="margin-top:24px;display:flex;align-items:center;justify-content:center;gap:8px">
 <div style="width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 1.5s ease-in-out infinite"></div>
 <span style="font-size:.6rem;color:var(--gray);letter-spacing:2px">POWERED BY</span>
@@ -310,14 +307,15 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </section>
 
 <footer><div class="wrap"><div class="footer-inner">
-<div class="footer-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></div>
-<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a><a href="/cognitive-hoops.html" data-en="Drills" data-es="Drills">Drills</a><a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a></div>
-<div class="footer-copy">© 2026 GoStar Digital LLC · Hooporia™ · RITNOME™</div>
-</div>
-<div style="font-size:.55rem;color:#333;margin-top:6px;max-width:500px;text-align:center;margin-left:auto;margin-right:auto" data-en="This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities." data-es="Este programa se enfoca en desarrollo del atleta, marca personal y oportunidades futuras. No garantizamos resultados específicos ni oportunidades.">This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities.</div>
-</div></footer>
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC. All Rights Reserved.</div>
+</div></div></footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
 var reveals=document.querySelectorAll('.reveal');
-var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:0.1});
+reveals.forEach(function(el,i){el.style.transitionDelay=(i%4)*0.1+'s';observer.observe(el)});
+</script>
+</body>
+</html>
