@@ -169,6 +169,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 20px;background:rg
 .lock-overlay .lock-btn{padding:10px 24px;border-radius:10px;font-size:.8rem;font-weight:700;background:var(--gold);color:var(--dark);text-decoration:none}
 .lock-overlay .lock-sub{font-size:.7rem;color:var(--muted)}
 
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.78rem;color:var(--muted);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:.65rem;color:#444}
+
 @media(max-width:640px){
   .challenge-card{grid-template-columns:1fr;gap:16px;padding:20px}
   .card-icon{width:60px;height:60px;font-size:1.5rem}
@@ -437,6 +445,9 @@ document.querySelectorAll('.challenge-card, .how-card').forEach(function(card, i
   observer.observe(card);
 });
 </script>
-<div style="text-align:center;padding:16px 24px;font-size:.55rem;color:#333" data-en="This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities." data-es="Este programa se enfoca en desarrollo del atleta, marca personal y oportunidades futuras. No garantizamos resultados específicos ni oportunidades.">This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities.</div>
+<footer><div style="max-width:900px;margin:0 auto;padding:0 24px"><div class="footer-inner">
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC. All Rights Reserved.</div>
+</div></div></footer>
 </body>
 </html>
