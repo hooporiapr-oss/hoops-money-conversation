@@ -9,71 +9,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
 var currentLang='en';
-function setLang(l){
-currentLang=l;localStorage.setItem('lc-lang',l);
-document.querySelectorAll('[data-'+l+']').forEach(function(el){
-var v=el.getAttribute('data-'+l);
-if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}
-});
-document.querySelectorAll('.lb[data-l]').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});
-}
-function toggleMenu(){
-document.getElementById('burger').classList.toggle('open');
-document.getElementById('menuPanel').classList.toggle('open');
-document.getElementById('menuOverlay').classList.toggle('open');
-}
+function setLang(l){currentLang=l;document.documentElement.lang=l;
+document.querySelectorAll('[data-en]').forEach(function(el){var v=el.getAttribute('data-'+l);if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}});
+document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});
+try{localStorage.setItem('lc-lang',l)}catch(e){}}
 </script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--black:#0a0a0f;--black2:#111118;--surface:#16161e;--gold:#FFD700;--gold-dim:rgba(255,215,0,0.08);--gold-border:rgba(255,215,0,0.15);--orange:#FF6B35;--white:#fafaf9;--gray:#7a7a8a;--gray-light:#aaa;--green:#22c55e;--purple:#9B59B6;--cyan:#00CED1;--teal:#00D9A5;--lime:#9ACD32}
 body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.04)}
-.ni{max-width:900px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between}
-.nb{display:flex;align-items:center;gap:8px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px}
-.nb img{height:26px}
-.nr{display:flex;align-items:center;gap:14px}
-.nl{font-size:.78rem;font-weight:600;color:var(--gray-light);transition:color .2s}
-.nl:hover{color:var(--white)}
-.nl-free{font-size:.78rem;font-weight:700;color:var(--gray-light);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:8px;transition:all .2s}
-.nl-free:hover{color:var(--white);border-color:rgba(255,255,255,.25)}
-
-/* HAMBURGER — always visible at all screen sizes */
-.burger{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;-webkit-tap-highlight-color:transparent;transition:all .2s}
-.burger:active{transform:scale(.95)}
-.burger-line{display:block;width:16px;height:2px;background:var(--gray-light);border-radius:1px;transition:all .3s}
-.burger.open .burger-line:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
-.burger.open .burger-line:nth-child(2){opacity:0}
-.burger.open .burger-line:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
-
-/* SLIDE-OUT MENU OVERLAY */
-.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}
-.menu-overlay.open{opacity:1;pointer-events:auto}
-
-/* SLIDE-OUT MENU PANEL */
-.menu-panel{position:fixed;top:0;right:-300px;width:280px;height:100%;background:var(--black2);z-index:201;transition:right .3s cubic-bezier(.22,1,.36,1);box-shadow:-4px 0 24px rgba(0,0,0,.3);display:flex;flex-direction:column;padding:28px 0;overflow-y:auto}
-.menu-panel.open{right:0}
-.menu-header{padding:0 24px 20px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px}
-.menu-header img{width:36px;height:36px;object-fit:contain}
-.menu-header span{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--white)}
-.menu-section{padding:18px 24px 8px;font-size:.55rem;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:2px}
-.menu-link{display:flex;align-items:center;gap:14px;padding:14px 24px;color:var(--gray-light);font-size:.9rem;font-weight:600;transition:background .15s;-webkit-tap-highlight-color:transparent}
-.menu-link:active,.menu-link:hover{background:rgba(255,255,255,.04);color:var(--white)}
-.menu-link-icon{font-size:1.1rem;width:28px;text-align:center;flex-shrink:0}
-.menu-link-arrow{color:var(--gray);font-size:.75rem;margin-left:auto}
-.menu-spacer{flex:1}
-.menu-lang{display:flex;gap:8px;padding:14px 24px}
-.menu-lang .lb{padding:6px 14px;border-radius:8px;font-size:.75rem;font-weight:700;border:1px solid rgba(255,255,255,.06);cursor:pointer;background:rgba(255,255,255,.04);color:var(--gray);font-family:'Outfit',sans-serif;transition:all .2s}
-.menu-lang .lb.active{background:rgba(255,215,0,.1);color:var(--gold);border-color:rgba(255,215,0,.15)}
-.menu-footer{padding:16px 24px;border-top:1px solid rgba(255,255,255,.06)}
-.menu-footer a{font-size:.65rem;color:var(--gray);font-weight:600;margin-right:14px}
-.menu-footer a:hover{color:var(--white)}
-.menu-footer p{font-size:.55rem;color:var(--gray);margin-top:8px;opacity:.5}
+/* NAV — matches index.html exactly */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand img{height:32px}
+.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:.78rem;font-weight:600;color:var(--gray);transition:color .2s}
+.nav-link:hover{color:var(--white)}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.65rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
+.lang-btn.active{background:var(--gold);color:var(--black)}
+.nav-cta{padding:8px 22px;border-radius:8px;font-size:.78rem;font-weight:700;background:var(--gold);color:var(--black);border:none;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.nav-cta:hover{background:#ffe44d}
+.hamburger{background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer;padding:6px 10px;line-height:1;border-radius:8px;transition:background .2s}
+.hamburger:hover{background:rgba(255,255,255,.06)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,10,15,.97);backdrop-filter:blur(20px);padding:16px 24px 24px;border-bottom:1px solid rgba(255,255,255,.06);z-index:99;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{display:block;padding:12px 16px;font-size:.88rem;font-weight:600;color:var(--gray-light);border-radius:10px;transition:all .2s}
+.mobile-menu a:hover{background:rgba(255,255,255,.04);color:var(--white)}
+.mm-lang{display:flex;gap:4px;padding:12px 16px}
+.mm-cta{background:var(--gold)!important;color:var(--black)!important;text-align:center;font-weight:700!important;border-radius:10px!important;margin-top:8px}
 
 /* CONTAINER */
-.container{max-width:640px;margin:0 auto;padding:72px 16px 32px}
+.container{max-width:640px;margin:0 auto;padding:80px 16px 32px}
 
 /* BANNER */
 .banner{text-align:center;padding:10px 16px;background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.04));border:1px solid rgba(255,215,0,.1);border-radius:12px;font-size:.78rem;color:var(--gray);margin-bottom:20px}
@@ -84,7 +54,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .cover{height:180px;border-radius:18px 18px 0 0;background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);position:relative;overflow:hidden;border:1.5px solid var(--gold);border-bottom:none;box-shadow:0 0 40px rgba(255,215,0,.06)}
 .cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,var(--black));pointer-events:none}
 
-/* HERO TOP */
+/* HERO */
 .ht{display:flex;align-items:flex-end;gap:18px;margin-top:-40px;padding:0 20px;position:relative;z-index:2}
 .avatar{width:80px;height:80px;border-radius:18px;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,107,53,.08));border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);flex-shrink:0;box-shadow:0 0 20px rgba(255,215,0,.15)}
 .hi{flex:1}
@@ -129,7 +99,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .cc .level{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px}
 .cc .speed{font-size:.55rem;color:var(--gray)}
 
-/* OVERALL RATING */
+/* OVERALL */
 .overall{text-align:center;margin-top:12px;padding:16px;background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.04));border:1px solid rgba(255,215,0,.1);border-radius:12px}
 .overall .big{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);letter-spacing:2px}
 .overall .sub{font-size:.7rem;color:var(--gray)}
@@ -178,84 +148,58 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .cta-btn-sub{display:inline-block;padding:10px 28px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--gray-light);border:1.5px solid rgba(255,255,255,.12)}
 .cta-sub{font-size:.65rem;color:var(--gray);margin-top:10px}
 
-/* RESPONSIVE — text links hide on mobile, burger stays */
-@media(max-width:600px){
+/* RESPONSIVE */
+@media(max-width:768px){
 .ht{flex-direction:column;text-align:center}
 .hn{justify-content:center}
 .tags{justify-content:center}
 .cg{grid-template-columns:repeat(2,1fr)}
 .mr{grid-template-columns:repeat(2,1fr)}
 .soc{justify-content:center}
-.nl{display:none}
-.nl-free{display:none}
+.nav-link{display:none}
+.nav-cta{display:none}
 .cover{height:140px}
 }
 </style>
 </head>
 <body>
+<script>function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('hamBtn');if(m.classList.contains('open')){m.classList.remove('open');b.textContent='☰'}else{m.classList.add('open');b.textContent='✕'}}</script>
 
-<!-- SLIDE-OUT OVERLAY -->
-<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
-
-<!-- SLIDE-OUT MENU -->
-<div class="menu-panel" id="menuPanel">
-<div class="menu-header"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></div>
-<div class="menu-section" data-en="NAVIGATE" data-es="NAVEGAR">NAVIGATE</div>
-<a href="/" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">🏠</span><span data-en="Home" data-es="Inicio">Home</span><span class="menu-link-arrow">›</span></a>
-<a href="/#programs" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">🏀</span><span data-en="Programs" data-es="Programas">Programs</span><span class="menu-link-arrow">›</span></a>
-<a href="/cognitive-report.html" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">📋</span><span data-en="AI Report" data-es="Reporte IA">AI Report</span><span class="menu-link-arrow">›</span></a>
-<a href="/cognitive-hoops.html" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">🧠</span><span data-en="Drills" data-es="Drills">Drills</span><span class="menu-link-arrow">›</span></a>
-<a href="/discover.html" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">🔍</span><span data-en="Discover" data-es="Descubrir">Discover</span><span class="menu-link-arrow">›</span></a>
-<a href="/preview-free.html" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">👤</span><span data-en="See Free Profile" data-es="Ver Perfil Gratis">See Free Profile</span><span class="menu-link-arrow">›</span></a>
-<div class="menu-section" data-en="ACCOUNT" data-es="CUENTA">ACCOUNT</div>
-<a href="/login.html" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">🔑</span><span data-en="Log In" data-es="Entrar">Log In</span><span class="menu-link-arrow">›</span></a>
-<a href="/join.html" class="menu-link" onclick="toggleMenu()"><span class="menu-link-icon">⭐</span><span data-en="Create Profile" data-es="Crear Perfil">Create Profile</span><span class="menu-link-arrow">›</span></a>
-<div class="menu-section" data-en="LANGUAGE" data-es="IDIOMA">LANGUAGE</div>
-<div class="menu-lang">
-<button class="lb active" data-l="en" onclick="setLang('en')">EN</button>
-<button class="lb" data-l="es" onclick="setLang('es')">ES</button>
-</div>
-<div class="menu-spacer"></div>
-<div class="menu-footer">
-<a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a>
-<a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a>
-<p>© 2026 GoStar Digital LLC · Hooporia™</p>
-</div>
-</div>
-
-<!-- NAV: Programs | AI Report | Drills | ☰ | See Free Profile -->
-<nav><div class="ni">
-<a href="/" class="nb"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
-<div class="nr">
-<a href="/#programs" class="nl" data-en="Programs" data-es="Programas">Programs</a>
-<a href="/cognitive-report.html" class="nl" data-en="AI Report" data-es="Reporte IA">AI Report</a>
-<a href="/cognitive-hoops.html" class="nl" data-en="Drills" data-es="Drills">Drills</a>
-<button class="burger" id="burger" onclick="toggleMenu()"><div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div></button>
-<a href="/preview-free.html" class="nl-free" data-en="See Free Profile" data-es="Ver Perfil Gratis">See Free Profile</a>
-</div>
+<nav><div class="nav-inner">
+<a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
+<div class="nav-right">
+<a href="/programs.html" class="nav-link" data-en="Programs" data-es="Programas">Programs</a>
+<a href="/cognitive-report.html" class="nav-link" data-en="AI Report" data-es="Reporte IA">AI Report</a>
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Drills" data-es="Drills">Drills</a>
+<button class="hamburger" id="hamBtn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+<a href="/preview-free.html"><button class="nav-cta" data-en="See Free Profile" data-es="Ver Perfil Gratis">See Free Profile</button></a>
+</div></div>
+<div class="mobile-menu" id="mobileMenu">
+<a href="/programs.html" data-en="Programs" data-es="Programas">Programs</a>
+<a href="/cognitive-report.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
+<a href="/cognitive-hoops.html" data-en="Cognitive Drills" data-es="Drills Cognitivos">Cognitive Drills</a>
+<a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<a href="/ritnome.html" data-en="RITNOME™" data-es="RITNOME™">RITNOME™</a>
+<a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
+<div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
+<a href="/preview-free.html" class="mm-cta" data-en="See Free Profile" data-es="Ver Perfil Gratis">See Free Profile</a>
 </div></nav>
 
 <div class="container">
 
-<!-- BANNER -->
 <div class="banner" data-en="⭐ This is a preview of the <strong>PREMIUM</strong> player profile — $49/year. <a href='/preview-free.html'>See Free →</a>" data-es="⭐ Vista previa del perfil <strong>PREMIUM</strong> — $49/año. <a href='/preview-free.html'>Ver Gratis →</a>">⭐ This is a preview of the <strong>PREMIUM</strong> player profile — $49/year. <a href="/preview-free.html">See Free →</a></div>
 
-<!-- COVER -->
 <div class="cover"></div>
 
-<!-- HERO -->
 <div class="ht">
 <div class="avatar">MR</div>
 <div class="hi">
-<div class="hn">
-<h1>MARCUS RIVERA</h1>
-<span class="verified">✓ VERIFIED</span>
-</div>
+<div class="hn"><h1>MARCUS RIVERA</h1><span class="verified">✓ VERIFIED</span></div>
 <p data-en="Point Guard · 6'1&quot; · 175 lbs · Lincoln High School · Class of 2026" data-es="Base · 6'1&quot; · 175 lbs · Lincoln High School · Clase 2026">Point Guard · 6'1" · 175 lbs · Lincoln High School · Class of 2026</p>
 </div>
 </div>
 
-<!-- TAGS -->
 <div class="tags">
 <span class="tag tag-pos">PG</span>
 <span class="tag tag-grad">2026</span>
@@ -265,10 +209,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <span class="tag tag-prem">⭐ PREMIUM</span>
 </div>
 
-<!-- CONTACT -->
 <a href="mailto:marcus@example.com" class="contact-btn" data-en="📩 Contact Player" data-es="📩 Contactar Jugador">📩 Contact Player</a>
 
-<!-- STATS -->
 <div class="section">
 <div class="st" data-en="📊 STATS" data-es="📊 ESTADÍSTICAS">📊 STATS</div>
 <div class="st-note" data-en="Self-reported by player" data-es="Auto-reportado por el jugador">Self-reported by player</div>
@@ -285,7 +227,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 </div>
 </div>
 
-<!-- MEASURABLES -->
 <div class="section">
 <div class="st" data-en="📏 MEASURABLES" data-es="📏 MEDIDAS">📏 MEASURABLES</div>
 <div class="st-note" data-en="Self-reported by player" data-es="Auto-reportado por el jugador">Self-reported by player</div>
@@ -297,7 +238,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 </div>
 </div>
 
-<!-- COGNITIVE SCORES -->
 <div class="section">
 <div class="st" data-en="🧠 COGNITIVE SCORES" data-es="🧠 PUNTAJES COGNITIVOS">🧠 COGNITIVE SCORES</div>
 <div class="st-note" style="color:var(--green)" data-en="✓ Verified by Hooporia" data-es="✓ Verificado por Hooporia">✓ Verified by Hooporia</div>
@@ -315,101 +255,56 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 </div>
 </div>
 
-<!-- AI COGNITIVE SCOUTING REPORT -->
 <div class="report">
 <div class="report-header">
 <div class="report-badge">📋 AI COGNITIVE SCOUTING REPORT</div>
 <span class="report-tag report-tag-v">✓ VERIFIED</span>
 <span class="report-tag report-tag-p">PREMIUM</span>
 </div>
-
-<div class="report-section">
-<h4 data-en="📝 Executive Summary" data-es="📝 Resumen Ejecutivo">📝 Executive Summary</h4>
-<p data-en="Marcus Rivera is a 6'1&quot; point guard with an elite cognitive profile that elevates his game well beyond his physical measurables. His RITNOME™ L7 All-Star rating places him in the top 15% of all tested players on the Hooporia platform. His reaction speed (L8) is his standout dimension — he processes defensive shifts and passing windows faster than 92% of guards tested. This is a player whose basketball IQ makes everyone around him better." data-es="Marcus Rivera es un base de 6'1&quot; con un perfil cognitivo élite que eleva su juego mucho más allá de sus medidas físicas. Su clasificación RITNOME™ L7 All-Star lo coloca en el top 15% de todos los jugadores evaluados en la plataforma Hooporia. Su velocidad de reacción (L8) es su dimensión más destacada — procesa cambios defensivos y ventanas de pase más rápido que el 92% de los bases evaluados. Este es un jugador cuyo IQ de baloncesto hace que todos a su alrededor mejoren.">Marcus Rivera is a 6'1" point guard with an elite cognitive profile that elevates his game well beyond his physical measurables. His RITNOME™ L7 All-Star rating places him in the top 15% of all tested players on the Hooporia platform. His reaction speed (L8) is his standout dimension — he processes defensive shifts and passing windows faster than 92% of guards tested. This is a player whose basketball IQ makes everyone around him better.</p>
-</div>
-
-<div class="report-section">
-<h4 data-en="💪 Cognitive Strengths" data-es="💪 Fortalezas Cognitivas">💪 Cognitive Strengths</h4>
-<ul>
+<div class="report-section"><h4 data-en="📝 Executive Summary" data-es="📝 Resumen Ejecutivo">📝 Executive Summary</h4><p data-en="Marcus Rivera is a 6'1&quot; point guard with an elite cognitive profile that elevates his game well beyond his physical measurables. His RITNOME™ L7 All-Star rating places him in the top 15% of all tested players on the Hooporia platform. His reaction speed (L8) is his standout dimension — he processes defensive shifts and passing windows faster than 92% of guards tested. This is a player whose basketball IQ makes everyone around him better." data-es="Marcus Rivera es un base de 6'1&quot; con un perfil cognitivo élite que eleva su juego mucho más allá de sus medidas físicas. Su clasificación RITNOME™ L7 All-Star lo coloca en el top 15% de todos los jugadores evaluados en la plataforma Hooporia. Su velocidad de reacción (L8) es su dimensión más destacada — procesa cambios defensivos y ventanas de pase más rápido que el 92% de los bases evaluados. Este es un jugador cuyo IQ de baloncesto hace que todos a su alrededor mejoren.">Marcus Rivera is a 6'1" point guard with an elite cognitive profile that elevates his game well beyond his physical measurables. His RITNOME™ L7 All-Star rating places him in the top 15% of all tested players on the Hooporia platform. His reaction speed (L8) is his standout dimension — he processes defensive shifts and passing windows faster than 92% of guards tested. This is a player whose basketball IQ makes everyone around him better.</p></div>
+<div class="report-section"><h4 data-en="💪 Cognitive Strengths" data-es="💪 Fortalezas Cognitivas">💪 Cognitive Strengths</h4><ul>
 <li data-en="Elite reaction processing (L8) — reads defensive rotations in real-time and exploits gaps before they close" data-es="Procesamiento de reacción élite (L8) — lee rotaciones defensivas en tiempo real y explota brechas antes de que se cierren">Elite reaction processing (L8) — reads defensive rotations in real-time and exploits gaps before they close</li>
 <li data-en="Strong court memory (L7 Recall) — remembers play sequences, opponent tendencies, and set configurations across games" data-es="Fuerte memoria de cancha (L7 Recall) — recuerda secuencias de jugadas, tendencias de oponentes y configuraciones de jugadas entre partidos">Strong court memory (L7 Recall) — remembers play sequences, opponent tendencies, and set configurations across games</li>
 <li data-en="Precise targeting under pressure (L7 Reflex) — maintains accuracy on fast-twitch decisions in transition and half-court sets" data-es="Precisión bajo presión (L7 Reflex) — mantiene exactitud en decisiones rápidas en transición y media cancha">Precise targeting under pressure (L7 Reflex) — maintains accuracy on fast-twitch decisions in transition and half-court sets</li>
 <li data-en="Excellent game rhythm (L7 Ritmo) — natural tempo control that keeps the offense flowing and teammates in sync" data-es="Excelente ritmo de juego (L7 Ritmo) — control de tempo natural que mantiene la ofensiva fluyendo y los compañeros sincronizados">Excellent game rhythm (L7 Ritmo) — natural tempo control that keeps the offense flowing and teammates in sync</li>
-</ul>
-</div>
-
-<div class="report-section">
-<h4 data-en="📈 Areas for Development" data-es="📈 Áreas de Desarrollo">📈 Areas for Development</h4>
-<ul>
+</ul></div>
+<div class="report-section"><h4 data-en="📈 Areas for Development" data-es="📈 Áreas de Desarrollo">📈 Areas for Development</h4><ul>
 <li data-en="Pattern recognition (L6 Replay) — can improve anticipation of complex multi-action sequences. Currently processes well at game speed but has room to see 2-3 plays ahead" data-es="Reconocimiento de patrones (L6 Replay) — puede mejorar anticipación de secuencias multi-acción complejas. Actualmente procesa bien a velocidad de juego pero tiene espacio para ver 2-3 jugadas adelante">Pattern recognition (L6 Replay) — can improve anticipation of complex multi-action sequences. Currently processes well at game speed but has room to see 2-3 plays ahead</li>
 <li data-en="Transition decision-making under fatigue — maintaining L8 reaction quality deep in fourth quarter situations" data-es="Toma de decisiones en transición bajo fatiga — mantener calidad de reacción L8 en situaciones del cuarto período">Transition decision-making under fatigue — maintaining L8 reaction quality deep in fourth quarter situations</li>
-</ul>
-</div>
-
-<div class="report-section">
-<h4 data-en="🏀 On-Court Translation" data-es="🏀 Traducción en Cancha">🏀 On-Court Translation</h4>
-<ul>
-<li data-en="Transition: Reads the floor in 0.3s — can push or pull up before the defense sets. His L8 React means he sees the outlet before it opens" data-es="Transición: Lee la cancha en 0.3s — puede empujar o detenerse antes de que la defensa se establezca. Su L8 React significa que ve el pase antes de que se abra">Transition: Reads the floor in 0.3s — can push or pull up before the defense sets. His L8 React means he sees the outlet before it opens</li>
+</ul></div>
+<div class="report-section"><h4 data-en="🏀 On-Court Translation" data-es="🏀 Traducción en Cancha">🏀 On-Court Translation</h4><ul>
+<li data-en="Transition: Reads the floor in 0.3s — can push or pull up before the defense sets" data-es="Transición: Lee la cancha en 0.3s — puede empujar o detenerse antes de que la defensa se establezca">Transition: Reads the floor in 0.3s — can push or pull up before the defense sets</li>
 <li data-en="Half-court: L7 Recall + L7 Ritmo = a point guard who remembers what the defense gave him last possession and controls pace to exploit it" data-es="Media cancha: L7 Recall + L7 Ritmo = un base que recuerda lo que la defensa le dio en la posesión anterior y controla el ritmo para explotarlo">Half-court: L7 Recall + L7 Ritmo = a point guard who remembers what the defense gave him last possession and controls pace to exploit it</li>
 <li data-en="Clutch: High accuracy under time pressure (L7 Reflex) suggests this player can be trusted with the ball in late-game situations" data-es="Clutch: Alta precisión bajo presión de tiempo (L7 Reflex) sugiere que este jugador puede ser confiable con el balón en situaciones de final de partido">Clutch: High accuracy under time pressure (L7 Reflex) suggests this player can be trusted with the ball in late-game situations</li>
 <li data-en="Team play: His rhythm awareness (L7 Ritmo) means he naturally keeps teammates involved and running the system" data-es="Juego en equipo: Su consciencia del ritmo (L7 Ritmo) significa que naturalmente mantiene a los compañeros involucrados y corriendo el sistema">Team play: His rhythm awareness (L7 Ritmo) means he naturally keeps teammates involved and running the system</li>
-</ul>
-</div>
-
-<div class="report-section">
-<h4 data-en="🎓 Coach Recommendation" data-es="🎓 Recomendación para Coaches">🎓 Coach Recommendation</h4>
-<p data-en="Marcus Rivera is a high-IQ floor general who makes the players around him better. At the next level, his cognitive processing speed and court memory will translate immediately — he won't need time to 'figure out' a new system. He sees the game. Ideal fit for programs that value ball movement, defensive reads, and clutch decision-making over raw athleticism." data-es="Marcus Rivera es un general de piso con alto IQ que hace mejores a los jugadores a su alrededor. En el siguiente nivel, su velocidad de procesamiento cognitivo y memoria de cancha se traducirán inmediatamente — no necesitará tiempo para 'descifrar' un nuevo sistema. Él ve el juego. Ideal para programas que valoran el movimiento del balón, lecturas defensivas y toma de decisiones en momentos cruciales sobre atleticismo puro.">Marcus Rivera is a high-IQ floor general who makes the players around him better. At the next level, his cognitive processing speed and court memory will translate immediately — he won't need time to "figure out" a new system. He sees the game. Ideal fit for programs that value ball movement, defensive reads, and clutch decision-making over raw athleticism.</p>
-</div>
-
-<div class="report-section">
-<h4 data-en="🗺️ Development Path" data-es="🗺️ Ruta de Desarrollo">🗺️ Development Path</h4>
-<ul>
+</ul></div>
+<div class="report-section"><h4 data-en="🎓 Coach Recommendation" data-es="🎓 Recomendación para Coaches">🎓 Coach Recommendation</h4><p data-en="Marcus Rivera is a high-IQ floor general who makes the players around him better. At the next level, his cognitive processing speed and court memory will translate immediately — he won't need time to figure out a new system. He sees the game. Ideal fit for programs that value ball movement, defensive reads, and clutch decision-making over raw athleticism." data-es="Marcus Rivera es un general de piso con alto IQ que hace mejores a los jugadores a su alrededor. En el siguiente nivel, su velocidad de procesamiento cognitivo y memoria de cancha se traducirán inmediatamente — no necesitará tiempo para descifrar un nuevo sistema. Él ve el juego. Ideal para programas que valoran el movimiento del balón, lecturas defensivas y toma de decisiones en momentos cruciales sobre atleticismo puro.">Marcus Rivera is a high-IQ floor general who makes the players around him better. At the next level, his cognitive processing speed and court memory will translate immediately — he won't need time to figure out a new system. He sees the game. Ideal fit for programs that value ball movement, defensive reads, and clutch decision-making over raw athleticism.</p></div>
+<div class="report-section"><h4 data-en="🗺️ Development Path" data-es="🗺️ Ruta de Desarrollo">🗺️ Development Path</h4><ul>
 <li data-en="Priority: Elevate Replay from L6 → L8 through pattern recognition drills at increasing complexity" data-es="Prioridad: Elevar Replay de L6 → L8 a través de drills de reconocimiento de patrones con complejidad creciente">Priority: Elevate Replay from L6 → L8 through pattern recognition drills at increasing complexity</li>
 <li data-en="Maintain React edge (L8) — continue speed drills at competition pace to keep this elite" data-es="Mantener ventaja en React (L8) — continuar drills de velocidad a ritmo de competencia para mantener esto élite">Maintain React edge (L8) — continue speed drills at competition pace to keep this elite</li>
 <li data-en="Train cognitive endurance — simulate late-game fatigue scenarios during drill sessions" data-es="Entrenar resistencia cognitiva — simular escenarios de fatiga de final de partido durante sesiones de práctica">Train cognitive endurance — simulate late-game fatigue scenarios during drill sessions</li>
-</ul>
-</div>
-
+</ul></div>
 <a href="/cognitive-report.html" class="report-link" data-en="📋 Learn More About the AI Cognitive Scouting Report →" data-es="📋 Conoce Más Sobre el Reporte Cognitivo IA →">📋 Learn More About the AI Cognitive Scouting Report →</a>
 </div>
 
-<!-- BASKETBALL TIMELINE -->
 <div class="tl">
 <div class="st" data-en="📅 BASKETBALL TIMELINE" data-es="📅 HISTORIA DE BALONCESTO">📅 BASKETBALL TIMELINE</div>
-<div class="tl-item">
-<div class="tl-year">2025-26</div>
-<div class="tl-title" data-en="Lincoln High School — Varsity" data-es="Lincoln High School — Varsity">Lincoln High School — Varsity</div>
-<div class="tl-desc" data-en="Starting Point Guard · Team Captain" data-es="Base Titular · Capitán del Equipo">Starting Point Guard · Team Captain</div>
-<div class="tl-stats"><span class="tl-stat">15.2 PPG</span><span class="tl-stat">8.1 RPG</span><span class="tl-stat">6.4 APG</span><span class="tl-stat" data-en="32 Games" data-es="32 Partidos">32 Games</span></div>
-</div>
-<div class="tl-item">
-<div class="tl-year" data-en="Summer 2025" data-es="Verano 2025">Summer 2025</div>
-<div class="tl-title">PR Ballers AAU — 16U</div>
-<div class="tl-desc" data-en="Starting PG · Nike EYBL Circuit" data-es="Base Titular · Circuito Nike EYBL">Starting PG · Nike EYBL Circuit</div>
-<div class="tl-stats"><span class="tl-stat">12.8 PPG</span><span class="tl-stat">7.2 APG</span><span class="tl-stat" data-en="18 Games" data-es="18 Partidos">18 Games</span></div>
-</div>
-<div class="tl-item">
-<div class="tl-year">2024-25</div>
-<div class="tl-title" data-en="Lincoln High School — JV/Varsity" data-es="Lincoln High School — JV/Varsity">Lincoln High School — JV/Varsity</div>
-<div class="tl-desc" data-en="Called up to varsity mid-season" data-es="Promovido a varsity a mitad de temporada">Called up to varsity mid-season</div>
-<div class="tl-stats"><span class="tl-stat">9.6 PPG</span><span class="tl-stat">5.4 APG</span><span class="tl-stat" data-en="28 Games" data-es="28 Partidos">28 Games</span></div>
-</div>
+<div class="tl-item"><div class="tl-year">2025-26</div><div class="tl-title" data-en="Lincoln High School — Varsity" data-es="Lincoln High School — Varsity">Lincoln High School — Varsity</div><div class="tl-desc" data-en="Starting Point Guard · Team Captain" data-es="Base Titular · Capitán del Equipo">Starting Point Guard · Team Captain</div><div class="tl-stats"><span class="tl-stat">15.2 PPG</span><span class="tl-stat">8.1 RPG</span><span class="tl-stat">6.4 APG</span><span class="tl-stat" data-en="32 Games" data-es="32 Partidos">32 Games</span></div></div>
+<div class="tl-item"><div class="tl-year" data-en="Summer 2025" data-es="Verano 2025">Summer 2025</div><div class="tl-title">PR Ballers AAU — 16U</div><div class="tl-desc" data-en="Starting PG · Nike EYBL Circuit" data-es="Base Titular · Circuito Nike EYBL">Starting PG · Nike EYBL Circuit</div><div class="tl-stats"><span class="tl-stat">12.8 PPG</span><span class="tl-stat">7.2 APG</span><span class="tl-stat" data-en="18 Games" data-es="18 Partidos">18 Games</span></div></div>
+<div class="tl-item"><div class="tl-year">2024-25</div><div class="tl-title" data-en="Lincoln High School — JV/Varsity" data-es="Lincoln High School — JV/Varsity">Lincoln High School — JV/Varsity</div><div class="tl-desc" data-en="Called up to varsity mid-season" data-es="Promovido a varsity a mitad de temporada">Called up to varsity mid-season</div><div class="tl-stats"><span class="tl-stat">9.6 PPG</span><span class="tl-stat">5.4 APG</span><span class="tl-stat" data-en="28 Games" data-es="28 Partidos">28 Games</span></div></div>
 </div>
 
-<!-- HIGHLIGHTS -->
 <div class="section">
 <div class="st" data-en="🎬 HIGHLIGHTS" data-es="🎬 HIGHLIGHTS">🎬 HIGHLIGHTS</div>
 <a href="#" class="vlc"><span class="vli">🎥</span><span data-en="Season Highlights 2025-26" data-es="Highlights Temporada 2025-26">Season Highlights 2025-26</span></a>
 <a href="#" class="vlc"><span class="vli">🎥</span><span data-en="AAU Summer Mix 2025" data-es="Mix AAU Verano 2025">AAU Summer Mix 2025</span></a>
 </div>
 
-<!-- ABOUT -->
 <div class="section">
 <div class="st" data-en="📝 ABOUT" data-es="📝 SOBRE MÍ">📝 ABOUT</div>
 <div class="nb2" data-en="Point guard out of San Juan with a pass-first mentality and a scorer's touch. I grew up on the courts of Santurce watching BSN games and dreaming of playing at the next level. My game is built on basketball development, training, and building my game. Looking to compete at the highest level and connect with programs that value high-IQ play and leadership." data-es="Base de San Juan con mentalidad de pasador y toque de anotador. Crecí en las canchas de Santurce viendo juegos de BSN y soñando con jugar al siguiente nivel. Mi juego se basa en desarrollo, entrenamiento y construcción de mi juego. Buscando competir al más alto nivel y conectar con programas que valoran juego de alto IQ y liderazgo.">Point guard out of San Juan with a pass-first mentality and a scorer's touch. I grew up on the courts of Santurce watching BSN games and dreaming of playing at the next level. My game is built on basketball development, training, and building my game. Looking to compete at the highest level and connect with programs that value high-IQ play and leadership.</div>
 </div>
 
-<!-- SOCIALS -->
 <div class="section">
 <div class="st" data-en="🔗 SOCIALS" data-es="🔗 REDES">🔗 SOCIALS</div>
 <div class="soc">
@@ -420,7 +315,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 </div>
 </div>
 
-<!-- CTA -->
 <div class="cta-b">
 <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;margin-bottom:4px" data-en="GET YOUR PREMIUM PROFILE" data-es="OBTÉN TU PERFIL PREMIUM">GET YOUR PREMIUM PROFILE</div>
 <p style="font-size:.78rem;color:var(--gray);margin-bottom:16px" data-en="Everything above — your stats, cognitive scores, AI report, timeline, and full profile — for $49/year." data-es="Todo lo de arriba — tus estadísticas, puntajes cognitivos, reporte IA, timeline y perfil completo — por $49/año.">Everything above — your stats, cognitive scores, AI report, timeline, and full profile — for $49/year.</p>
@@ -429,13 +323,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <p class="cta-sub" data-en="⚠️ Use the same email you signed up with so your account upgrades automatically." data-es="⚠️ Usa el mismo email con el que te registraste para que tu cuenta se actualice automáticamente.">⚠️ Use the same email you signed up with so your account upgrades automatically.</p>
 </div>
 
-<!-- DISCLAIMER -->
 <div style="text-align:center;padding:16px 24px;font-size:.55rem;color:#333" data-en="This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities." data-es="Este programa se enfoca en desarrollo del atleta, marca personal y oportunidades futuras. No garantizamos resultados específicos ni oportunidades.">This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities.</div>
 
 </div>
 
 <script>
-(function(){var saved=localStorage.getItem('lc-lang');if(saved)setLang(saved);})();
+try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
 </script>
 </body>
 </html>
