@@ -103,6 +103,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;background:rg
 </style>
 </head>
 <body>
+<script>function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('hamBtn');if(m.classList.contains('open')){m.classList.remove('open');b.textContent='☰'}else{m.classList.add('open');b.textContent='✕'}}</script>
 
 <nav><div class="nav-inner">
 <a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
@@ -298,7 +299,6 @@ function renderPlayers(players){
 }
 
 function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('hamBtn');if(m.classList.contains('open')){m.classList.remove('open');b.textContent='☰'}else{m.classList.add('open');b.textContent='✕'}}
 </script>
 </body>
 </html>
