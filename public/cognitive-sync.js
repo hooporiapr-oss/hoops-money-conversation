@@ -1,12 +1,10 @@
-// cognitive-sync.js — Saves RITNOME™ scores to Supabase for logged-in Hoops.Money players
+// cognitive-sync.js — Saves BPM Basketball™ scores to Supabase for logged-in Hooporia players
 // Include this AFTER the game's own <script> block
 // Each game must set window.COGNITIVE_TEST_NAME to: 'react', 'recall', 'reflex', or 'replay'
-
 (function(){
   var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
   var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
   var sb=null, playerId=null, testName=window.COGNITIVE_TEST_NAME||'unknown';
-
   async function initSync(){
     if(typeof window.supabase==='undefined'){
       // Load Supabase if not already loaded
@@ -27,7 +25,6 @@
       }
     }catch(e){console.log('Cognitive sync: not logged in')}
   }
-
   window.syncCognitiveScore=async function(speed,level,score,streak,tier){
     if(!playerId||!sb)return;
     try{
@@ -45,7 +42,6 @@
       else console.log('🧠 Score synced:',testName,speed,'L'+level,score+'pts');
     }catch(e){console.error('Cognitive sync error:',e)}
   };
-
   // Initialize when page loads
   if(document.readyState==='complete')initSync();
   else window.addEventListener('load',initSync);
