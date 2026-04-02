@@ -131,8 +131,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* FOOTER */
-.footer{text-align:center;padding:32px 24px;color:#444;font-size:.7rem;border-top:1px solid rgba(255,255,255,.04);margin-top:40px}
-.footer a{color:var(--gold)}
+footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0;margin-top:40px}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:900px;margin:0 auto;padding:0 24px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.78rem;color:var(--gray);transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:.65rem;color:#444}
 
 @media(max-width:600px){
 .filters{flex-direction:column}
@@ -220,9 +224,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 
 </div>
 
-<div class="footer">
-<span data-en="Powered by" data-es="Impulsado por">Powered by</span> <a href="/">Hooporia™</a> · <a href="/cognitive-hoops.html" data-en="Play Challenges" data-es="Jugar Desafíos">Play Challenges</a> · <a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a>
-</div>
+<footer><div class="footer-inner">
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC. All Rights Reserved.</div>
+</div></footer>
 
 <script>
 var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
