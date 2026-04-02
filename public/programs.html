@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hooporia for Programs — The Competitive Advantage for Your Basketball Program</title>
+<meta name="description" content="Give your program cognitive training, RITNOME™ scores, and AI scouting reports. The most advanced player development tool in basketball. Free for your program.">
+<link rel="icon" href="/hooporia.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;
+document.querySelectorAll('[data-en]').forEach(function(el){var v=el.getAttribute('data-'+l);if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}});
+document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});
+try{localStorage.setItem('lc-lang',l)}catch(e){}}
+</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0f;--black2:#111118;--black3:#1a1a22;--surface:#16161e;--gold:#FFD700;--gold-dim:rgba(255,215,0,0.08);--gold-border:rgba(255,215,0,0.15);--orange:#FF6B35;--white:#fafaf9;--gray:#7a7a8a;--gray-light:#aaa;--green:#22c55e;--purple:#9B59B6;--cyan:#00CED1;--teal:#00D9A5;--lime:#9ACD32;--red:#ef4444}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand img{height:32px}
+.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:.78rem;font-weight:600;color:var(--gray);transition:color .2s}
+.nav-link:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:3px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.65rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
+.lang-btn.active{background:var(--gold);color:var(--black)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+.text-center{text-align:center}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(255,215,0,.07),transparent 70%),radial-gradient(ellipse 40% 40% at 20% 70%,rgba(155,89,182,.05),transparent),radial-gradient(ellipse 40% 40% at 80% 60%,rgba(0,206,209,.04),transparent);pointer-events:none}
+.hero-for{font-size:.6rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray);margin-bottom:12px;animation:fadeUp .8s ease both}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 20px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:30px;font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:var(--green);margin-bottom:24px;animation:fadeUp .8s ease .05s both}
+.hero-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,9vw,6rem);line-height:.88;margin-bottom:16px;animation:fadeUp .8s ease .1s both}
+.hero h1 .gold{color:var(--gold)}
+.hero h1 .line2{display:block;font-size:.55em;color:var(--gray-light)}
+.hero-sub{font-size:1.05rem;color:var(--gray-light);max-width:600px;margin:0 auto 12px;line-height:1.7;animation:fadeUp .8s ease .2s both}
+.hero-cost{font-size:1.3rem;font-weight:800;color:var(--green);margin-bottom:32px;animation:fadeUp .8s ease .25s both}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s ease .3s both}
+.btn-gold{display:inline-block;padding:16px 40px;border-radius:10px;font-size:.95rem;font-weight:700;background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--black);transition:all .2s}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,215,0,.35)}
+.btn-outline{display:inline-block;padding:16px 40px;border-radius:10px;font-size:.95rem;font-weight:700;background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.12);transition:all .2s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+/* SECTIONS */
+.section{padding:80px 0}
+.section-pill{display:inline-block;padding:5px 14px;border-radius:20px;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.section-pill.gold{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-border)}
+.section-pill.green{background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.15)}
+.section-pill.purple{background:rgba(155,89,182,.08);color:var(--purple);border:1px solid rgba(155,89,182,.15)}
+.section-pill.red{background:rgba(239,68,68,.08);color:#ef4444;border:1px solid rgba(239,68,68,.15)}
+.section-pill.cyan{background:rgba(0,206,209,.08);color:var(--cyan);border:1px solid rgba(0,206,209,.15)}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3rem);letter-spacing:2px;margin-bottom:12px;line-height:1.05}
+.section-sub{color:var(--gray-light);font-size:.95rem;max-width:580px;margin:0 auto 44px;line-height:1.7;text-align:center}
+
+/* PROBLEM */
+.problem-section{padding:60px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);background:var(--black2)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:800px;margin:0 auto}
+.problem-card{background:var(--surface);border:1px solid rgba(239,68,68,.1);border-radius:16px;padding:28px 20px;text-align:center;transition:all .3s}
+.problem-card:hover{transform:translateY(-4px)}
+.problem-icon{font-size:2rem;margin-bottom:10px}
+.problem-card h4{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:2px;margin-bottom:8px;color:#ef4444}
+.problem-card p{font-size:.78rem;color:var(--gray);line-height:1.5}
+
+/* SOLUTION */
+.solution-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:800px;margin:0 auto}
+.solution-card{background:var(--surface);border:1px solid rgba(255,215,0,.08);border-radius:16px;padding:28px 20px;text-align:center;transition:all .3s}
+.solution-card:hover{border-color:rgba(255,215,0,.2);transform:translateY(-4px)}
+.solution-icon{font-size:2rem;margin-bottom:10px}
+.solution-card h4{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:2px;margin-bottom:8px;color:var(--gold)}
+.solution-card p{font-size:.78rem;color:var(--gray);line-height:1.5}
+
+/* PITCH SCRIPT */
+.pitch-card{max-width:700px;margin:0 auto;background:var(--surface);border:1.5px solid rgba(255,215,0,.15);border-radius:24px;padding:40px 32px;position:relative;overflow:hidden}
+.pitch-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold))}
+.pitch-quote{font-size:1.05rem;color:var(--white);line-height:1.8;font-style:italic}
+.pitch-quote .gold{color:var(--gold);font-weight:700;font-style:normal}
+.pitch-who{font-size:.75rem;color:var(--gray);margin-top:16px;font-weight:600}
+
+/* WHAT THEY GET */
+.get-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:800px;margin:0 auto}
+.get-card{background:var(--surface);border:1px solid rgba(255,255,255,.04);border-radius:16px;padding:24px 20px;transition:all .3s}
+.get-card:hover{border-color:rgba(255,215,0,.15);transform:translateY(-4px)}
+.get-card h4{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:2px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.get-card p{font-size:.78rem;color:var(--gray);line-height:1.5}
+.get-tag{padding:3px 8px;border-radius:5px;font-size:.5rem;font-weight:700;letter-spacing:1px}
+.get-tag.free{background:rgba(34,197,94,.1);color:var(--green)}
+.get-tag.prem{background:rgba(255,215,0,.1);color:var(--gold)}
+
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:800px;margin:0 auto}
+.step-card{background:var(--surface);border:1px solid rgba(255,255,255,.04);border-radius:16px;padding:28px 20px;text-align:center;transition:all .3s}
+.step-card:hover{border-color:rgba(255,215,0,.15)}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;background:linear-gradient(to bottom,var(--gold),rgba(255,215,0,.3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.step-card h4{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:2px;margin-bottom:6px}
+.step-card p{font-size:.75rem;color:var(--gray);line-height:1.5}
+
+/* COMPARISON */
+.compare-wrap{max-width:700px;margin:0 auto}
+.compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.compare-row:last-child{border-bottom:none}
+.compare-them{text-align:right;font-size:.82rem;color:var(--gray)}
+.compare-vs{font-size:.6rem;color:#444;font-weight:700;letter-spacing:2px}
+.compare-you{text-align:left;font-size:.82rem;color:var(--gold);font-weight:700}
+.compare-header{font-family:'Bebas Neue',sans-serif;font-size:.85rem;letter-spacing:2px}
+.compare-header.them{color:var(--gray)}
+.compare-header.you{color:var(--gold)}
+
+/* TESTIMONIAL PLACEHOLDER */
+.social-proof{padding:60px 0;border-top:1px solid rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);background:var(--black2)}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:800px;margin:0 auto}
+.proof-card{background:var(--surface);border:1px solid rgba(255,255,255,.04);border-radius:16px;padding:24px 20px;text-align:center}
+.proof-num{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold)}
+.proof-label{font-size:.7rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:1px}
+
+/* FINAL CTA */
+.final-cta{text-align:center;padding:80px 24px 100px;position:relative}
+.final-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 100%,rgba(255,215,0,.05),transparent);pointer-events:none}
+.final-cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,7vw,4.5rem);letter-spacing:2px;margin-bottom:12px;line-height:.95}
+.final-cta h2 .gold{color:var(--gold)}
+.final-sub{font-size:1rem;color:var(--gray-light);margin-bottom:8px}
+.final-desc{color:var(--gray);font-size:.9rem;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
+.final-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.final-note{font-size:.75rem;color:var(--gray);max-width:400px;margin:0 auto}
+.contact-email{display:inline-block;padding:12px 28px;border-radius:10px;font-size:.9rem;font-weight:700;background:rgba(255,215,0,.08);border:1.5px solid rgba(255,215,0,.2);color:var(--gold);margin-top:12px}
+
+footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-brand{display:flex;align-items:center;gap:8px}
+.footer-brand img{height:22px}
+.footer-brand span{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:1px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.78rem;color:var(--gray);transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:.65rem;color:#444}
+
+@media(max-width:768px){
+.problem-grid,.solution-grid,.steps-grid,.proof-grid{grid-template-columns:1fr}
+.get-grid{grid-template-columns:1fr}
+.compare-wrap{font-size:.85rem}
+.nav-link{display:none}
+.hero h1{font-size:clamp(2.5rem,9vw,5rem)}
+.final-btns{flex-direction:column;max-width:300px;margin-left:auto;margin-right:auto}
+.btn-gold,.btn-outline{width:100%;text-align:center}
+.pitch-card{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+<a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
+<div class="nav-right">
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Cognitive Drills" data-es="Drills Cognitivos">Cognitive Drills</a>
+<a href="/discover.html" class="nav-link" data-en="Discover" data-es="Descubrir">Discover</a>
+<div class="lang-toggle"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
+</div></div></nav>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-for" data-en="FOR COACHES · PROGRAM DIRECTORS · AAU · SCHOOL · LEAGUE" data-es="PARA COACHES · DIRECTORES · AAU · ESCUELA · LIGA">FOR COACHES · PROGRAM DIRECTORS · AAU · SCHOOL · LEAGUE</div>
+<div class="hero-badge"><span class="dot"></span> <span data-en="FREE FOR YOUR PROGRAM" data-es="GRATIS PARA TU PROGRAMA">FREE FOR YOUR PROGRAM</span></div>
+<h1 data-en="THE COMPETITIVE<br>ADVANTAGE FOR<br>YOUR <span class='gold'>PROGRAM</span>" data-es="LA VENTAJA<br>COMPETITIVA PARA<br>TU <span class='gold'>PROGRAMA</span>">THE COMPETITIVE<br>ADVANTAGE FOR<br>YOUR <span class="gold">PROGRAM</span></h1>
+<p class="hero-sub" data-en="Give every player in your program cognitive training, a RITNOME™ score, and an AI scouting report. No other program in your area offers this. Parents will choose you." data-es="Dale a cada jugador de tu programa entrenamiento cognitivo, un puntaje RITNOME™, y un reporte IA. Ningún otro programa en tu área ofrece esto. Los padres te elegirán.">Give every player in your program cognitive training, a RITNOME™ score, and an AI scouting report. No other program in your area offers this. Parents will choose you.</p>
+<div class="hero-cost" data-en="Cost to your program: $0" data-es="Costo para tu programa: $0">Cost to your program: $0</div>
+<div class="hero-btns">
+<a href="#how" class="btn-gold" data-en="See How It Works" data-es="Cómo Funciona">See How It Works</a>
+<a href="#pitch" class="btn-outline" data-en="See the Parent Pitch" data-es="Ver el Pitch Para Padres">See the Parent Pitch</a>
+</div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="problem-section"><div class="wrap text-center">
+<div class="section-pill red" data-en="The Problem" data-es="El Problema">The Problem</div>
+<h2 class="section-title" data-en="Every Program Looks the Same" data-es="Todos los Programas Se Ven Igual">Every Program Looks the Same</h2>
+<p class="section-sub" data-en="Jerseys. Tournaments. Practice. Every AAU program, school team, and league offers the same thing. How do you stand out?" data-es="Uniformes. Torneos. Práctica. Cada programa AAU, equipo escolar y liga ofrece lo mismo. ¿Cómo te diferencias?">Jerseys. Tournaments. Practice. Every AAU program, school team, and league offers the same thing. How do you stand out?</p>
+<div class="problem-grid">
+<div class="problem-card reveal"><div class="problem-icon">👥</div><h4 data-en="RECRUITING" data-es="RECLUTAMIENTO">RECRUITING</h4><p data-en="Parents have 5 programs to choose from. They all look the same. They all cost the same. Why should they pick yours?" data-es="Los padres tienen 5 programas para elegir. Todos se ven igual. Todos cuestan lo mismo. ¿Por qué elegir el tuyo?">Parents have 5 programs to choose from. They all look the same. They all cost the same. Why should they pick yours?</p></div>
+<div class="problem-card reveal"><div class="problem-icon">📉</div><h4 data-en="RETENTION" data-es="RETENCIÓN">RETENTION</h4><p data-en="Parents pull their kids when they don't see development. 'He's been playing for 2 years and I can't tell what's improved.' Sound familiar?" data-es="Los padres sacan a sus hijos cuando no ven desarrollo. 'Lleva 2 años y no puedo ver qué mejoró.' ¿Te suena?">Parents pull their kids when they don't see development. "He's been playing for 2 years and I can't tell what's improved." Sound familiar?</p></div>
+<div class="problem-card reveal"><div class="problem-icon">📋</div><h4 data-en="PROOF" data-es="PRUEBA">PROOF</h4><p data-en="You know your program develops players. But how do you prove it? Game stats only tell part of the story." data-es="Sabes que tu programa desarrolla jugadores. Pero ¿cómo lo pruebas? Las estadísticas solo cuentan parte de la historia.">You know your program develops players. But how do you prove it? Game stats only tell part of the story.</p></div>
+</div>
+</div></section>
+
+<!-- THE SOLUTION -->
+<section class="section"><div class="wrap text-center">
+<div class="section-pill gold" data-en="The Solution" data-es="La Solución">The Solution</div>
+<h2 class="section-title" data-en="Hooporia Makes Your Program Different" data-es="Hooporia Diferencia Tu Programa">Hooporia Makes Your Program Different</h2>
+<p class="section-sub" data-en="The only basketball platform that measures cognitive performance and generates AI scouting reports. Add it to your program and instantly stand out." data-es="La única plataforma de baloncesto que mide rendimiento cognitivo y genera reportes IA. Agrégala a tu programa y destaca al instante.">The only basketball platform that measures cognitive performance and generates AI scouting reports. Add it to your program and instantly stand out.</p>
+<div class="solution-grid">
+<div class="solution-card reveal"><div class="solution-icon">🧠</div><h4 data-en="COGNITIVE TRAINING" data-es="ENTRENAMIENTO COGNITIVO">COGNITIVE TRAINING</h4><p data-en="6 drills that train reaction time, court vision, play recall, and game rhythm. Players train from their phones. Progress is measurable." data-es="6 drills que entrenan tiempo de reacción, visión de cancha, memoria de jugadas y ritmo de juego. Los jugadores entrenan desde su teléfono.">6 drills that train reaction time, court vision, play recall, and game rhythm. Players train from their phones. Progress is measurable.</p></div>
+<div class="solution-card reveal"><div class="solution-icon">📊</div><h4 data-en="RITNOME™ SCORES" data-es="PUNTAJES RITNOME™">RITNOME™ SCORES</h4><p data-en="Every player gets a verified cognitive score — L1 Rookie to L10 GOAT. Coaches see who processes the game fastest. Parents see growth over time." data-es="Cada jugador obtiene un puntaje cognitivo verificado — L1 Novato a L10 GOAT. Los coaches ven quién procesa más rápido. Los padres ven crecimiento.">Every player gets a verified cognitive score — L1 Rookie to L10 GOAT. Coaches see who processes the game fastest. Parents see growth over time.</p></div>
+<div class="solution-card reveal"><div class="solution-icon">📋</div><h4 data-en="AI SCOUTING REPORTS" data-es="REPORTES IA">AI SCOUTING REPORTS</h4><p data-en="AI generates a professional cognitive scouting report for each player — written for coaches. Strengths, development areas, on-court translation, and specific recommendations." data-es="La IA genera un reporte profesional para cada jugador — escrito para coaches. Fortalezas, áreas de desarrollo, traducción en cancha y recomendaciones.">AI generates a professional cognitive scouting report for each player — written for coaches. Strengths, development areas, on-court translation, and specific recommendations.</p></div>
+</div>
+</div></section>
+
+<!-- YOUR VS THEIRS -->
+<section class="section" style="padding-top:0"><div class="wrap text-center">
+<div class="section-pill purple" data-en="Your Program vs. Theirs" data-es="Tu Programa vs. El De Ellos">Your Program vs. Theirs</div>
+<h2 class="section-title" data-en="The Conversation Parents Are Having" data-es="La Conversación Que Tienen Los Padres">The Conversation Parents Are Having</h2>
+<div class="compare-wrap" style="margin-top:40px">
+<div class="compare-row"><div class="compare-header them" data-en="OTHER PROGRAMS" data-es="OTROS PROGRAMAS">OTHER PROGRAMS</div><div class="compare-vs">VS</div><div class="compare-header you" data-en="YOUR PROGRAM" data-es="TU PROGRAMA">YOUR PROGRAM</div></div>
+<div class="compare-row reveal"><div class="compare-them" data-en="Jerseys & tournaments" data-es="Uniformes y torneos">Jerseys & tournaments</div><div class="compare-vs">VS</div><div class="compare-you" data-en="Jerseys, tournaments + cognitive training" data-es="Uniformes, torneos + entrenamiento cognitivo">Jerseys, tournaments + cognitive training</div></div>
+<div class="compare-row reveal"><div class="compare-them" data-en="'Trust us, he's improving'" data-es="'Confía en nosotros, está mejorando'">​"Trust us, he's improving"</div><div class="compare-vs">VS</div><div class="compare-you" data-en="'His RITNOME™ went from L3 to L6 this season'" data-es="'Su RITNOME™ subió de L3 a L6 esta temporada'">"His RITNOME™ went from L3 to L6 this season"</div></div>
+<div class="compare-row reveal"><div class="compare-them" data-en="PPG, RPG, APG" data-es="PPG, RPG, APG">PPG, RPG, APG</div><div class="compare-vs">VS</div><div class="compare-you" data-en="PPG + court vision L9, reaction speed L8, play recall L6" data-es="PPG + visión de cancha L9, velocidad de reacción L8, memoria de jugadas L6">PPG + court vision L9, reaction speed L8, play recall L6</div></div>
+<div class="compare-row reveal"><div class="compare-them" data-en="No scouting reports" data-es="Sin reportes">No scouting reports</div><div class="compare-vs">VS</div><div class="compare-you" data-en="AI scouting report for every player" data-es="Reporte IA para cada jugador">AI scouting report for every player</div></div>
+<div class="compare-row reveal"><div class="compare-them" data-en="Parents leave after 1 season" data-es="Los padres se van después de 1 temporada">Parents leave after 1 season</div><div class="compare-vs">VS</div><div class="compare-you" data-en="Parents stay because they see measurable growth" data-es="Los padres se quedan porque ven crecimiento medible">Parents stay because they see measurable growth</div></div>
+</div>
+</div></section>
+
+<!-- THE PARENT PITCH -->
+<section class="section" id="pitch"><div class="wrap text-center">
+<div class="section-pill gold" data-en="Your Recruiting Pitch" data-es="Tu Pitch de Reclutamiento">Your Recruiting Pitch</div>
+<h2 class="section-title" data-en="What You Tell Parents" data-es="Lo Que Le Dices a los Padres">What You Tell Parents</h2>
+<p class="section-sub" data-en="Copy this. Use it at tryouts, on your website, in your group chat. This is the pitch that wins." data-es="Copia esto. Úsalo en tryouts, en tu sitio web, en tu grupo. Este es el pitch ganador.">Copy this. Use it at tryouts, on your website, in your group chat. This is the pitch that wins.</p>
+<div class="pitch-card">
+<div class="pitch-quote" data-en="Our program uses <span class='gold'>Hooporia</span> — the only basketball platform with cognitive performance training and AI scouting reports. Every player in our program gets a <span class='gold'>RITNOME™ cognitive score</span> that measures court vision, reaction speed, play recall, and game rhythm. At the end of the season, your child will have a <span class='gold'>professional AI scouting report</span> that you can share with any college coach, scout, or program. No other program in our area offers this. We don't just develop athletes — we develop <span class='gold'>basketball minds</span>." data-es="Nuestro programa usa <span class='gold'>Hooporia</span> — la única plataforma de baloncesto con entrenamiento cognitivo y reportes IA. Cada jugador obtiene un <span class='gold'>puntaje cognitivo RITNOME™</span> que mide visión de cancha, velocidad de reacción, memoria de jugadas y ritmo. Al final de la temporada, tu hijo tendrá un <span class='gold'>reporte profesional IA</span> que puedes compartir con cualquier coach. Ningún otro programa en nuestra área ofrece esto. No solo desarrollamos atletas — desarrollamos <span class='gold'>mentes de baloncesto</span>.">"Our program uses <span class="gold">Hooporia</span> — the only basketball platform with cognitive performance training and AI scouting reports. Every player in our program gets a <span class="gold">RITNOME™ cognitive score</span> that measures court vision, reaction speed, play recall, and game rhythm. At the end of the season, your child will have a <span class="gold">professional AI scouting report</span> that you can share with any college coach, scout, or program. No other program in our area offers this. We don't just develop athletes — we develop <span class="gold">basketball minds</span>."</div>
+<div class="pitch-who" data-en="— You, at the next parent meeting" data-es="— Tú, en la próxima reunión de padres">— You, at the next parent meeting</div>
+</div>
+</div></section>
+
+<!-- WHAT PLAYERS GET -->
+<section class="section" style="padding-top:0"><div class="wrap text-center">
+<div class="section-pill cyan" data-en="What Your Players Get" data-es="Lo Que Obtienen Tus Jugadores">What Your Players Get</div>
+<h2 class="section-title" data-en="Free and Premium Features" data-es="Funciones Gratis y Premium">Free and Premium Features</h2>
+<p class="section-sub" data-en="Every player starts free. Premium is optional — and it's on them, not your program budget." data-es="Cada jugador empieza gratis. Premium es opcional — y lo paga el jugador, no tu programa.">Every player starts free. Premium is optional — and it's on them, not your program budget.</p>
+<div class="get-grid">
+<div class="get-card reveal"><h4>🏀 Player Profile <span class="get-tag free">FREE</span></h4><p data-en="Personal basketball profile page with position, measurables, and social links. Shareable URL." data-es="Página de perfil con posición, medidas y redes. URL compartible.">Personal basketball profile page with position, measurables, and social links. Shareable URL.</p></div>
+<div class="get-card reveal"><h4>🧠 3 Cognitive Drills <span class="get-tag free">FREE</span></h4><p data-en="React, Recall, and Reflex — free for every player. Train reaction time, working memory, and court vision." data-es="React, Recall y Reflex — gratis. Entrenan tiempo de reacción, memoria de trabajo y visión de cancha.">React, Recall, and Reflex — free for every player. Train reaction time, working memory, and court vision.</p></div>
+<div class="get-card reveal"><h4>🔓 All 6 Drills <span class="get-tag prem">PREMIUM</span></h4><p data-en="Unlock Replay, Ritmo, and Beat. Full RITNOME™ profile across all 6 cognitive dimensions." data-es="Desbloquea Replay, Ritmo y Beat. Perfil RITNOME™ completo en las 6 dimensiones.">Unlock Replay, Ritmo, and Beat. Full RITNOME™ profile across all 6 cognitive dimensions.</p></div>
+<div class="get-card reveal"><h4>📋 AI Scouting Report <span class="get-tag prem">PREMIUM</span></h4><p data-en="Professional AI-generated cognitive scouting report. Written for coaches and scouts. Personalized to position, play style, and competition level." data-es="Reporte cognitivo profesional generado por IA. Personalizado a posición, estilo y nivel de competencia.">Professional AI-generated cognitive scouting report. Written for coaches and scouts. Personalized to position, play style, and competition level.</p></div>
+<div class="get-card reveal"><h4>📅 Basketball Timeline <span class="get-tag prem">PREMIUM</span></h4><p data-en="Every season, every team, every stat — documented forever. The player's complete basketball story." data-es="Cada temporada, cada equipo, cada stat — documentado para siempre. La historia completa del jugador.">Every season, every team, every stat — documented forever. The player's complete basketball story.</p></div>
+<div class="get-card reveal"><h4>🔍 Get Discovered <span class="get-tag free">FREE</span></h4><p data-en="Player profiles appear in the Discover database. Scouts and coaches can find your players." data-es="Los perfiles aparecen en la base de datos Discover. Scouts y coaches pueden encontrar a tus jugadores.">Player profiles appear in the Discover database. Scouts and coaches can find your players.</p></div>
+</div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how"><div class="wrap text-center">
+<div class="section-pill green" data-en="How It Works" data-es="Cómo Funciona">How It Works</div>
+<h2 class="section-title" data-en="Setup Takes 5 Minutes" data-es="La Configuración Toma 5 Minutos">Setup Takes 5 Minutes</h2>
+<div class="steps-grid" style="margin-top:40px">
+<div class="step-card reveal"><div class="step-num">01</div><h4 data-en="SHARE THE LINK" data-es="COMPARTE EL LINK">SHARE THE LINK</h4><p data-en="Send hooporia.com to your players and parents. They create free profiles in 2 minutes." data-es="Envía hooporia.com a tus jugadores y padres. Crean perfiles gratis en 2 minutos.">Send hooporia.com to your players and parents. They create free profiles in 2 minutes.</p></div>
+<div class="step-card reveal"><div class="step-num">02</div><h4 data-en="PLAYERS TRAIN" data-es="JUGADORES ENTRENAN">PLAYERS TRAIN</h4><p data-en="Players play cognitive drills from their phones. Scores sync automatically. You can track their RITNOME™ levels." data-es="Los jugadores hacen drills desde su teléfono. Los puntajes se sincronizan. Puedes ver sus niveles RITNOME™.">Players play cognitive drills from their phones. Scores sync automatically. You can track their RITNOME™ levels.</p></div>
+<div class="step-card reveal"><div class="step-num">03</div><h4 data-en="PROGRAM GROWS" data-es="EL PROGRAMA CRECE">PROGRAM GROWS</h4><p data-en="Parents see measurable development. Players share profiles. Word spreads. Your program becomes the one everyone talks about." data-es="Los padres ven desarrollo medible. Los jugadores comparten perfiles. Se corre la voz. Tu programa se convierte en el que todos hablan.">Parents see measurable development. Players share profiles. Word spreads. Your program becomes the one everyone talks about.</p></div>
+</div>
+</div></section>
+
+<!-- NUMBERS -->
+<section class="social-proof"><div class="wrap text-center">
+<div class="proof-grid">
+<div class="proof-card"><div class="proof-num">$0</div><div class="proof-label" data-en="Cost to Your Program" data-es="Costo Para Tu Programa">Cost to Your Program</div></div>
+<div class="proof-card"><div class="proof-num">6</div><div class="proof-label" data-en="Cognitive Drills" data-es="Drills Cognitivos">Cognitive Drills</div></div>
+<div class="proof-card"><div class="proof-num">AI</div><div class="proof-label" data-en="Scouting Reports" data-es="Reportes Para Scouts">Scouting Reports</div></div>
+</div>
+</div></section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+<h2 data-en="BECOME THE PROGRAM<br>THAT <span class='gold'>DEVELOPS MINDS</span>" data-es="SÉ EL PROGRAMA<br>QUE <span class='gold'>DESARROLLA MENTES</span>">BECOME THE PROGRAM<br>THAT <span class="gold">DEVELOPS MINDS</span></h2>
+<p class="final-sub" data-en="We don't just develop athletes. We develop basketball minds." data-es="No solo desarrollamos atletas. Desarrollamos mentes de baloncesto.">We don't just develop athletes. We develop basketball minds.</p>
+<p class="final-desc" data-en="Share hooporia.com with your team today. Players sign up free. Your program gets the credit. It costs you nothing." data-es="Comparte hooporia.com con tu equipo hoy. Los jugadores se registran gratis. Tu programa recibe el crédito. No te cuesta nada.">Share hooporia.com with your team today. Players sign up free. Your program gets the credit. It costs you nothing.</p>
+<div class="final-btns">
+<a href="/join.html" class="btn-gold" data-en="Create Your Profile" data-es="Crear Tu Perfil">Create Your Profile</a>
+<a href="/cognitive-hoops.html" class="btn-outline" data-en="🧠 Try the Drills" data-es="🧠 Prueba los Drills">🧠 Try the Drills</a>
+</div>
+<p class="final-note" data-en="Questions about Hooporia for your program? We're here to help." data-es="¿Preguntas sobre Hooporia para tu programa? Estamos aquí para ayudar.">Questions about Hooporia for your program? We're here to help.</p>
+<a href="mailto:info@hooporia.com" class="contact-email">info@hooporia.com</a>
+<div style="margin-top:24px;display:flex;align-items:center;justify-content:center;gap:8px">
+<div style="width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 1.5s ease-in-out infinite"></div>
+<span style="font-size:.6rem;color:var(--gray);letter-spacing:2px">POWERED BY</span>
+<span style="font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:.85rem;letter-spacing:3px">RITNOME™</span>
+</div>
+</section>
+
+<footer><div class="wrap"><div class="footer-inner">
+<div class="footer-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></div>
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a><a href="/cognitive-hoops.html" data-en="Drills" data-es="Drills">Drills</a><a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC · Hooporia™ · RITNOME™</div>
+</div>
+<div style="font-size:.55rem;color:#333;margin-top:6px;max-width:500px;text-align:center;margin-left:auto;margin-right:auto" data-en="This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities." data-es="Este programa se enfoca en desarrollo del atleta, marca personal y oportunidades futuras. No garantizamos resultados específicos ni oportunidades.">This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities.</div>
+</div></footer>
+
+<script>
+try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
+var reveals=document.querySelectorAll('.reveal');
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:0.1});
+reveals.forEach(function(el,i){el.style.transitionDelay=(i%4)*0.1+'s';observer.observe(el)});
+</script>
+</body>
+</html>
