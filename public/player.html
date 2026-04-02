@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Profile — Hooporia</title>
+<link rel="icon" href="/hooporia.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;localStorage.setItem('lc-lang',l);
+document.querySelectorAll('[data-'+l+']').forEach(function(el){var v=el.getAttribute('data-'+l);if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}});
+document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)})}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0a0a0f;--black2:#111118;--surface:#16161e;--gold:#FFD700;--gold-dim:rgba(255,215,0,0.08);--gold-border:rgba(255,215,0,0.15);--orange:#FF6B35;--white:#fafaf9;--gray:#7a7a8a;--gray-light:#aaa;--green:#22c55e;--purple:#9B59B6;--cyan:#00CED1;--teal:#00D9A5;--lime:#9ACD32;--accent:var(--gold)}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;font-family:inherit}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
+.nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{display:flex;align-items:center;gap:8px}.nav-brand img{height:28px}.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-link{font-size:.75rem;font-weight:600;color:var(--gray);transition:color .2s}.nav-link:hover{color:var(--white)}
+.lang-toggle{display:flex;gap:3px;background:rgba(26,26,34,1);border-radius:6px;padding:2px}
+.lang-btn{padding:4px 8px;border-radius:4px;font-size:.6rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;border:none;cursor:pointer}.lang-btn.active{background:var(--gold);color:var(--black)}
+.container{max-width:680px;margin:0 auto;padding:80px 24px 40px}
+.loading{text-align:center;padding:100px 24px}
+.spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-card{position:relative;border-radius:24px;overflow:hidden;padding:40px 28px 32px;margin-bottom:20px;background:var(--surface);border:1px solid rgba(255,255,255,.04)}
+.hero-card.premium{border:1.5px solid var(--accent);background:linear-gradient(160deg,var(--surface) 0%,rgba(255,215,0,.03) 100%)}
+.hero-card.premium::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--orange),var(--accent));opacity:.6}
+.hero-top{display:flex;align-items:center;gap:20px;margin-bottom:20px;flex-wrap:wrap}
+.hero-avatar{width:80px;height:80px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;flex-shrink:0}
+.hero-avatar.free{background:var(--gold-dim);border:2px solid var(--gold-border);color:var(--gold)}
+.hero-avatar.premium{border:2.5px solid var(--accent);background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,107,53,.08));color:var(--accent);box-shadow:0 0 24px rgba(255,215,0,.15)}
+.hero-info{flex:1;min-width:200px}
+.hero-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;line-height:1;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.verified-badge{display:inline-flex;align-items:center;gap:3px;background:var(--gold);color:var(--black);padding:2px 8px;border-radius:6px;font-size:.55rem;font-weight:800;letter-spacing:.5px}
+.hero-meta{font-size:.85rem;color:var(--gray);margin-top:4px}
+.hero-school{font-size:.8rem;color:var(--gray-light);margin-top:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tag{padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700}
+.tag.pos{background:rgba(255,107,53,.1);color:var(--orange)}.tag.grad{background:rgba(59,130,246,.1);color:#3b82f6}.tag.nil{background:rgba(34,197,94,.1);color:var(--green)}.tag.cog{background:rgba(155,89,182,.1);color:var(--purple)}.tag.ht{background:rgba(255,255,255,.05);color:var(--gray-light)}.tag.premium-tag{background:linear-gradient(90deg,rgba(255,215,0,.1),rgba(255,107,53,.1));color:var(--gold);border:1px solid rgba(255,215,0,.15)}
+.card{background:var(--surface);border:1px solid rgba(255,255,255,.04);border-radius:18px;padding:24px;margin-bottom:16px}
+.card.pc{border-color:rgba(255,215,0,.08)}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;margin-bottom:16px;color:var(--gray-light)}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap}
+.stat{text-align:center;flex:1;min-width:55px;padding:10px 6px;background:rgba(255,255,255,.02);border-radius:10px;border:1px solid rgba(255,255,255,.03)}
+.stat .val{font-size:1.3rem;font-weight:800;color:var(--green)}.stat .lbl{font-size:.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.meas-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.meas{text-align:center;padding:12px 8px;background:rgba(255,255,255,.02);border-radius:10px;border:1px solid rgba(255,255,255,.03)}
+.meas .val{font-size:1.1rem;font-weight:800}.meas .lbl{font-size:.55rem;color:var(--gray);text-transform:uppercase;margin-top:2px}
+.cog-overall{text-align:center;padding:16px;background:rgba(255,255,255,.02);border-radius:14px;margin-bottom:14px}
+.cog-overall-lbl{font-size:.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px}
+.cog-overall-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem}
+.cog-overall-rat{font-size:.75rem;color:var(--gray)}
+.cog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cog-item{text-align:center;padding:12px 8px;background:rgba(255,255,255,.02);border-radius:10px;border:1px solid rgba(255,255,255,.03)}
+.cog-emoji{font-size:1.1rem;margin-bottom:4px}.cog-name{font-family:'Bebas Neue',sans-serif;font-size:.65rem;letter-spacing:1px;margin-bottom:3px}.cog-lvl{font-size:1.1rem;font-weight:800}.cog-det{font-size:.55rem;color:var(--gray)}
+.cog-bar{height:3px;background:rgba(255,255,255,.05);border-radius:2px;margin-top:5px;overflow:hidden}.cog-bar-f{height:100%;border-radius:2px}
+.hl-link{display:flex;align-items:center;gap:10px;padding:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px;transition:all .2s;color:var(--white);font-size:.85rem;font-weight:600}
+.hl-link:hover{border-color:rgba(255,215,0,.2)}
+.nil-bio{font-size:.88rem;color:var(--gray-light);line-height:1.7;padding:16px;background:rgba(255,255,255,.02);border-radius:12px;border-left:3px solid var(--gold)}
+.socials{display:flex;gap:6px;flex-wrap:wrap}
+.social-btn{padding:8px 16px;border-radius:8px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.04);color:var(--gray-light);border:1px solid rgba(255,255,255,.04);transition:all .2s}
+.social-btn:hover{background:rgba(255,255,255,.08);color:var(--white)}
+.contact-btn{display:block;width:100%;padding:16px;border-radius:12px;font-size:.95rem;font-weight:700;text-align:center;background:linear-gradient(135deg,var(--accent),var(--orange));color:var(--black);transition:all .2s;box-shadow:0 4px 20px rgba(255,215,0,.2);margin-bottom:16px}
+.contact-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,215,0,.3)}
+.mindset-cta{background:linear-gradient(135deg,rgba(155,89,182,.08),rgba(255,215,0,.05));border:1px solid rgba(155,89,182,.15);border-radius:18px;padding:28px;text-align:center;margin-bottom:16px}
+.mindset-cta h3{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;margin-bottom:6px}
+.mindset-cta p{font-size:.8rem;color:var(--gray);margin-bottom:16px}
+.mcta-btn{display:inline-block;padding:12px 28px;border-radius:10px;font-size:.85rem;font-weight:700;background:var(--purple);color:var(--white)}
+.upgrade-banner{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.04));border:1.5px solid rgba(255,215,0,.15);border-radius:18px;padding:28px;text-align:center;margin-bottom:16px}
+.upgrade-banner h3{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--gold);margin-bottom:6px}
+.upgrade-banner p{font-size:.8rem;color:var(--gray);margin-bottom:16px}
+.upgrade-banner ul{list-style:none;text-align:left;max-width:300px;margin:0 auto 20px}
+.upgrade-banner li{font-size:.78rem;color:var(--gray-light);padding:4px 0;display:flex;align-items:center;gap:6px}
+.upgrade-banner li::before{content:'✓';color:var(--gold);font-weight:700;font-size:.7rem}
+.up-btn{display:inline-block;padding:14px 32px;border-radius:10px;font-size:.9rem;font-weight:700;background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--black)}
+.up-btn-secondary{display:inline-block;padding:10px 28px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--gray-light);border:1.5px solid rgba(255,255,255,.12)}
+.powered{text-align:center;padding:24px;margin-top:12px}.powered a{font-size:.7rem;color:var(--gray);font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px}.powered img{height:16px;opacity:.5}
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold),rgba(255,215,0,.1))}
+.tl-item{position:relative;margin-bottom:20px;padding-left:20px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:8px;width:12px;height:12px;border-radius:50%;border:2px solid var(--gold);background:var(--black)}
+.tl-item.highlight::before{background:var(--gold);box-shadow:0 0 10px rgba(255,215,0,.4)}
+.tl-year{font-family:'Bebas Neue',sans-serif;font-size:.75rem;color:var(--gold);letter-spacing:2px;margin-bottom:4px}
+.tl-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px}
+.tl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.tl-name{font-size:.9rem;font-weight:700}
+.tl-type{padding:3px 10px;border-radius:12px;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;flex-shrink:0}
+.tl-type.school{background:rgba(59,130,246,.1);color:#3b82f6}
+.tl-type.aau{background:rgba(255,107,53,.1);color:var(--orange)}
+.tl-type.league{background:rgba(34,197,94,.1);color:var(--green)}
+.tl-type.tournament{background:rgba(155,89,182,.1);color:var(--purple)}
+.tl-type.camp{background:rgba(0,206,209,.1);color:var(--cyan)}
+.tl-type.clinic{background:rgba(154,205,50,.1);color:var(--lime)}
+.tl-type.other{background:rgba(255,255,255,.05);color:var(--gray-light)}
+.tl-meta{font-size:.72rem;color:var(--gray);margin-bottom:8px}
+.tl-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.tl-stat{text-align:center;padding:5px 8px;background:rgba(255,255,255,.03);border-radius:6px;min-width:40px}
+.tl-stat .v{font-size:.85rem;font-weight:800;color:var(--green)}.tl-stat .l{font-size:.45rem;color:var(--gray);text-transform:uppercase}
+.tl-awards{font-size:.75rem;color:var(--gold);font-weight:600;margin-top:6px}
+.tl-notes{font-size:.75rem;color:var(--gray-light);margin-top:4px;font-style:italic}
+.tl-summary{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:16px;background:rgba(255,255,255,.02);border-radius:14px;margin-bottom:16px}
+.tl-sum-item{text-align:center}
+.tl-sum-item .v{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold)}
+.tl-sum-item .l{font-size:.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:.5px}
+.cover-banner{width:100%;height:200px;border-radius:24px 24px 0 0;object-fit:cover;display:block;margin-bottom:-24px;position:relative;z-index:0}
+.hero-card.has-cover{border-radius:0 0 24px 24px;margin-top:0}
+.hero-card.has-cover.premium{border-radius:0 0 24px 24px}
+.hero-avatar img{width:100%;height:100%;object-fit:cover;border-radius:18px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gallery-item{aspect-ratio:1;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .2s;border:1px solid rgba(255,255,255,.04)}
+.gallery-item:hover{transform:scale(1.03)}
+.gallery-item img{width:100%;height:100%;object-fit:cover}
+.video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.video-card{border-radius:12px;overflow:hidden;background:var(--black2);border:1px solid rgba(255,255,255,.04);transition:all .2s}
+.video-card:hover{border-color:rgba(255,215,0,.15)}
+.video-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;display:block}
+.video-card .vc-label{padding:8px 10px;font-size:.7rem;color:var(--gray);font-weight:600}
+.video-link-card{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px;color:var(--white);font-size:.82rem;font-weight:600;transition:all .2s}
+.video-link-card:hover{border-color:rgba(255,215,0,.15);background:rgba(255,255,255,.04)}
+.vl-icon{font-size:1.3rem;flex-shrink:0}
+.vl-text{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vl-platform{font-size:.6rem;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;display:none;align-items:center;justify-content:center;cursor:pointer}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90%;max-height:90%;border-radius:12px;object-fit:contain}
+.lightbox-close{position:absolute;top:20px;right:24px;color:var(--white);font-size:1.5rem;cursor:pointer;background:rgba(255,255,255,.1);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none}
+@media(max-width:600px){.hero-top{flex-direction:column;text-align:center}.hero-name{justify-content:center}.tags{justify-content:center}.stat{min-width:48px;padding:8px 4px}.stat .val{font-size:1.1rem}.cog-grid{grid-template-columns:repeat(2,1fr)}.meas-row{grid-template-columns:repeat(2,1fr)}.socials{justify-content:center}.nav-link{display:none}.gallery-grid{grid-template-columns:repeat(2,1fr)}.video-grid{grid-template-columns:1fr}.cover-banner{height:140px}}
+.not-found{text-align:center;padding:100px 24px}
+.not-found h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:8px}
+.not-found p{color:var(--gray);margin-bottom:24px}
+.nf-btn{display:inline-block;padding:12px 28px;border-radius:10px;font-size:.85rem;font-weight:700;background:var(--gold);color:var(--black)}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+<a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
+<div class="nav-right">
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Hoops Mindset" data-es="Hoops Mindset">Hoops Mindset</a>
+<a href="/discover.html" class="nav-link" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" class="nav-link" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<div class="lang-toggle"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
+</div></div></nav>
+
+<div class="container">
+<div id="loadState" class="loading"><div class="spinner"></div><p data-en="Loading player..." data-es="Cargando jugador...">Loading player...</p></div>
+<div id="profileOut" style="display:none"></div>
+<div id="notFound" style="display:none" class="not-found"><h2>🏀</h2><h2 data-en="Player Not Found" data-es="Jugador No Encontrado">Player Not Found</h2><p data-en="This profile doesn't exist." data-es="Este perfil no existe.">This profile doesn't exist.</p><a href="/discover.html" class="nf-btn" data-en="Browse Players" data-es="Buscar Jugadores">Browse Players</a></div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')"><button class="lightbox-close">✕</button><img id="lightboxImg" src="" alt=""></div>
+
+<script>
+var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
+var sb,TC={react:'#9B59B6',recall:'#FF6B35',reflex:'#00CED1',replay:'#00D9A5',ritmo:'#9ACD32',beat:'#FFD700'},TN={react:'THE REACT',recall:'THE RECALL',reflex:'THE REFLEX',replay:'THE REPLAY',ritmo:'THE RITMO',beat:'THE BEAT'},TE={react:'🟣',recall:'🟠',reflex:'🔵',replay:'🟢',ritmo:'🟡',beat:'🏀'},RL={1:'Rookie',2:'Developing',3:'Solid',4:'Advanced',5:'Elite',6:'Pro',7:'All-Star',8:'MVP',9:'Hall of Fame',10:'GOAT'},SL={slow:'Training',med:'Tempo',fast:'Elite'};
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function cogAvg(b){var t=0,c=0;['react','recall','reflex','replay','ritmo','beat'].forEach(function(k){if(b[k]){t+=b[k].level;c++}});return c?Math.round(t/c):0}
+function stB(v,l){return'<div class="stat"><div class="val">'+v+'</div><div class="lbl">'+l+'</div></div>'}
+
+(async function(){
+try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){}
+var slug=window.location.pathname.split('/player/')[1];
+if(slug)slug=slug.replace(/\/$/,'');
+if(!slug){document.getElementById('loadState').style.display='none';document.getElementById('notFound').style.display='block';setLang(currentLang);return}
+try{
+await new Promise(function(r,j){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';s.onload=r;s.onerror=j;document.head.appendChild(s)});
+sb=window.supabase.createClient(SB_URL,SB_KEY);
+var{data:pl}=await sb.from('players').select('*').eq('slug',slug);
+if(!pl||!pl.length){document.getElementById('loadState').style.display='none';document.getElementById('notFound').style.display='block';setLang(currentLang);return}
+var p=pl[0],pm=(p.profile_tier==='premium'||p.profile_tier==='pro');
+sb.from('players').update({profile_views:(p.profile_views||0)+1}).eq('id',p.id);
+var{data:cd}=await sb.from('cognitive_scores').select('*').eq('player_id',p.id);
+var bt={};if(cd)cd.forEach(function(s){if(!bt[s.test_name]||s.level>bt[s.test_name].level)bt[s.test_name]=s});
+var{data:seasonData}=await sb.from('player_seasons').select('*').eq('player_id',p.id).order('season_year',{ascending:false});
+var seasons=seasonData||[];
+document.title=(p.first_name||'')+' '+(p.last_name||'')+' — Hooporia';
+render(p,pm,bt,seasons);
+}catch(e){console.error(e);document.getElementById('loadState').innerHTML='<p style="color:var(--gray)">Error loading profile.</p>'}
+})();
+
+function render(p,pm,bt,seasons){var h='';
+if(p.cover_url)h+='<img class="cover-banner" src="'+esc(p.cover_url)+'" alt="Cover">';
+h+='<div class="hero-card '+(pm?'premium':'')+(p.cover_url?' has-cover':'')+'">';
+h+='<div class="hero-top">';
+if(p.avatar_url){h+='<div class="hero-avatar '+(pm?'premium':'free')+'"><img src="'+esc(p.avatar_url)+'" alt=""></div>'}
+else{h+='<div class="hero-avatar '+(pm?'premium':'free')+'">#'+(p.jersey_number||'—')+'</div>'}
+h+='<div class="hero-info"><div class="hero-name">'+esc(p.first_name)+' '+esc(p.last_name);
+if(pm)h+=' <span class="verified-badge">✓ VERIFIED</span>';
+h+='</div><div class="hero-meta">'+(p.position||'')+(p.height?' · '+esc(p.height):'')+(p.weight?' · '+esc(p.weight):'')+'</div>';
+if(p.school)h+='<div class="hero-school">'+esc(p.school)+(p.grad_year?' · Class of '+p.grad_year:'')+'</div>';
+h+='</div></div>';
+h+='<div class="tags">';
+if(p.position)h+='<span class="tag pos">'+esc(p.position)+'</span>';
+if(p.grad_year)h+='<span class="tag grad">Class of '+p.grad_year+'</span>';
+if(p.height)h+='<span class="tag ht">'+esc(p.height)+'</span>';
+if(p.nil_available)h+='<span class="tag nil">📣 NIL Available</span>';
+var ca=cogAvg(bt);if(ca>0)h+='<span class="tag cog">🧠 L'+ca+' '+(RL[ca]||'')+'</span>';
+if(pm)h+='<span class="tag premium-tag">⭐ Premium</span>';
+h+='</div></div>';
+
+if(pm&&p.nil_contact_email)h+='<a href="mailto:'+esc(p.nil_contact_email)+'" class="contact-btn" data-en="✉ Contact This Player" data-es="✉ Contactar Jugador">✉ Contact This Player</a>';
+
+h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="📊 Stats" data-es="📊 Estadísticas">📊 Stats</div><div class="stats-row">';
+if(p.stats_ppg)h+=stB(p.stats_ppg,'PPG');if(p.stats_rpg)h+=stB(p.stats_rpg,'RPG');if(p.stats_apg)h+=stB(p.stats_apg,'APG');
+if(pm){if(p.stats_spg)h+=stB(p.stats_spg,'SPG');if(p.stats_bpg)h+=stB(p.stats_bpg,'BPG');if(p.games_played)h+=stB(p.games_played,'GP')}
+h+='</div>';
+if(pm&&(p.fg_pct||p.three_pct||p.ft_pct)){h+='<div class="stats-row" style="margin-top:10px">';if(p.fg_pct)h+=stB(p.fg_pct+'%','FG%');if(p.three_pct)h+=stB(p.three_pct+'%','3PT%');if(p.ft_pct)h+=stB(p.ft_pct+'%','FT%');h+='</div>'}
+if(!p.stats_ppg&&!p.stats_rpg&&!p.stats_apg)h+='<div style="text-align:center;padding:16px;color:var(--gray);font-size:.8rem" data-en="No stats entered yet" data-es="Sin estadísticas aún">No stats entered yet</div>';
+h+='</div>';
+
+if(pm&&(p.wingspan||p.vertical)){h+='<div class="card pc"><div class="card-title" data-en="📏 Measurables" data-es="📏 Medidas">📏 Measurables</div><div class="meas-row">';
+if(p.height)h+='<div class="meas"><div class="val">'+esc(p.height)+'</div><div class="lbl" data-en="Height" data-es="Altura">Height</div></div>';
+if(p.weight)h+='<div class="meas"><div class="val">'+esc(p.weight)+'</div><div class="lbl" data-en="Weight" data-es="Peso">Weight</div></div>';
+if(p.wingspan)h+='<div class="meas"><div class="val">'+esc(p.wingspan)+'</div><div class="lbl" data-en="Wingspan" data-es="Envergadura">Wingspan</div></div>';
+if(p.vertical)h+='<div class="meas"><div class="val">'+esc(p.vertical)+'</div><div class="lbl">Vertical</div></div>';
+h+='</div></div>'}
+
+if(seasons.length>0){
+h+='<div class="card '+(pm?'pc':'')+'">';
+h+='<div class="card-title" data-en="📅 Basketball Timeline" data-es="📅 Historia de Baloncesto">📅 Basketball Timeline</div>';
+var totalSeasons=seasons.length;
+var totalGames=seasons.reduce(function(s,x){return s+(x.games_played||0)},0);
+var totalAwards=seasons.filter(function(x){return x.awards&&x.awards.trim()}).length;
+var yearSpan='';
+var years=seasons.map(function(x){return x.season_year}).filter(Boolean).sort();
+if(years.length>1)yearSpan=years[years.length-1]+' — '+years[0];
+else if(years.length===1)yearSpan=years[0];
+h+='<div class="tl-summary">';
+h+='<div class="tl-sum-item"><div class="v">'+totalSeasons+'</div><div class="l" data-en="Seasons" data-es="Temporadas">Seasons</div></div>';
+if(totalGames)h+='<div class="tl-sum-item"><div class="v">'+totalGames+'</div><div class="l" data-en="Games" data-es="Juegos">Games</div></div>';
+if(totalAwards)h+='<div class="tl-sum-item"><div class="v">'+totalAwards+'</div><div class="l" data-en="Awards" data-es="Premios">Awards</div></div>';
+if(yearSpan)h+='<div class="tl-sum-item"><div class="v" style="font-size:1rem">'+yearSpan+'</div><div class="l" data-en="Years" data-es="Años">Years</div></div>';
+h+='</div>';
+var typeEN={school:'School',aau:'AAU',league:'League',tournament:'Tournament',camp:'Camp',clinic:'Clinic',other:'Other'};
+var typeES={school:'Escuela',aau:'AAU',league:'Liga',tournament:'Torneo',camp:'Campamento',clinic:'Clínica',other:'Otro'};
+h+='<div class="timeline">';
+seasons.forEach(function(s){
+var hasStats=s.stats_ppg||s.stats_rpg||s.stats_apg;
+var hasAwards=s.awards&&s.awards.trim();
+h+='<div class="tl-item'+(hasAwards?' highlight':'')+'">';
+h+='<div class="tl-year">'+(s.season_year||'—')+'</div>';
+h+='<div class="tl-card">';
+h+='<div class="tl-header"><div class="tl-name">'+esc(s.season_name)+'</div>';
+h+='<span class="tl-type '+(s.season_type||'other')+'">'+(currentLang==='es'?(typeES[s.season_type]||s.season_type):(typeEN[s.season_type]||s.season_type))+'</span></div>';
+var meta=[];
+if(s.team_name)meta.push(esc(s.team_name));
+if(s.school_name)meta.push('🏫 '+esc(s.school_name));
+if(s.organization)meta.push(esc(s.organization));
+if(s.season_type==='school'&&s.grad_year)meta.push((currentLang==='es'?'Clase ':'Class of ')+s.grad_year);
+if(s.season_type!=='school'&&s.player_age)meta.push((currentLang==='es'?'Edad: ':'Age: ')+s.player_age);
+if(s.jersey_number)meta.push('#'+esc(s.jersey_number));
+if(s.games_played)meta.push(s.games_played+' '+(currentLang==='es'?'juegos':'games'));
+if(meta.length)h+='<div class="tl-meta">'+meta.join(' · ')+'</div>';
+if(hasStats){h+='<div class="tl-stats">';
+if(s.stats_ppg)h+='<div class="tl-stat"><div class="v">'+s.stats_ppg+'</div><div class="l">PPG</div></div>';
+if(s.stats_rpg)h+='<div class="tl-stat"><div class="v">'+s.stats_rpg+'</div><div class="l">RPG</div></div>';
+if(s.stats_apg)h+='<div class="tl-stat"><div class="v">'+s.stats_apg+'</div><div class="l">APG</div></div>';
+if(s.stats_spg)h+='<div class="tl-stat"><div class="v">'+s.stats_spg+'</div><div class="l">SPG</div></div>';
+if(s.stats_bpg)h+='<div class="tl-stat"><div class="v">'+s.stats_bpg+'</div><div class="l">BPG</div></div>';
+if(s.fg_pct)h+='<div class="tl-stat"><div class="v">'+s.fg_pct+'%</div><div class="l">FG</div></div>';
+if(s.three_pct)h+='<div class="tl-stat"><div class="v">'+s.three_pct+'%</div><div class="l">3PT</div></div>';
+if(s.ft_pct)h+='<div class="tl-stat"><div class="v">'+s.ft_pct+'%</div><div class="l">FT</div></div>';
+h+='</div>'}
+if(hasAwards)h+='<div class="tl-awards">🏆 '+esc(s.awards)+'</div>';
+if(s.notes)h+='<div class="tl-notes">"'+esc(s.notes)+'"</div>';
+h+='</div></div>';
+});
+h+='</div></div>';
+}
+
+h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="🧠 Hoops Mindset" data-es="🧠 Hoops Mindset">🧠 Hoops Mindset</div>';
+var tc=Object.keys(bt).length;
+if(tc>0){var av=cogAvg(bt),ac=av>=8?'var(--gold)':av>=5?'var(--green)':'var(--orange)';
+h+='<div class="cog-overall"><div class="cog-overall-lbl" data-en="OVERALL RATING" data-es="CALIFICACIÓN GENERAL">OVERALL RATING</div><div class="cog-overall-val" style="color:'+ac+'">L'+av+'</div><div class="cog-overall-rat">'+(RL[av]||'')+'</div></div>';
+h+='<div class="cog-grid">';
+['react','recall','reflex','replay','ritmo','beat'].forEach(function(t){var s=bt[t];
+if(s){h+='<div class="cog-item"><div class="cog-emoji">'+TE[t]+'</div><div class="cog-name" style="color:'+TC[t]+'">'+TN[t]+'</div><div class="cog-lvl" style="color:'+TC[t]+'">L'+s.level+'</div><div class="cog-det">'+SL[s.speed]+' · '+s.score+' pts</div><div class="cog-bar"><div class="cog-bar-f" style="width:'+(s.level*10)+'%;background:'+TC[t]+'"></div></div></div>'}
+else{h+='<div class="cog-item" style="opacity:.3"><div class="cog-emoji">'+TE[t]+'</div><div class="cog-name" style="color:'+TC[t]+'">'+TN[t]+'</div><div class="cog-lvl" style="color:#444">—</div><div class="cog-det" style="color:#333">—</div><div class="cog-bar"><div class="cog-bar-f" style="width:0%"></div></div></div>'}
+});h+='</div>'}
+else{h+='<div style="text-align:center;padding:20px;color:var(--gray);font-size:.8rem" data-en="No cognitive scores yet" data-es="Sin puntajes cognitivos aún">No cognitive scores yet</div>'}
+h+='</div>';
+
+h+='<div class="mindset-cta"><h3 data-en="🧠 TRAIN YOUR BASKETBALL MINDSET" data-es="🧠 ENTRENA TU MENTALIDAD DE CANCHA">🧠 TRAIN YOUR BASKETBALL MINDSET</h3>';
+h+='<p data-en="6 drills. 3 speeds. 10 levels. How high can you climb?" data-es="6 drills. 3 velocidades. 10 niveles. ¿Qué tan alto puedes llegar?">6 drills. 3 speeds. 10 levels. How high can you climb?</p>';
+h+='<a href="/cognitive-hoops.html" class="mcta-btn" data-en="🧠 Play Now — Free" data-es="🧠 Juega Ahora — Gratis">🧠 Play Now — Free</a>';
+h+='<div style="margin-top:10px"><a href="/cognitive-report.html" style="font-size:.78rem;font-weight:600;color:var(--gold);border-bottom:1px dashed rgba(255,215,0,.3);padding-bottom:2px" data-en="📋 See the AI Scouting Report →" data-es="📋 Ver el Reporte IA →">📋 See the AI Scouting Report →</a></div></div>';
+
+var hasHL=p.highlight_link;
+var hasVL=p.video_links&&p.video_links.length;
+var hasVU=p.video_urls&&p.video_urls.length;
+if(hasHL||hasVL||hasVU){
+h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="🎥 Highlights & Videos" data-es="🎥 Highlights y Videos">🎥 Highlights & Videos</div>';
+if(hasHL)h+='<a href="'+esc(p.highlight_link)+'" target="_blank" class="video-link-card"><span class="vl-icon">▶</span><div><div class="vl-text" data-en="Watch Highlight Reel" data-es="Ver Highlights">Watch Highlight Reel</div><div class="vl-platform">'+detectPlatform(p.highlight_link)+'</div></div></a>';
+if(hasVL)p.video_links.forEach(function(vl){if(vl)h+='<a href="'+esc(vl)+'" target="_blank" class="video-link-card"><span class="vl-icon">'+platformIcon(vl)+'</span><div><div class="vl-text">'+shortenUrl(vl)+'</div><div class="vl-platform">'+detectPlatform(vl)+'</div></div></a>'});
+if(hasVU){h+='<div class="video-grid" style="margin-top:12px">';p.video_urls.forEach(function(vu,i){h+='<div class="video-card"><video src="'+esc(vu)+'" controls preload="metadata" playsinline></video><div class="vc-label">Clip '+(i+1)+'</div></div>'});h+='</div>'}
+h+='</div>'}
+
+var hasGal=p.gallery_urls&&p.gallery_urls.length;
+if(hasGal){
+h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="📷 Photos" data-es="📷 Fotos">📷 Photos</div>';
+h+='<div class="gallery-grid">';
+p.gallery_urls.forEach(function(url,i){h+='<div class="gallery-item" onclick="openLightbox(\''+esc(url)+'\')"><img src="'+esc(url)+'" alt="Photo '+(i+1)+'" loading="lazy"></div>'});
+h+='</div></div>'}
+
+if(pm&&p.nil_bio){h+='<div class="card pc"><div class="card-title" data-en="💼 About" data-es="💼 Acerca de">💼 About</div><div class="nil-bio">'+esc(p.nil_bio)+'</div></div>'}
+
+var hs=p.instagram||p.tiktok||p.twitter||p.youtube;
+if(hs){h+='<div class="card '+(pm?'pc':'')+'"><div class="card-title" data-en="📣 Socials" data-es="📣 Redes">📣 Socials</div><div class="socials">';
+if(p.instagram)h+='<a href="https://instagram.com/'+esc(p.instagram.replace('@','')).trim()+'" target="_blank" class="social-btn">📸 '+esc(p.instagram)+'</a>';
+if(p.tiktok)h+='<a href="https://tiktok.com/@'+esc(p.tiktok.replace('@','')).trim()+'" target="_blank" class="social-btn">🎵 '+esc(p.tiktok)+'</a>';
+if(p.twitter)h+='<a href="https://x.com/'+esc(p.twitter.replace('@','')).trim()+'" target="_blank" class="social-btn">𝕏 '+esc(p.twitter)+'</a>';
+if(p.youtube)h+='<a href="'+esc(p.youtube)+'" target="_blank" class="social-btn">📺 YouTube</a>';
+h+='</div></div>'}
+
+// UPGRADE BANNER (Free only)
+if(!pm){h+='<div class="upgrade-banner"><h3 data-en="⭐ GO PREMIUM" data-es="⭐ HAZTE PREMIUM">⭐ GO PREMIUM</h3>';
+h+='<p data-en="Unlock the full profile experience" data-es="Desbloquea la experiencia completa">Unlock the full profile experience</p><ul>';
+h+='<li data-en="Verified badge ✓" data-es="Insignia verificada ✓">Verified badge ✓</li>';
+h+='<li data-en="Full stats & measurables" data-es="Stats y medidas completas">Full stats & measurables</li>';
+h+='<li data-en="Direct contact button for scouts" data-es="Botón de contacto para scouts">Direct contact button for scouts</li>';
+h+='<li data-en="NIL bio & custom profile" data-es="Bio NIL y perfil personalizado">NIL bio & custom profile</li>';
+h+='<li data-en="Priority in search results" data-es="Prioridad en búsquedas">Priority in search results</li></ul>';
+h+='<p style="font-size:.65rem;color:var(--gray);margin-bottom:10px" data-en="⚠️ Use the same email as your Hooporia profile" data-es="⚠️ Usa el mismo email de tu perfil Hooporia">⚠️ Use the same email as your Hooporia profile</p>';
+h+='<a href="https://buy.stripe.com/eVq28s8yrgwuaMEgP88Zq03" class="up-btn" style="display:inline-block;margin-bottom:8px" data-en="⭐ $49/year — Best Value" data-es="⭐ $49/año — Mejor Valor">⭐ $49/year — Best Value</a><br>';
+h+='<a href="https://buy.stripe.com/00wdRa7un2FEf2U0Qa8Zq02" class="up-btn-secondary" data-en="$7/month" data-es="$7/mes">$7/month</a></div>'}
+
+if(!pm)h+='<div class="powered"><a href="/"><img src="/hooporia.png" alt="Hooporia"> Powered by Hooporia™</a></div>';
+
+document.getElementById('loadState').style.display='none';
+document.getElementById('profileOut').style.display='block';
+document.getElementById('profileOut').innerHTML=h;
+setLang(currentLang);
+}
+
+function detectPlatform(url){if(!url)return'';url=url.toLowerCase();if(url.indexOf('youtube')>-1||url.indexOf('youtu.be')>-1)return'YouTube';if(url.indexOf('instagram')>-1)return'Instagram';if(url.indexOf('tiktok')>-1)return'TikTok';if(url.indexOf('x.com')>-1||url.indexOf('twitter')>-1)return'Twitter/X';return'Video'}
+function platformIcon(url){var p=detectPlatform(url);if(p==='YouTube')return'📺';if(p==='Instagram')return'📸';if(p==='TikTok')return'🎵';return'▶'}
+function shortenUrl(url){try{var u=new URL(url);return u.hostname+u.pathname.substring(0,30)+(u.pathname.length>30?'...':'')}catch(e){return url.substring(0,40)}}
+
+window.openLightbox=function(url){
+var lb=document.getElementById('lightbox');
+document.getElementById('lightboxImg').src=url;
+lb.classList.add('show');
+};
+</script>
+</body>
+</html>
