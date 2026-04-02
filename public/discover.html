@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discover — Hooporia</title>
+<meta name="description" content="Discover basketball talent. Browse player profiles, stats, cognitive scores, and highlights on Hooporia.">
+<link rel="icon" href="/hooporia.png">
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;document.querySelectorAll('.en,.es').forEach(function(e){e.style.display=e.classList.contains(l)?'':'none'});document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});try{localStorage.setItem('gostar-lang',l)}catch(e){}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fafaf9;line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+input,select{font-family:inherit}
+:root{--black:#0a0a0a;--black2:#131313;--black3:#1a1a1a;--orange:#e8611a;--orange-light:#f4832f;--white:#fafaf9;--gray:#8a8a8a;--green:#22c55e;--blue:#3b82f6;--purple:#a855f7}
+html[lang="en"] .es{display:none!important}
+html[lang="es"] .en{display:none!important}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(10,10,10,.9);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{display:block;height:36px}
+.nav-logo img{height:36px;width:auto}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-link{font-size:.8rem;font-weight:600;color:var(--gray);transition:color .2s;padding:6px 14px;border-radius:6px}
+.nav-link:hover{color:var(--white)}
+.nav-link.active{background:rgba(232,97,26,.12);color:var(--orange)}
+.lang-toggle{display:flex;gap:4px;background:var(--black3);border-radius:6px;padding:2px}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
+.lang-btn.active{background:var(--orange);color:#fff}
+
+.scout-hero{padding:90px 24px 32px;text-align:center}
+.scout-hero h1{font-size:2rem;font-weight:800;margin-bottom:8px}
+.scout-hero p{color:var(--gray);font-size:.95rem;max-width:500px;margin:0 auto}
+
+.container{max-width:1100px;margin:0 auto;padding:0 24px 60px}
+
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.filter-input{padding:10px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:var(--black2);color:var(--white);font-size:.85rem;font-weight:500;min-width:140px}
+.filter-input:focus{outline:none;border-color:var(--orange)}
+.filter-input::placeholder{color:#555}
+.filter-btn{padding:10px 20px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--orange);color:#fff;transition:all .2s}
+.filter-btn:hover{background:var(--orange-light)}
+.results-count{font-size:.8rem;color:var(--gray);font-weight:600;padding:8px 0}
+
+.scout-tabs{display:flex;gap:4px;margin-bottom:24px}
+.s-tab{padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:700;background:var(--black2);color:var(--gray);border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .2s}
+.s-tab:hover{color:var(--white)}
+.s-tab.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+.s-panel{display:none}
+.s-panel.active{display:block}
+
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.player-card{background:var(--black2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:20px;transition:all .2s}
+.player-card:hover{border-color:rgba(232,97,26,.3);transform:translateY(-2px)}
+.player-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.player-jersey{width:48px;height:48px;border-radius:12px;background:rgba(232,97,26,.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:var(--orange)}
+.player-name{font-size:1.05rem;font-weight:800;margin-bottom:2px}
+.player-info{font-size:.8rem;color:var(--gray)}
+.player-stats{display:flex;gap:16px;margin-bottom:12px;padding:12px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.player-stat{text-align:center;flex:1}
+.player-stat .num{font-size:1.2rem;font-weight:800;color:var(--green)}
+.player-stat .label{font-size:.65rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.player-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.player-tag{padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;background:rgba(255,255,255,.06);color:var(--gray)}
+.player-tag.pos{background:rgba(232,97,26,.1);color:var(--orange)}
+.player-tag.grad{background:rgba(59,130,246,.1);color:var(--blue)}
+.player-tag.school{background:rgba(168,85,247,.1);color:var(--purple)}
+.player-links{display:flex;gap:8px}
+.player-links a{padding:6px 14px;border-radius:6px;font-size:.75rem;font-weight:700;transition:all .2s}
+.highlight-link{background:rgba(239,68,68,.1);color:#ef4444}
+.highlight-link:hover{background:rgba(239,68,68,.2)}
+.profile-link{background:rgba(232,97,26,.1);color:var(--orange)}
+.profile-link:hover{background:rgba(232,97,26,.2)}
+
+.loading{text-align:center;padding:60px 24px}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:60px 24px;color:var(--gray)}
+.empty-state .icon{font-size:2.5rem;margin-bottom:12px}
+
+.footer{text-align:center;padding:40px 24px;color:var(--gray);font-size:.75rem;border-top:1px solid rgba(255,255,255,.06)}
+.footer a{color:var(--orange)}
+
+@media(max-width:600px){
+  .player-grid{grid-template-columns:1fr}
+  .filters{flex-direction:column}
+  .filter-input{width:100%}
+  .nav-link{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo"><img src="/hooporia.png" alt="Hooporia"></a>
+  <div class="nav-right">
+    <a href="/" class="nav-link"><span class="en">Home</span><span class="es">Inicio</span></a>
+    <a href="/cognitive-hoops.html" class="nav-link"><span class="en">Hoops Mindset</span><span class="es">Hoops Mindset</span></a>
+    <a href="/discover.html" class="nav-link active"><span class="en">Discover</span><span class="es">Discover</span></a>
+    <a href="/login.html" class="nav-link"><span class="en">Log In</span><span class="es">Entrar</span></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+
+<div class="scout-hero">
+  <h1><span class="en">🎓 Discover</span><span class="es">🎓 Discover</span></h1>
+  <p><span class="en">Discover basketball talent. Browse player profiles, stats, cognitive scores, and basketball timelines.</span><span class="es">Descubre talento de baloncesto. Navega perfiles, estadísticas, puntajes cognitivos e historias de baloncesto.</span></p>
+</div>
+
+<div class="container">
+  <div class="scout-tabs">
+    <button class="s-tab active" onclick="showSTab('players',this)"><span class="en">Players</span><span class="es">Jugadores</span></button>
+  </div>
+
+  <div class="s-panel active" id="sp-players">
+    <div class="filters">
+      <input class="filter-input" id="fSearch" placeholder="Search name..." oninput="filterPlayers()">
+      <select class="filter-input" id="fPosition" onchange="filterPlayers()">
+        <option value="">All Positions</option>
+        <option value="PG">PG</option>
+        <option value="SG">SG</option>
+        <option value="SF">SF</option>
+        <option value="PF">PF</option>
+        <option value="C">C</option>
+        <option value="G">G</option>
+        <option value="F">F</option>
+      </select>
+      <select class="filter-input" id="fSort" onchange="filterPlayers()">
+        <option value="recent">Sort: Recently Added</option>
+        <option value="ppg">Sort: Points High→Low</option>
+        <option value="name">Sort: Name A→Z</option>
+      </select>
+      <select class="filter-input" id="fNIL" onchange="filterPlayers()">
+        <option value="">All Players</option>
+        <option value="nil">📣 Open for Opportunities Only</option>
+      </select>
+    </div>
+    <div class="results-count" id="resultsCount"></div>
+    <div id="playerGrid" class="player-grid">
+      <div class="loading"><div class="spinner"></div><p style="color:var(--gray);font-size:.85rem"><span class="en">Loading players...</span><span class="es">Cargando jugadores...</span></p></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="en">Powered by</span><span class="es">Impulsado por</span> <a href="/">Hooporia™</a> · <a href="/privacy.html"><span class="en">Privacy</span><span class="es">Privacidad</span></a> · <a href="/terms.html"><span class="en">Terms</span><span class="es">Términos</span></a>
+  <div style="font-size:.55rem;color:#333;margin-top:8px;max-width:500px;margin-left:auto;margin-right:auto" data-en="This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities." data-es="Este programa se enfoca en desarrollo del atleta, marca personal y oportunidades futuras. No garantizamos resultados específicos ni oportunidades.">This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities.</div>
+</div>
+
+<script>
+var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
+var sb=null;
+var allPlayers=[];
+
+function showSTab(id,btn){
+  document.querySelectorAll('.s-tab').forEach(function(t){t.classList.remove('active')});
+  btn.classList.add('active');
+  document.querySelectorAll('.s-panel').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('sp-'+id).classList.add('active');
+}
+
+(async function init(){
+  try{var sl=localStorage.getItem('gostar-lang');if(sl)setLang(sl)}catch(e){}
+  try{
+    await new Promise(function(res,rej){
+      var s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+      s.onload=res;s.onerror=rej;
+      document.head.appendChild(s);
+    });
+    sb=window.supabase.createClient(SB_URL,SB_KEY);
+
+    var[playersRes,cogRes]=await Promise.all([
+      sb.from('players').select('*').order('created_at',{ascending:false}),
+      sb.from('cognitive_scores').select('*')
+    ]);
+
+    allPlayers=playersRes.data||[];
+
+    // Build cognitive lookup - best level per player
+    var cogMap={};
+    (cogRes.data||[]).forEach(function(s){
+      if(!cogMap[s.player_id])cogMap[s.player_id]={total:0,count:0,tests:{}};
+      var existing=cogMap[s.player_id].tests[s.test_name];
+      if(!existing||s.level>existing.level){
+        if(existing)cogMap[s.player_id].total-=existing.level;
+        else cogMap[s.player_id].count++;
+        cogMap[s.player_id].tests[s.test_name]=s;
+        cogMap[s.player_id].total+=s.level;
+      }
+    });
+
+    allPlayers.forEach(function(p){
+      var cog=cogMap[p.id];
+      p._cogLevel=cog?Math.round(cog.total/cog.count):0;
+      p._cogTests=cog?cog.tests:{};
+    });
+
+    filterPlayers();
+  }catch(e){
+    console.error('Discover error:',e);
+    document.getElementById('playerGrid').innerHTML='<div class="empty-state"><div class="icon">⚠️</div><p>Error loading data</p></div>';
+  }
+})();
+
+function filterPlayers(){
+  var search=(document.getElementById('fSearch').value||'').toLowerCase();
+  var pos=document.getElementById('fPosition').value;
+  var sort=document.getElementById('fSort').value;
+  var nilOnly=document.getElementById('fNIL').value;
+
+  var thirtyDaysAgo=new Date();thirtyDaysAgo.setDate(thirtyDaysAgo.getDate()-30);
+
+  var filtered=allPlayers.filter(function(p){
+    // Hide free profiles older than 30 days
+    if(p.profile_tier!=='premium'&&p.profile_tier!=='pro'&&p.created_at&&new Date(p.created_at)<thirtyDaysAgo)return false;
+    if(search&&!(p.first_name+' '+p.last_name).toLowerCase().includes(search))return false;
+    if(pos&&p.position!==pos)return false;
+    if(nilOnly==='nil'&&!p.nil_contact_email)return false;
+    return true;
+  });
+
+  if(sort==='ppg')filtered.sort(function(a,b){return(b.stats_ppg||0)-(a.stats_ppg||0)});
+  else if(sort==='name')filtered.sort(function(a,b){return(a.last_name||'').localeCompare(b.last_name||'')});
+  else if(sort==='recent')filtered.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at)});
+
+  document.getElementById('resultsCount').textContent=filtered.length+' player'+(filtered.length!==1?'s':'')+' found';
+  renderPlayers(filtered);
+}
+
+function renderPlayers(players){
+  var el=document.getElementById('playerGrid');
+  if(!players.length){
+    el.innerHTML='<div class="empty-state"><div class="icon">🏀</div><p><span class="en">No players found. Adjust your filters or check back soon.</span><span class="es">No se encontraron jugadores. Ajusta tus filtros o vuelve pronto.</span></p></div>';
+    setLang(currentLang);return;
+  }
+  el.innerHTML=players.map(function(p){
+    return '<div class="player-card">'+
+      '<div class="player-top">'+
+        '<div class="player-jersey">#'+(p.jersey_number||'—')+'</div>'+
+        '<div>'+
+          '<div class="player-name">'+esc(p.first_name)+' '+esc(p.last_name)+'</div>'+
+          '<div class="player-info">'+[p.position,p.height,p.age?p.age+' yrs':''].filter(Boolean).join(' · ')+'</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="player-stats">'+
+        '<div class="player-stat"><div class="num">'+(p.stats_ppg||'—')+'</div><div class="label">PPG</div></div>'+
+        '<div class="player-stat"><div class="num">'+(p.stats_rpg||'—')+'</div><div class="label">RPG</div></div>'+
+        '<div class="player-stat"><div class="num">'+(p.stats_apg||'—')+'</div><div class="label">APG</div></div>'+
+        '<div class="player-stat"><div class="num">'+(p.height||'—')+'</div><div class="label">HT</div></div>'+
+        (p._cogLevel?'<div class="player-stat"><div class="num" style="color:'+(p._cogLevel>=8?'#FFD700':p._cogLevel>=5?'#22c55e':'#e8611a')+'">L'+p._cogLevel+'</div><div class="label">🧠 COG</div></div>':'')+
+      '</div>'+
+      '<div class="player-meta">'+
+        (p.position?'<span class="player-tag pos">'+p.position+'</span>':'')+
+        (p.age?'<span class="player-tag">Age '+p.age+'</span>':'')+
+        (p.weight?'<span class="player-tag">'+esc(p.weight)+'</span>':'')+
+        (p._cogLevel?'<span class="player-tag" style="background:rgba(155,89,182,.1);color:#9B59B6">🧠 Mindset L'+p._cogLevel+'</span>':'')+
+      '</div>'+
+      '<div class="player-links">'+
+        '<a href="/player/'+esc(p.slug)+'" class="profile-link">👤 <span class="en">View Profile</span><span class="es">Ver Perfil</span></a>'+
+        (p.highlight_link?'<a href="'+esc(p.highlight_link)+'" target="_blank" class="highlight-link">🎥 <span class="en">Highlights</span><span class="es">Videos</span></a>':'')+
+      '</div>'+
+      ((p.nil_contact_email)?
+        '<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)">'+
+          '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px"><span style="background:rgba(168,85,247,.12);color:var(--purple);font-size:.7rem;font-weight:800;padding:3px 10px;border-radius:20px">📣 Open for Opportunities</span></div>'+
+          (p.nil_bio?'<div style="font-size:.8rem;color:var(--gray);margin-bottom:8px">'+esc(p.nil_bio)+'</div>':'')+
+          '<div style="display:flex;flex-wrap:wrap;gap:6px">'+
+            (p.nil_contact_email?'<a href="mailto:'+esc(p.nil_contact_email)+'" style="padding:4px 10px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(34,197,94,.1);color:var(--green)">✉ Contact for NIL</a>':'')+
+          '</div>'+
+        '</div>':'')+
+    '</div>';
+  }).join('');
+  setLang(currentLang);
+}
+
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+</script>
+</body>
+</html>
