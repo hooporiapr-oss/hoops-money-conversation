@@ -23,17 +23,25 @@ button{cursor:pointer;border:none;font-family:inherit}
 select{font-family:inherit}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
-.nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
-.nav-brand{display:flex;align-items:center;gap:8px}
-.nav-brand img{height:28px}
-.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px}
-.nav-right{display:flex;align-items:center;gap:12px}
-.nav-link{font-size:.75rem;font-weight:600;color:var(--gray);transition:color .2s}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand img{height:32px}
+.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:.78rem;font-weight:600;color:var(--gray);transition:color .2s}
 .nav-link:hover{color:var(--white)}
-.nav-link.active{color:var(--gold)}
-.lang-toggle{display:flex;gap:3px;background:var(--black3);border-radius:6px;padding:2px}
-.lang-btn{padding:4px 8px;border-radius:4px;font-size:.6rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;border:none;cursor:pointer}
+.lang-btn{padding:5px 10px;border-radius:5px;font-size:.65rem;font-weight:700;background:transparent;color:var(--gray);transition:all .2s;letter-spacing:.05em;border:none;cursor:pointer}
 .lang-btn.active{background:var(--gold);color:var(--black)}
+.nav-cta{padding:8px 22px;border-radius:8px;font-size:.78rem;font-weight:700;background:var(--gold);color:var(--black);border:none;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.nav-cta:hover{background:#ffe44d}
+.hamburger{background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer;padding:6px 10px;line-height:1;border-radius:8px;transition:background .2s}
+.hamburger:hover{background:rgba(255,255,255,.06)}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(10,10,15,.97);backdrop-filter:blur(20px);padding:16px 24px 24px;border-bottom:1px solid rgba(255,255,255,.06);z-index:99;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{display:block;padding:12px 16px;font-size:.88rem;font-weight:600;color:var(--gray-light);border-radius:10px;transition:all .2s}
+.mobile-menu a:hover{background:rgba(255,255,255,.04);color:var(--white)}
+.mm-lang{display:flex;gap:4px;padding:12px 16px}
+.mm-cta{background:var(--gold)!important;color:var(--black)!important;text-align:center;font-weight:700!important;border-radius:10px!important;margin-top:8px}
 
 .container{max-width:900px;margin:0 auto;padding:80px 24px 60px}
 
@@ -137,19 +145,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .lb-table th:nth-child(3){display:none}
 .lb-row td:nth-child(3){display:none}
 .nav-link{display:none}
+.nav-cta{display:none}
 }
 </style>
 </head>
 <body>
+<script>function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('hamBtn');if(m.classList.contains('open')){m.classList.remove('open');b.textContent='☰'}else{m.classList.add('open');b.textContent='✕'}}</script>
 
 <nav><div class="nav-inner">
 <a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
 <div class="nav-right">
-<a href="/cognitive-hoops.html" class="nav-link" data-en="Hoops Mindset" data-es="Hoops Mindset">Hoops Mindset</a>
-<a href="/discover.html" class="nav-link" data-en="Discover" data-es="Descubrir">Discover</a>
-<a href="/leaderboard.html" class="nav-link active" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
-<div class="lang-toggle"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
-</div></div></nav>
+<a href="/programs.html" class="nav-link" data-en="Programs" data-es="Programas">Programs</a>
+<a href="/cognitive-report.html" class="nav-link" data-en="AI Report" data-es="Reporte IA">AI Report</a>
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Drills" data-es="Drills">Drills</a>
+<button class="hamburger" id="hamBtn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+<a href="/join.html"><button class="nav-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</button></a>
+</div></div>
+<div class="mobile-menu" id="mobileMenu">
+<a href="/programs.html" data-en="Programs" data-es="Programas">Programs</a>
+<a href="/cognitive-report.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
+<a href="/cognitive-hoops.html" data-en="Cognitive Drills" data-es="Drills Cognitivos">Cognitive Drills</a>
+<a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<a href="/ritnome.html" data-en="RITNOME™" data-es="RITNOME™">RITNOME™</a>
+<a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
+<div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
+<a href="/join.html" class="mm-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</a>
+</div></nav>
 
 <div class="container">
 
@@ -245,8 +267,7 @@ var speed=document.getElementById('fSpeed').value;
 var pos=document.getElementById('fPosition').value;
 var grad=document.getElementById('fGrad').value;
 
-// Build best score per player per test
-var playerBests={};// {playerId: {react:{level,score,speed}, recall:...}}
+var playerBests={};
 allScores.forEach(function(s){
 if(speed&&s.speed!==speed)return;
 if(!playerBests[s.player_id])playerBests[s.player_id]={};
@@ -256,7 +277,6 @@ playerBests[s.player_id][s.test_name]=s;
 }
 });
 
-// Build ranking entries
 var entries=[];
 Object.keys(playerBests).forEach(function(pid){
 var p=playerMap[pid];
@@ -280,7 +300,6 @@ entries.push({player:p,avgLevel:t.level,roundedLevel:t.level,totalScore:t.score,
 }
 });
 
-// Sort
 entries.sort(function(a,b){
 if(b.roundedLevel!==a.roundedLevel)return b.roundedLevel-a.roundedLevel;
 return b.totalScore-a.totalScore;
@@ -305,10 +324,9 @@ return;
 
 infoEl.textContent=entries.length+' '+(currentLang==='es'?'jugadores clasificados':'players ranked');
 
-// PODIUM (top 3)
 if(entries.length>=3){
 podiumEl.style.display='flex';
-var top3=[entries[1],entries[0],entries[2]];// silver, gold, bronze
+var top3=[entries[1],entries[0],entries[2]];
 var medals=['🥈','🥇','🥉'];
 var barColors=[testColors[currentTest]||'#C0C0C0',testColors[currentTest]||'#FFD700',testColors[currentTest]||'#CD7F32'];
 if(currentTest==='overall')barColors=['#C0C0C0','#FFD700','#CD7F32'];
@@ -326,7 +344,6 @@ return'<div class="podium-spot" onclick="window.location.href=\'/player/'+esc(p.
 }).join('');
 }else{podiumEl.style.display='none'}
 
-// TABLE
 var testLabel=currentTest==='overall'?(currentLang==='es'?'General':'Overall'):currentTest.toUpperCase();
 var html='<table class="lb-table"><thead><tr>'+
 '<th>#</th>'+
