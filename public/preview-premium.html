@@ -148,6 +148,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .cta-btn-sub{display:inline-block;padding:10px 28px;border-radius:10px;font-size:.8rem;font-weight:600;color:var(--gray-light);border:1.5px solid rgba(255,255,255,.12)}
 .cta-sub{font-size:.65rem;color:var(--gray);margin-top:10px}
 
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:640px;margin:0 auto;padding:0 24px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.78rem;color:var(--gray);transition:color .2s}
+.footer-links a:hover{color:var(--white)}
+.footer-copy{font-size:.65rem;color:#444}
+
 /* RESPONSIVE */
 @media(max-width:768px){
 .ht{flex-direction:column;text-align:center}
@@ -323,9 +331,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 <p class="cta-sub" data-en="⚠️ Use the same email you signed up with so your account upgrades automatically." data-es="⚠️ Usa el mismo email con el que te registraste para que tu cuenta se actualice automáticamente.">⚠️ Use the same email you signed up with so your account upgrades automatically.</p>
 </div>
 
-<div style="text-align:center;padding:16px 24px;font-size:.55rem;color:#333" data-en="This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities." data-es="Este programa se enfoca en desarrollo del atleta, marca personal y oportunidades futuras. No garantizamos resultados específicos ni oportunidades.">This program focuses on athlete development, branding, and future opportunities. We do not guarantee specific outcomes or opportunities.</div>
-
 </div>
+
+<footer><div class="footer-inner">
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC. All Rights Reserved.</div>
+</div></footer>
 
 <script>
 try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
