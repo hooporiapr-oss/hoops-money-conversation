@@ -88,10 +88,7 @@ style.textContent = `
 .hc-typing span:nth-child(2){animation-delay:.15s}
 .hc-typing span:nth-child(3){animation-delay:.3s}
 @keyframes hcDot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
-#hc-quick{display:flex;flex-wrap:wrap;gap:6px;padding:8px 14px;border-top:1px solid rgba(255,255,255,.04)}
-.hc-quick-btn{padding:6px 10px;border-radius:20px;border:1px solid rgba(255,215,0,.15);background:rgba(255,215,0,.04);color:rgba(255,255,255,.7);font-size:.65rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;white-space:nowrap}
-.hc-quick-btn:hover{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.08);color:#FFD700}
-.hc-quick-btn:active{transform:scale(.96)}
+#hc-quick{display:none}
 #hc-input-wrap{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.3)}
 #hc-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;color:#fff;font-size:.82rem;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s}
 #hc-input:focus{border-color:rgba(255,215,0,.3)}
@@ -110,7 +107,6 @@ style.textContent = `
 #hc-input{font-size:.95rem;padding:12px 16px;border-radius:14px}
 #hc-send{width:44px;height:44px;font-size:1.1rem}
 #hc-input-wrap{padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
-.hc-quick-btn{font-size:.75rem;padding:8px 14px}
 #hc-messages{padding:16px 16px 10px}
 #hc-powered{font-size:.55rem;padding:8px}
 }
@@ -133,7 +129,6 @@ panel.innerHTML = `
 <button id="hc-close" onclick="document.getElementById('hc-fab').click()">✕</button>
 </div>
 <div id="hc-messages"></div>
-<div id="hc-quick"></div>
 <div id="hc-input-wrap">
 <input id="hc-input" type="text" placeholder="${tx('placeholder')}" autocomplete="off">
 <button id="hc-send" disabled>➤</button>
@@ -145,27 +140,6 @@ document.body.appendChild(panel);
 var messagesEl = document.getElementById('hc-messages');
 var inputEl = document.getElementById('hc-input');
 var sendBtn = document.getElementById('hc-send');
-var quickEl = document.getElementById('hc-quick');
-
-// Quick actions
-function renderQuickActions() {
-  var actions = [
-    { key: 'quickDrills', msg: lang === 'es' ? '¿Qué drills tienen y cómo funcionan?' : 'What drills do you have and how do they work?' },
-    { key: 'quickFree', msg: lang === 'es' ? '¿Qué puedo hacer gratis?' : 'What can I do for free?' },
-    { key: 'quickProgram', msg: lang === 'es' ? 'Tengo un programa de baloncesto, ¿cómo puedo usar Hooporia?' : 'I run a basketball program, how can I use Hooporia?' },
-    { key: 'quickPricing', msg: lang === 'es' ? '¿Cuánto cuesta premium?' : 'What does premium cost?' },
-    { key: 'quickReport', msg: lang === 'es' ? '¿Cómo funciona el reporte de IA?' : 'How does the AI report work?' },
-    { key: 'quickStart', msg: lang === 'es' ? '¿Cómo empiezo?' : 'How do I get started?' }
-  ];
-  quickEl.innerHTML = '';
-  actions.forEach(function(a) {
-    var btn = document.createElement('button');
-    btn.className = 'hc-quick-btn';
-    btn.textContent = tx(a.key);
-    btn.onclick = function() { sendMessage(a.msg); quickEl.style.display = 'none'; };
-    quickEl.appendChild(btn);
-  });
-}
 
 function toggleChat() {
   isOpen = !isOpen;
@@ -174,7 +148,6 @@ function toggleChat() {
   fab.innerHTML = isOpen ? '✕' : '🏀<div id="hc-badge"></div>';
   if (isOpen && messages.length === 0) {
     showGreeting();
-    renderQuickActions();
   }
   if (isOpen) {
     setTimeout(function() { inputEl.focus(); }, 300);
