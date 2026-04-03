@@ -1,338 +1,292 @@
-// api/hooporia-chat.js — Vercel Serverless Function
-// Hooporia AI Agent with live Supabase player data
+/* hooporia-chat.js — Drop-in chat widget for any Hooporia page
+   Usage: <script src="/hooporia-chat.js"></script>
+   That's it. The widget creates itself. */
 
-const SB_URL = 'https://rhsszirtbyvalugmbecm.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
+(function(){
+'use strict';
 
-const POSITIONS = ['PG', 'SG', 'SF', 'PF', 'C', 'G', 'F'];
-const DRILLS = ['react', 'recall', 'reflex', 'replay', 'ritmo', 'beat'];
-const SCOUT_KEYWORDS = ['player', 'players', 'scout', 'scouting', 'roster', 'who', 'top', 'best', 'rank', 'leaderboard', 'class of', 'grad', 'position', 'point guard', 'shooting guard', 'small forward', 'power forward', 'center', 'jugador', 'jugadores', 'scout', 'mejor', 'mejores', 'clasificación', 'clase de', 'posición', 'base', 'escolta', 'alero', 'ala-pivot', 'pívot', 'profile', 'perfil', 'bpm score', 'level', 'nivel', 'how is', 'show me', 'find', 'search', 'muéstrame', 'buscar', 'tell me about', 'cuéntame'];
+var ENDPOINT = '/api/hooporia-chat';
+var messages = [];
+var isOpen = false;
+var isLoading = false;
+var lang = (localStorage.getItem('lc-lang') || 'en');
 
-const LEVEL_LABELS = {1:'Rookie',2:'Developing',3:'Solid',4:'Advanced',5:'Elite',6:'Pro',7:'All-Star',8:'MVP',9:'Hall of Fame',10:'GOAT'};
+var t = {
+  en: {
+    greeting: "Hey! 🏀 I'm the Hooporia assistant. Ask me anything — drills, BPM scores, pricing, programs, whatever you need.",
+    placeholder: 'Ask me anything...',
+    quickDrills: '🧠 What are the drills?',
+    quickFree: '🆓 What\'s free?',
+    quickProgram: '🏀 For my program',
+    quickPricing: '💰 Pricing',
+    quickReport: '📋 AI Report',
+    quickStart: '🚀 How to start',
+    powered: 'Powered by BPM Basketball™',
+    error: 'Something went wrong. Try again!',
+    title: 'HOOPORIA'
+  },
+  es: {
+    greeting: "¡Hey! 🏀 Soy el asistente de Hooporia. Pregúntame lo que quieras — drills, puntajes BPM, precios, programas, lo que necesites.",
+    placeholder: 'Pregúntame lo que sea...',
+    quickDrills: '🧠 ¿Qué drills hay?',
+    quickFree: '🆓 ¿Qué es gratis?',
+    quickProgram: '🏀 Para mi programa',
+    quickPricing: '💰 Precios',
+    quickReport: '📋 Reporte IA',
+    quickStart: '🚀 Cómo empezar',
+    powered: 'Powered by BPM Basketball™',
+    error: '¡Algo falló! Intenta de nuevo.',
+    title: 'HOOPORIA'
+  }
+};
 
-async function sbQuery(table, params = '') {
-  const url = `${SB_URL}/rest/v1/${table}?${params}`;
-  const res = await fetch(url, {
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': `Bearer ${SB_KEY}`,
-      'Content-Type': 'application/json'
-    }
-  });
-  if (!res.ok) return [];
-  return res.json();
+function tx(key) { return (t[lang] && t[lang][key]) || t.en[key] || key; }
+
+// Watch for language changes
+var langCheck = setInterval(function(){
+  var nl = localStorage.getItem('lc-lang') || 'en';
+  if (nl !== lang) { lang = nl; updateLangUI(); }
+}, 1000);
+
+function updateLangUI() {
+  var ph = document.getElementById('hc-input');
+  if (ph) ph.placeholder = tx('placeholder');
+  var pw = document.getElementById('hc-powered');
+  if (pw) pw.textContent = tx('powered');
+  var en = document.getElementById('hcLangEN');
+  var es = document.getElementById('hcLangES');
+  if (en) en.classList.toggle('active', lang === 'en');
+  if (es) es.classList.toggle('active', lang === 'es');
 }
 
-function needsPlayerData(messages) {
-  const lastMsg = messages[messages.length - 1];
-  if (!lastMsg || lastMsg.role !== 'user') return false;
-  const text = lastMsg.content.toLowerCase();
-  return SCOUT_KEYWORDS.some(k => text.includes(k)) ||
-    POSITIONS.some(p => text.includes(p.toLowerCase())) ||
-    DRILLS.some(d => text.includes(d));
+window.setHcLang = function(l) {
+  lang = l;
+  try { localStorage.setItem('lc-lang', l); } catch(e) {}
+  updateLangUI();
+  if (typeof setLang === 'function') setLang(l);
+  var firstMsg = document.querySelector('#hc-messages .hc-msg.bot');
+  if (firstMsg && messages.length > 0 && messages[0].role === 'assistant') {
+    var newGreeting = tx('greeting');
+    messages[0].content = newGreeting;
+    firstMsg.innerHTML = formatText(newGreeting);
+  }
+};
+
+// Inject styles
+var style = document.createElement('style');
+style.textContent = `
+#hc-fab{position:fixed;bottom:20px;right:20px;z-index:9998;width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#FFD700,#FF6B35);box-shadow:0 4px 20px rgba(255,215,0,.4),0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:1.6rem;transition:all .3s;animation:hcBounce 2s ease-in-out infinite}
+#hc-fab:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(255,215,0,.5)}
+#hc-fab:active{transform:scale(.95)}
+#hc-fab.open{animation:none;border-radius:50%;background:linear-gradient(135deg,#333,#222)}
+@keyframes hcBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#hc-badge{position:absolute;top:-2px;right:-2px;width:14px;height:14px;background:#22c55e;border-radius:50%;border:2px solid #0a0a0f;animation:hcPulse 2s ease-in-out infinite}
+@keyframes hcPulse{0%,100%{opacity:.6;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+#hc-panel{position:fixed;bottom:86px;right:16px;width:340px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100dvh - 120px);background:#0d0d14;border:1px solid rgba(255,215,0,.12);border-radius:20px;z-index:9999;display:none;flex-direction:column;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.03)}
+#hc-panel.open{display:flex;animation:hcSlideUp .35s cubic-bezier(.4,0,.2,1)}
+@keyframes hcSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#hc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,215,0,.04);border-bottom:1px solid rgba(255,215,0,.08)}
+#hc-header-left{display:flex;align-items:center;gap:10px}
+#hc-header-icon{font-size:1.4rem}
+#hc-header-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:#FFD700}
+#hc-header-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;animation:hcPulse 2s ease-in-out infinite}
+#hc-close{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white,#fff);font-size:1rem;font-weight:700;cursor:pointer;padding:6px 10px;border-radius:8px;transition:all .2s;line-height:1}
+#hc-close:hover{background:rgba(255,255,255,.15);color:#fff}
+#hc-header-right{display:flex;align-items:center;gap:6px}
+#hc-lang-toggle{display:flex;gap:2px}
+.hc-lang-btn{padding:4px 8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);border-radius:4px;font-size:.55rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.hc-lang-btn.active{border-color:#FFD700;color:#FFD700}
+#hc-messages{flex:1;overflow-y:auto;padding:14px 14px 8px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(255,215,0,.15) transparent}
+#hc-messages::-webkit-scrollbar{width:4px}
+#hc-messages::-webkit-scrollbar-thumb{background:rgba(255,215,0,.15);border-radius:2px}
+.hc-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:.82rem;line-height:1.55;font-family:'Outfit',sans-serif;word-wrap:break-word;animation:hcFadeIn .3s ease}
+@keyframes hcFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.hc-msg.bot{align-self:flex-start;background:rgba(255,255,255,.06);color:rgba(255,255,255,.88);border-bottom-left-radius:4px}
+.hc-msg.user{align-self:flex-end;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,107,53,.1));color:#fff;border-bottom-right-radius:4px;border:1px solid rgba(255,215,0,.12)}
+.hc-msg.bot a{color:#FFD700;text-decoration:underline}
+.hc-typing{align-self:flex-start;padding:10px 16px;display:flex;gap:4px;animation:hcFadeIn .3s ease}
+.hc-typing span{width:6px;height:6px;background:rgba(255,215,0,.4);border-radius:50%;animation:hcDot 1.2s ease-in-out infinite}
+.hc-typing span:nth-child(2){animation-delay:.15s}
+.hc-typing span:nth-child(3){animation-delay:.3s}
+@keyframes hcDot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+#hc-quick{display:none}
+#hc-input-wrap{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.3)}
+#hc-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;color:#fff;font-size:.82rem;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s}
+#hc-input:focus{border-color:rgba(255,215,0,.3)}
+#hc-input::placeholder{color:rgba(255,255,255,.25)}
+#hc-send{width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,#FFD700,#FF6B35);color:#0a0a0f;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+#hc-send:hover{transform:scale(1.08)}
+#hc-send:active{transform:scale(.95)}
+#hc-send:disabled{opacity:.3;cursor:not-allowed;transform:none}
+#hc-powered{text-align:center;padding:6px;font-size:.5rem;color:rgba(255,255,255,.15);letter-spacing:1.5px;font-family:'Bebas Neue',sans-serif}
+@media(max-width:420px){
+#hc-panel{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100dvh;max-height:100dvh;border-radius:0;border:none;z-index:10000}
+#hc-fab{bottom:16px;right:16px;width:52px;height:52px;font-size:1.4rem}
+#hc-header{padding:16px 18px;padding-top:calc(16px + env(safe-area-inset-top))}
+#hc-header-title{font-size:1.2rem;letter-spacing:4px}
+.hc-msg{font-size:.95rem;line-height:1.65;padding:12px 16px;max-width:92%}
+#hc-input{font-size:.95rem;padding:12px 16px;border-radius:14px}
+#hc-send{width:44px;height:44px;font-size:1.1rem}
+#hc-input-wrap{padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+#hc-messages{padding:16px 16px 10px}
+#hc-powered{font-size:.55rem;padding:8px}
+}
+`;
+document.head.appendChild(style);
+
+// Create FAB
+var fab = document.createElement('button');
+fab.id = 'hc-fab';
+fab.innerHTML = '🏀<div id="hc-badge"></div>';
+fab.onclick = toggleChat;
+document.body.appendChild(fab);
+
+// Create Panel
+var panel = document.createElement('div');
+panel.id = 'hc-panel';
+panel.innerHTML = `
+<div id="hc-header">
+<div id="hc-header-left"><span id="hc-header-icon">🏀</span><a href="/" id="hc-header-title" style="text-decoration:none;color:inherit">${tx('title')}</a><span id="hc-header-dot"></span></div>
+<div id="hc-header-right"><div id="hc-lang-toggle"><button class="hc-lang-btn" id="hcLangEN" onclick="setHcLang('en')">EN</button><button class="hc-lang-btn" id="hcLangES" onclick="setHcLang('es')">ES</button></div><button id="hc-close" onclick="document.getElementById('hc-fab').click()">✕</button></div>
+</div>
+<div id="hc-messages"></div>
+<div id="hc-input-wrap">
+<input id="hc-input" type="text" placeholder="${tx('placeholder')}" autocomplete="off">
+<button id="hc-send" disabled>➤</button>
+</div>
+<div id="hc-powered">${tx('powered')}</div>
+`;
+document.body.appendChild(panel);
+
+var messagesEl = document.getElementById('hc-messages');
+var inputEl = document.getElementById('hc-input');
+var sendBtn = document.getElementById('hc-send');
+
+function toggleChat() {
+  isOpen = !isOpen;
+  panel.classList.toggle('open', isOpen);
+  fab.classList.toggle('open', isOpen);
+  fab.innerHTML = isOpen ? '✕' : '🏀<div id="hc-badge"></div>';
+  if (isOpen && messages.length === 0) {
+    showGreeting();
+  }
+  if (isOpen) {
+    updateLangUI();
+    setTimeout(function() { inputEl.focus(); }, 300);
+  }
 }
 
-function extractFilters(text) {
-  text = text.toLowerCase();
-  const filters = {};
-
-  // Position
-  const posMap = {
-    'point guard': 'PG', 'pg': 'PG', 'base': 'PG',
-    'shooting guard': 'SG', 'sg': 'SG', 'escolta': 'SG',
-    'small forward': 'SF', 'sf': 'SF', 'alero': 'SF',
-    'power forward': 'PF', 'pf': 'PF', 'ala-pivot': 'PF', 'ala pivot': 'PF',
-    'center': 'C', 'pívot': 'C', 'pivot': 'C',
-    'guard': 'G', 'forward': 'F'
-  };
-  for (const [key, val] of Object.entries(posMap)) {
-    if (text.includes(key)) { filters.position = val; break; }
-  }
-
-  // Grad year
-  const gradMatch = text.match(/(?:class of |clase de |grad(?:uation)?\s*(?:year)?\s*|20)(2[4-9]|3[0-2])/);
-  if (gradMatch) {
-    let yr = parseInt(gradMatch[1]);
-    if (yr < 100) yr += 2000;
-    filters.grad_year = yr;
-  }
-
-  // Drill
-  for (const d of DRILLS) {
-    if (text.includes(d)) { filters.drill = d; break; }
-  }
-
-  // Speed
-  if (text.includes('elite') || text.includes('120') || text.includes('fast')) filters.speed = 'fast';
-  else if (text.includes('tempo') || text.includes('90') || text.includes('med')) filters.speed = 'med';
-  else if (text.includes('training') || text.includes('60') || text.includes('slow')) filters.speed = 'slow';
-
-  // Player name search
-  const namePatterns = [
-    /(?:about|find|show me|tell me about|how is|cuéntame sobre|muéstrame a|buscar a|cómo está)\s+([a-záéíóúñ]+ [a-záéíóúñ]+)/i,
-    /(?:about|find|show me|tell me about|how is|cuéntame sobre|muéstrame a|buscar a|cómo está)\s+([a-záéíóúñ]+)/i
-  ];
-  for (const pat of namePatterns) {
-    const m = text.match(pat);
-    if (m) {
-      const name = m[1].trim();
-      // Filter out generic words
-      const skip = ['the', 'top', 'best', 'all', 'any', 'your', 'our', 'some', 'players', 'jugadores', 'drills', 'report', 'premium', 'free'];
-      if (!skip.includes(name.toLowerCase())) {
-        filters.name = name;
-        break;
-      }
-    }
-  }
-
-  // Top N
-  const topMatch = text.match(/top\s*(\d+)/);
-  filters.limit = topMatch ? Math.min(parseInt(topMatch[1]), 20) : 10;
-
-  return filters;
+function showGreeting() {
+  addBotMessage(tx('greeting'));
 }
 
-async function fetchPlayerData(filters) {
-  let context = '';
-
-  // Fetch all players
-  let playerParams = 'select=id,first_name,last_name,slug,position,grad_year,school,jersey_number,height,city,state&order=last_name.asc';
-  if (filters.position) playerParams += `&position=eq.${filters.position}`;
-  if (filters.grad_year) playerParams += `&grad_year=eq.${filters.grad_year}`;
-
-  let players = await sbQuery('players', playerParams);
-
-  // Name search
-  if (filters.name) {
-    const search = filters.name.toLowerCase();
-    const nameWords = search.split(' ');
-    players = players.filter(p => {
-      const full = `${p.first_name} ${p.last_name}`.toLowerCase();
-      return nameWords.every(w => full.includes(w)) || 
-        p.first_name.toLowerCase().includes(search) ||
-        p.last_name.toLowerCase().includes(search);
-    });
-  }
-
-  if (!players.length) {
-    return filters.name 
-      ? `\n[DATABASE SEARCH: No player found matching "${filters.name}". There are currently no matches in the database for that name.]`
-      : `\n[DATABASE SEARCH: No players found matching those filters.]`;
-  }
-
-  // Fetch scores for matched players
-  const playerIds = players.map(p => p.id);
-  let scoreParams = `select=*&player_id=in.(${playerIds.join(',')})`;
-  if (filters.drill) scoreParams += `&test_name=eq.${filters.drill}`;
-  if (filters.speed) scoreParams += `&speed=eq.${filters.speed}`;
-
-  const scores = await sbQuery('cognitive_scores', scoreParams);
-
-  // Build player score map
-  const scoreMap = {};
-  scores.forEach(s => {
-    if (!scoreMap[s.player_id]) scoreMap[s.player_id] = {};
-    if (!scoreMap[s.player_id][s.test_name]) scoreMap[s.player_id][s.test_name] = {};
-    const existing = scoreMap[s.player_id][s.test_name][s.speed];
-    if (!existing || s.level > existing.level || (s.level === existing.level && s.score > existing.score)) {
-      scoreMap[s.player_id][s.test_name][s.speed] = s;
-    }
-  });
-
-  // Calculate rankings
-  const ranked = players.map(p => {
-    const pScores = scoreMap[p.id] || {};
-    let totalLevel = 0, drillCount = 0, totalScore = 0;
-    const drillSummary = [];
-
-    for (const drill of DRILLS) {
-      if (pScores[drill]) {
-        // Get best across speeds
-        let bestLevel = 0, bestScore = 0, bestSpeed = '';
-        for (const [spd, data] of Object.entries(pScores[drill])) {
-          if (data.level > bestLevel || (data.level === bestLevel && data.score > bestScore)) {
-            bestLevel = data.level;
-            bestScore = data.score;
-            bestSpeed = spd;
-          }
-        }
-        if (bestLevel > 0) {
-          totalLevel += bestLevel;
-          totalScore += bestScore;
-          drillCount++;
-          drillSummary.push(`${drill.charAt(0).toUpperCase() + drill.slice(1)}: L${bestLevel} (${bestScore}pts, ${bestSpeed === 'fast' ? 'Elite' : bestSpeed === 'med' ? 'Tempo' : 'Training'})`);
-        }
-      }
-    }
-
-    const avgLevel = drillCount > 0 ? (totalLevel / drillCount) : 0;
-    return {
-      player: p,
-      avgLevel: Math.round(avgLevel * 10) / 10,
-      roundedLevel: Math.round(avgLevel),
-      totalScore,
-      drillCount,
-      drillSummary
-    };
-  }).filter(r => r.drillCount > 0 || filters.name);
-
-  // Sort by level then score
-  ranked.sort((a, b) => {
-    if (b.roundedLevel !== a.roundedLevel) return b.roundedLevel - a.roundedLevel;
-    return b.totalScore - a.totalScore;
-  });
-
-  // Limit results
-  const limited = ranked.slice(0, filters.limit);
-
-  if (!limited.length) {
-    return `\n[DATABASE: Found ${players.length} player(s) but none have BPM scores yet.]`;
-  }
-
-  // Build context string
-  context = `\n[LIVE DATABASE — ${limited.length} player(s) found]\n`;
-
-  limited.forEach((r, i) => {
-    const p = r.player;
-    const label = LEVEL_LABELS[r.roundedLevel] || '';
-    context += `\n#${i + 1} ${p.first_name} ${p.last_name}`;
-    context += ` | ${p.position || 'N/A'} | ${p.school || 'N/A'}`;
-    if (p.grad_year) context += ` | Class of ${p.grad_year}`;
-    if (p.height) context += ` | ${p.height}`;
-    if (p.city || p.state) context += ` | ${[p.city, p.state].filter(Boolean).join(', ')}`;
-    context += ` | Jersey #${p.jersey_number || 'N/A'}`;
-    context += `\n  Overall BPM: L${r.roundedLevel} ${label} | Total Score: ${r.totalScore} | Drills Played: ${r.drillCount}/6`;
-    if (r.drillSummary.length) context += `\n  Drill Breakdown: ${r.drillSummary.join(' | ')}`;
-    context += `\n  Profile: hooporia.com/player/${p.slug}`;
-    context += '\n';
-  });
-
-  if (ranked.length > limited.length) {
-    context += `\n[${ranked.length - limited.length} more players not shown. User can ask to see more.]`;
-  }
-
-  return context;
+function addBotMessage(text) {
+  messages.push({ role: 'assistant', content: text });
+  var div = document.createElement('div');
+  div.className = 'hc-msg bot';
+  div.innerHTML = formatText(text);
+  messagesEl.appendChild(div);
+  scrollToBottom();
 }
 
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
+function addUserMessage(text) {
+  messages.push({ role: 'user', content: text });
+  var div = document.createElement('div');
+  div.className = 'hc-msg user';
+  div.textContent = text;
+  messagesEl.appendChild(div);
+  scrollToBottom();
+}
 
-  const { messages } = req.body;
-  if (!messages || !Array.isArray(messages)) {
-    return res.status(400).json({ error: 'messages array required' });
-  }
+function showTyping() {
+  var div = document.createElement('div');
+  div.className = 'hc-typing';
+  div.id = 'hc-typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  messagesEl.appendChild(div);
+  scrollToBottom();
+}
 
-  // Check if we need player data
-  let playerContext = '';
-  if (needsPlayerData(messages)) {
-    try {
-      const filters = extractFilters(messages[messages.length - 1].content);
-      playerContext = await fetchPlayerData(filters);
-    } catch (err) {
-      console.error('Supabase query error:', err);
-      playerContext = '\n[DATABASE: Error fetching player data. Respond based on general knowledge only.]';
+function hideTyping() {
+  var el = document.getElementById('hc-typing');
+  if (el) el.remove();
+}
+
+function formatText(text) {
+  // Convert markdown-like links and bold
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+  // Convert URLs to links
+  text = text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank">$1</a>');
+  // Convert newlines
+  text = text.replace(/\n/g, '<br>');
+  return text;
+}
+
+function scrollToBottom() {
+  setTimeout(function() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }, 50);
+}
+
+async function sendMessage(text) {
+  if (!text || !text.trim() || isLoading) return;
+  text = text.trim();
+  addUserMessage(text);
+  inputEl.value = '';
+  sendBtn.disabled = true;
+  isLoading = true;
+  showTyping();
+
+  // Build API messages (skip the greeting which is local only)
+  var apiMessages = [];
+  for (var i = 0; i < messages.length; i++) {
+    if (messages[i].role === 'user' || (messages[i].role === 'assistant' && i > 0)) {
+      apiMessages.push({ role: messages[i].role, content: messages[i].content });
     }
   }
-
-  const SYSTEM_PROMPT = `You are the Hooporia AI — the official expert for Hooporia™, a basketball cognitive training platform powered by BPM Basketball™. You are friendly, confident, bilingual (English/Spanish), and speak like a knowledgeable basketball scout who understands both the game and the data.
-
-CRITICAL RULES:
-- Respond in the same language the user writes in
-- Keep responses SHORT — 2-4 sentences for simple questions, up to 6-8 for player breakdowns
-- Be conversational, not corporate. You're a scout with a database, not a FAQ page
-- Use basketball language naturally
-- When presenting player data, be specific with numbers and levels
-- Always include the player's profile link when discussing a specific player
-- If no player data is found, say so clearly and suggest they try different search terms
-- Never make up player data — only use what's in the [DATABASE] context
-- If asked about a player not in the database, say they may not have created a profile yet and suggest hooporia.com/join.html
-
-ABOUT HOOPORIA:
-Hooporia™ is the platform. BPM Basketball™ is the proprietary cognitive training system. Owned by GoStar Digital LLC, San Juan, Puerto Rico. Website: hooporia.com
-
-THE 6 COGNITIVE DRILLS:
-1. THE REACT (purple) — Rhythm reaction. Watch pattern flash 3x, tap cells on the beat. Tests reaction time and rhythm processing.
-2. THE RECALL (orange) — Number recall. Memorize numbered cells, tap back in order. Tests working memory.
-3. THE REFLEX (cyan) — Flash memory. Multiple cells flash at once, find them all. Tests visual memory and spatial awareness.
-4. THE REPLAY (teal) — Sequence replay. Watch sequence, replay exact order. Tests sequential memory. PREMIUM.
-5. THE RITMO (lime) — Spot the change. Find the one cell that changed. Tests change detection. PREMIUM.
-6. THE BEAT (gold) — Rhythm training with Latin beats: Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. PREMIUM.
-
-BPM SYSTEM:
-- 3 speeds: Training (60 BPM), Tempo (90 BPM), Elite (120 BPM)
-- 10 levels: L1 Rookie → L10 GOAT
-- BPM = Beats Per Minute (rhythm-based training) AND Box Plus/Minus (basketball analytics)
-
-LEVEL RATINGS: L1 Rookie, L2 Developing, L3 Solid, L4 Advanced, L5 Elite, L6 Pro, L7 All-Star, L8 MVP, L9 Hall of Fame, L10 GOAT
-
-FREE VS PREMIUM:
-- FREE: React, Recall, Reflex, player profile, Discover database, basic BPM scores
-- PREMIUM ($49/year or $7/month): All 6 drills + AI Scouting Report + full BPM profile + basketball timeline
-- IMPORTANT: Use same email for signup and payment
-
-SCOUTING REPORT:
-- AI-generated professional report analyzing all 6 drills
-- Includes strengths, development areas, on-court translation, recommendations
-- Personalized to position, play style, competition level
-- Share with any coach, scout, or program
-
-FOR PROGRAMS: Cost $0. Share hooporia.com, players sign up free, coaches track BPM levels.
-
-WHEN DISCUSSING PLAYERS:
-- Present data professionally, like a real scouting report
-- Highlight strengths (highest drill levels) and areas to develop (lowest)
-- Translate BPM scores to basketball: high React = quick decisions, high Recall = play memorization, high Reflex = court vision, high Replay = play sequencing, high Ritmo = reading changes in defense
-- Always mention their profile link
-- If comparing players, be fair and data-driven
-- If a player has no scores yet, encourage them to run the drills
-
-PERSONALITY:
-- You're a basketball scout with AI power
-- Excited about talent, data-driven, fair
-- Puerto Rico pride — built in PR
-- Bilingual — match the user's language
-- If someone asks something outside basketball/Hooporia, redirect politely`;
-
-  // Build messages with player context injected
-  const apiMessages = messages.slice(-10).map((m, i, arr) => {
-    if (i === arr.length - 1 && m.role === 'user' && playerContext) {
-      return { role: 'user', content: m.content + playerContext };
-    }
-    return m;
-  });
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    var resp = await fetch(ENDPOINT, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 800,
-        system: SYSTEM_PROMPT,
-        messages: apiMessages
-      })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: apiMessages })
     });
 
-    if (!response.ok) {
-      const err = await response.text();
-      console.error('Anthropic error:', err);
-      return res.status(500).json({ error: 'AI service error' });
+    hideTyping();
+
+    if (!resp.ok) throw new Error('API error');
+
+    var data = await resp.json();
+    if (data.reply) {
+      addBotMessage(data.reply);
+    } else {
+      addBotMessage(tx('error'));
     }
-
-    const data = await response.json();
-    const text = data.content && data.content[0] ? data.content[0].text : '';
-    return res.status(200).json({ reply: text });
-
   } catch (err) {
-    console.error('Chat error:', err);
-    return res.status(500).json({ error: 'Server error' });
+    hideTyping();
+    addBotMessage(tx('error'));
+    console.error('Hooporia chat error:', err);
   }
+
+  isLoading = false;
+  sendBtn.disabled = !inputEl.value.trim();
 }
+
+// Input handlers
+inputEl.addEventListener('input', function() {
+  sendBtn.disabled = !inputEl.value.trim() || isLoading;
+});
+
+inputEl.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage(inputEl.value);
+  }
+});
+
+sendBtn.addEventListener('click', function() {
+  sendMessage(inputEl.value);
+});
+
+})();
