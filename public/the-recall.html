@@ -561,7 +561,7 @@ function showScreen(name){
     screenDemo.classList.remove('active');
     screenTrophy.classList.remove('active');
     screenPlay.classList.remove('active');
-    currentScreen=name;
+    currentScreen=name;document.querySelector('.nav-lang').style.display=name==='play'?'none':'flex';
     if(name==='demo')screenDemo.classList.add('active');
     else if(name==='trophy')screenTrophy.classList.add('active');
     else if(name==='play')screenPlay.classList.add('active');
