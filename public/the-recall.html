@@ -634,7 +634,7 @@ function saveSpeedState(){localStorage.setItem(getSpeedKey(gameState.speed,'leve
 
 function renderStars(tier){var s='';for(var i=0;i<10;i++)s+=i<tier?'⭐':'☆';return s}
 
-function updateTrophyUI(){
+function var initData=loadSpeedState(gameState.speed);gameState.level=initData.level;gameState.score=initData.score;gameState.streak=initData.streak;updateTrophyUI(){
     var slowData=loadSpeedState('slow'),medData=loadSpeedState('med'),fastData=loadSpeedState('fast');
     $('starsSlow').textContent=renderStars(slowData.tier);
     $('starsMed').textContent=renderStars(medData.tier);
