@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>My AI Scouting Report | Hooporia™</title>
+<meta name="description" content="Generate your AI Cognitive Scouting Report powered by BPM Basketball™.">
+<link rel="icon" href="/hooporia.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;
+document.querySelectorAll('[data-en]').forEach(function(el){var v=el.getAttribute('data-'+l);if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}});
+document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});
+try{localStorage.setItem('lc-lang',l)}catch(e){}}
+function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('hamBtn');if(m.classList.contains('open')){m.classList.remove('open');b.textContent='☰'}else{m.classList.add('open');b.textContent='✕'}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0a0a0f;--surface:#12121a;--card:#16161e;--gold:#FFD700;--gold-dim:rgba(255,215,0,.08);--gold-border:rgba(255,215,0,.15);--orange:#FF6B35;--white:#fafaf9;--gray:#7a7a8a;--gray-light:#b0b0b8;--green:#22c55e;--purple:#9B59B6;--cyan:#00CED1;--teal:#00D9A5;--lime:#9ACD32;--red:#ef4444;--blue:#3b82f6}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{display:flex;align-items:center;gap:10px}.nav-brand img{height:30px}.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:.75rem;font-weight:600;color:var(--gray);transition:color .2s}.nav-link:hover{color:var(--white)}.nav-login{padding:8px 12px;border-radius:8px}
+.nav-cta{padding:8px 16px;border-radius:8px;font-size:.72rem;font-weight:700;background:var(--gold);color:var(--black);border:none;cursor:pointer;font-family:'Outfit',sans-serif}
+.hamburger{background:none;border:none;color:var(--white);font-size:1.3rem;cursor:pointer;padding:6px 10px;border-radius:8px}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,10,15,.97);backdrop-filter:blur(20px);padding:16px 24px 24px;border-bottom:1px solid rgba(255,255,255,.06);z-index:99;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}.mobile-menu a{display:block;padding:12px 16px;font-size:.85rem;font-weight:600;color:var(--gray-light);border-radius:10px}
+.mm-lang{display:flex;gap:4px;padding:12px 16px}.mm-cta{background:var(--gold)!important;color:var(--black)!important;text-align:center;font-weight:700!important;border-radius:10px!important;margin-top:8px}
+.lang-btn{padding:4px 9px;border-radius:5px;font-size:.6rem;font-weight:700;background:transparent;color:var(--gray);border:none;cursor:pointer}.lang-btn.active{background:var(--gold);color:var(--black)}
+@media(max-width:600px){.nav-link{display:none}.nav-cta{display:none}}
+.page{max-width:720px;margin:0 auto;padding:80px 20px 40px}
+.auth-gate{text-align:center;padding:100px 20px}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.auth-msg{font-size:.85rem;color:var(--gray)}.auth-msg a{color:var(--gold);font-weight:700}
+.gen-state{text-align:center;padding:60px 20px;display:none}
+.gen-btn{padding:18px 44px;border-radius:14px;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:4px;background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--black);border:none;cursor:pointer;transition:all .3s;box-shadow:0 4px 25px rgba(255,215,0,.3)}
+.gen-btn:hover{transform:translateY(-2px);box-shadow:0 8px 35px rgba(255,215,0,.4)}
+.gen-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.gen-sub{font-size:.75rem;color:var(--gray);margin-top:12px}
+.gen-loading{display:none;padding:80px 20px;text-align:center}
+.gen-loading .step{font-size:.7rem;color:var(--gray);margin-top:8px}
+#reportContent{display:none}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);padding:12px 28px;background:var(--gold);color:var(--black);border-radius:12px;font-size:.8rem;font-weight:700;pointer-events:none;opacity:0;transition:all .4s;z-index:200}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:720px;margin:0 auto;padding:0 24px}
+.footer-links{display:flex;gap:20px}.footer-links a{font-size:.78rem;color:var(--gray)}
+.footer-copy{font-size:.65rem;color:#444}
+</style>
+<link rel="stylesheet" href="/report-demo.html" type="text/css" disabled>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+<a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
+<div class="nav-right">
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Drills" data-es="Drills">Drills</a>
+<a href="/cognitive-report.html" class="nav-link" data-en="Report" data-es="Reporte">Report</a>
+<a href="/discover.html" class="nav-link" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" class="nav-link" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<a href="/login.html" class="nav-link nav-login" data-en="Log In" data-es="Entrar">Log In</a>
+<button class="hamburger" id="hamBtn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+<a href="/join.html"><button class="nav-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</button></a>
+</div></div>
+<div class="mobile-menu" id="mobileMenu">
+<a href="/cognitive-hoops.html" data-en="Drills" data-es="Drills">Drills</a>
+<a href="/cognitive-report.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
+<a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
+<div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
+<a href="/join.html" class="mm-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</a>
+</div></nav>
+
+<div class="page">
+<div class="auth-gate" id="authGate"><div class="spinner"></div><p class="auth-msg" id="authMsg" data-en="Loading..." data-es="Cargando...">Loading...</p></div>
+<div class="gen-state" id="genState">
+<img src="/hooporia.png" alt="Hooporia" style="width:80px;height:auto;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(255,215,0,.3))">
+<h2 style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;margin-bottom:8px" data-en="YOUR AI SCOUTING REPORT" data-es="TU REPORTE IA">YOUR AI SCOUTING REPORT</h2>
+<p style="color:var(--gray);font-size:.85rem;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto" data-en="Claude AI will analyze your cognitive scores across all 6 BPM dimensions and generate a professional scouting report with your full player profile." data-es="Claude AI analizará tus puntajes cognitivos y generará un reporte profesional con tu perfil completo.">Claude AI will analyze your cognitive scores across all 6 BPM dimensions and generate a professional scouting report with your full player profile.</p>
+<button class="gen-btn" id="genBtn" onclick="generateReport()" data-en="📋 GENERATE MY REPORT" data-es="📋 GENERAR MI REPORTE">📋 GENERATE MY REPORT</button>
+<p class="gen-sub" data-en="Takes about 10 seconds. Written for coaches and scouts." data-es="Toma unos 10 segundos. Escrito para coaches y scouts.">Takes about 10 seconds. Written for coaches and scouts.</p>
+</div>
+<div class="gen-loading" id="genLoading"><div class="spinner"></div><p data-en="Generating your AI scouting report..." data-es="Generando tu reporte IA...">Generating your AI scouting report...</p><div class="step" id="loadStep"></div></div>
+<div id="reportContent"></div>
+</div>
+
+<footer><div class="footer-inner">
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC. All Rights Reserved.</div>
+</div></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+var SB_URL='https://rhsszirtbyvalugmbecm.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJoc3N6aXJ0Ynl2YWx1Z21iZWNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3Mjg3MzUsImV4cCI6MjA5MDMwNDczNX0.MK3sYXhbdVtijzAkXJXvMlF1t0xfk6bRumBnovbQkRs';
+var sb=null,player=null,cogScores={},seasons=[];
+var RL={1:'Rookie',2:'Developing',3:'Solid',4:'Advanced',5:'Elite',6:'Pro',7:'All-Star',8:'MVP',9:'Hall of Fame',10:'GOAT'};
+var DM={react:{e:'🟣',n:'REACT',c:'#9B59B6',s:'Reaction & Rhythm',sEs:'Reacción y Ritmo'},recall:{e:'🟠',n:'RECALL',c:'#FF6B35',s:'Working Memory',sEs:'Memoria de Trabajo'},reflex:{e:'🔵',n:'REFLEX',c:'#00CED1',s:'Court Vision',sEs:'Visión de Cancha'},replay:{e:'🟢',n:'REPLAY',c:'#00D9A5',s:'Play Recall',sEs:'Memoria de Jugadas'},ritmo:{e:'🟡',n:'RITMO',c:'#9ACD32',s:'Change Detection',sEs:'Detección de Cambios'},beat:{e:'🏀',n:'BEAT',c:'#FFD700',s:'Game Rhythm',sEs:'Ritmo de Juego'}};
+var SL={slow:'Training',med:'Tempo',fast:'Elite'};
+try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
+function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
+
+(async function init(){
+try{
+await new Promise(function(r,j){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';s.onload=r;s.onerror=j;document.head.appendChild(s)});
+sb=window.supabase.createClient(SB_URL,SB_KEY);
+var{data:{user}}=await sb.auth.getUser();
+if(!user){document.getElementById('authMsg').innerHTML=currentLang==='es'?'Inicia sesión para generar tu reporte. <a href="/login.html">Entrar</a> o <a href="/join.html">Crear perfil</a>.':'Log in to generate your report. <a href="/login.html">Log in</a> or <a href="/join.html">Create a profile</a>.';document.querySelector('.spinner').style.display='none';return}
+var{data:players}=await sb.from('players').select('*').eq('auth_user_id',user.id);
+if(!players||!players.length){document.getElementById('authMsg').innerHTML=currentLang==='es'?'No se encontró perfil. <a href="/join.html">Crea uno</a>.':'No profile found. <a href="/join.html">Create one</a>.';document.querySelector('.spinner').style.display='none';return}
+player=players[0];
+if(player.profile_tier!=='premium'&&player.profile_tier!=='pro'){document.getElementById('authMsg').innerHTML=currentLang==='es'?'🔒 Función premium. <a href="https://buy.stripe.com/eVq28s8yrgwuaMEgP88Zq03">⭐ $49/año</a> o <a href="https://buy.stripe.com/00wdRa7un2FEf2U0Qa8Zq02">$7/mes</a>':'🔒 Premium feature. <a href="https://buy.stripe.com/eVq28s8yrgwuaMEgP88Zq03">⭐ $49/year</a> or <a href="https://buy.stripe.com/00wdRa7un2FEf2U0Qa8Zq02">$7/month</a>';document.querySelector('.spinner').style.display='none';return}
+var{data:cd}=await sb.from('cognitive_scores').select('*').eq('player_id',player.id);
+var best={};if(cd)cd.forEach(function(s){if(!best[s.test_name]||s.level>best[s.test_name].level)best[s.test_name]=s});cogScores=best;
+if(!Object.keys(cogScores).length){document.getElementById('authMsg').innerHTML=currentLang==='es'?'Juega los drills primero. <a href="/cognitive-hoops.html">🧠 Ir a Drills</a>':'Play the drills first. <a href="/cognitive-hoops.html">🧠 Go to Drills</a>';document.querySelector('.spinner').style.display='none';return}
+var{data:sd}=await sb.from('player_seasons').select('*').eq('player_id',player.id).order('season_year',{ascending:false});
+seasons=sd||[];
+document.getElementById('authGate').style.display='none';
+document.getElementById('genState').style.display='block';
+setLang(currentLang);
+}catch(e){console.error(e);document.getElementById('authMsg').textContent='Error loading. Try refreshing.';document.querySelector('.spinner').style.display='none'}
+})();
+
+async function generateReport(){
+document.getElementById('genState').style.display='none';
+document.getElementById('reportContent').style.display='none';
+document.getElementById('genLoading').style.display='block';
+var ls=document.getElementById('loadStep');
+var steps=currentLang==='es'?['Analizando perfil...','Evaluando dimensiones BPM...','Claude AI escribiendo...','Finalizando reporte...']:['Analyzing profile...','Evaluating BPM dimensions...','Claude AI writing...','Finalizing report...'];
+var si=0;ls.textContent=steps[0];
+var iv=setInterval(function(){si++;if(si<steps.length)ls.textContent=steps[si]},2500);
+try{
+var scores={};['react','recall','reflex','replay','ritmo','beat'].forEach(function(t){if(cogScores[t])scores[t]={level:cogScores[t].level,speed:cogScores[t].speed,score:cogScores[t].score}});
+var tS=0,tG=0,tA=0,sH='';
+if(seasons.length){tS=seasons.length;tG=seasons.reduce(function(a,x){return a+(x.games_played||0)},0);tA=seasons.filter(function(x){return x.awards&&x.awards.trim()}).length;sH=seasons.map(function(s){var l=(s.season_year||'?')+' — '+(s.season_name||'Unknown')+' ('+(s.season_type||'other')+')';if(s.team_name)l+=' | Team: '+s.team_name;if(s.games_played)l+=' | '+s.games_played+' games';if(s.stats_ppg)l+=' | '+s.stats_ppg+' PPG';if(s.stats_rpg)l+=' '+s.stats_rpg+' RPG';if(s.stats_apg)l+=' '+s.stats_apg+' APG';if(s.awards)l+=' | Award: '+s.awards;return l}).join('\n')}
+var res=await fetch('/api/cognitive-report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:(player.first_name||'')+' '+(player.last_name||''),position:player.position||'',age:player.age||'',height:player.height||'',weight:player.weight||'',wingspan:player.wingspan||'',dominant_hand:player.dominant_hand||'',play_style:player.play_style||'',competition_level:player.competition_level||'',years_playing:player.years_playing||'',total_seasons:tS,total_games:tG,total_awards:tA,season_history:sH,scores:scores})});
+var data=await res.json();clearInterval(iv);
+if(data.error)throw new Error(data.error);
+renderFullReport(data);
+document.getElementById('genLoading').style.display='none';
+document.getElementById('reportContent').style.display='block';
+setLang(currentLang);
+showToast(currentLang==='es'?'¡Reporte generado!':'Report generated!');
+}catch(e){clearInterval(iv);console.error(e);document.getElementById('genLoading').style.display='none';document.getElementById('genState').style.display='block';showToast('Error: '+e.message)}
+}
+
+function renderFullReport(data){
+var p=player,h='';
+var now=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}).toUpperCase();
+var fullName=((p.first_name||'')+ ' '+(p.last_name||'')).toUpperCase();
+// Inject report-demo.html styles inline
+var styleLink=document.createElement('link');styleLink.rel='stylesheet';styleLink.href='/report-styles.css';document.head.appendChild(styleLink);
+
+// COVER
+h+='<div style="height:220px;background:linear-gradient(135deg,#0f1628,#1a1040,#0d2847);position:relative;overflow:hidden;margin:-80px -20px 0;width:calc(100% + 40px)">';
+if(p.cover_url)h+='<img src="'+esc(p.cover_url)+'" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">';
+h+='<div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,var(--black))"></div></div>';
+
+// HERO
+h+='<div style="margin-top:-56px;position:relative;z-index:2;margin-bottom:14px"><div style="display:flex;align-items:flex-end;gap:18px">';
+if(p.avatar_url)h+='<img src="'+esc(p.avatar_url)+'" style="width:96px;height:96px;border-radius:22px;border:3px solid var(--gold);object-fit:cover;flex-shrink:0;box-shadow:0 4px 30px rgba(255,215,0,.2)">';
+else h+='<div style="width:96px;height:96px;border-radius:22px;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,107,53,.08));border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:\'Bebas Neue\',sans-serif;font-size:2.2rem;color:var(--gold);flex-shrink:0;box-shadow:0 4px 30px rgba(255,215,0,.2)">#'+(p.jersey_number||'—')+'</div>';
+h+='<div style="flex:1;padding-bottom:4px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px"><h1 style="font-family:\'Bebas Neue\',sans-serif;font-size:clamp(1.8rem,5vw,2.4rem);letter-spacing:3px;line-height:1">'+esc(fullName)+'</h1><span style="background:var(--gold);color:var(--black);padding:2px 8px;border-radius:6px;font-size:.5rem;font-weight:800;letter-spacing:.5px">✓ VERIFIED</span></div>';
+var meta=[p.position,p.height,p.weight?p.weight+' lbs':'',p.dominant_hand?p.dominant_hand+'-handed':''].filter(Boolean).join(' · ');
+h+='<div style="font-size:.8rem;color:var(--gray-light)">'+esc(meta)+'</div>';
+var school=[p.school,p.city&&p.state?p.city+', '+p.state:'',p.grad_year?'Class of '+p.grad_year:''].filter(Boolean).join(' · ');
+h+='<div style="font-size:.72rem;color:var(--gray)">'+esc(school)+'</div></div></div></div>';
+
+// TAGS
+h+='<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">';
+if(p.position)h+='<span style="padding:3px 10px;border-radius:16px;font-size:.6rem;font-weight:700;background:rgba(255,107,53,.1);color:var(--orange)">'+esc(p.position)+'</span>';
+if(p.grad_year)h+='<span style="padding:3px 10px;border-radius:16px;font-size:.6rem;font-weight:700;background:rgba(59,130,246,.1);color:var(--blue)">'+p.grad_year+'</span>';
+if(p.height)h+='<span style="padding:3px 10px;border-radius:16px;font-size:.6rem;font-weight:700;background:rgba(0,206,209,.1);color:var(--cyan)">'+esc(p.height)+'</span>';
+h+='<span style="padding:3px 10px;border-radius:16px;font-size:.6rem;font-weight:700;background:rgba(155,89,182,.1);color:var(--purple)">🧠 L'+data.overall_level+' '+esc(data.overall_rating)+'</span>';
+h+='<span style="padding:3px 10px;border-radius:16px;font-size:.6rem;font-weight:700;background:linear-gradient(90deg,rgba(255,215,0,.12),rgba(255,107,53,.08));color:var(--gold);border:1px solid rgba(255,215,0,.12)">⭐ PREMIUM</span>';
+h+='</div>';
+
+// CONTACT
+if(p.nil_contact_email)h+='<a href="mailto:'+esc(p.nil_contact_email)+'" style="display:block;padding:14px;border-radius:12px;text-align:center;font-size:.88rem;font-weight:700;background:linear-gradient(135deg,var(--gold),#FFA500);color:var(--black);margin-bottom:16px;box-shadow:0 4px 20px rgba(255,215,0,.2)">📩 Contact Player</a>';
+
+// STATS
+var hasStats=p.stats_ppg||p.stats_rpg||p.stats_apg;
+if(hasStats){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">📊 STATS <span style="font-size:.58rem;color:var(--gray);font-weight:400;letter-spacing:0;font-family:\'Outfit\',sans-serif">Self-reported</span></div>';
+h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
+[['PPG',p.stats_ppg],['RPG',p.stats_rpg],['APG',p.stats_apg],['SPG',p.stats_spg],['BPG',p.stats_bpg],['GP',p.games_played]].forEach(function(s){if(s[1])h+='<div style="text-align:center;padding:14px 6px;background:rgba(255,255,255,.02);border-radius:12px;border:1px solid rgba(255,255,255,.04)"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.5rem;letter-spacing:1px">'+s[1]+'</div><div style="font-size:.58rem;color:var(--gray);font-weight:600;text-transform:uppercase">'+s[0]+'</div></div>'});
+h+='</div></div>'}
+
+// MEASURABLES
+var hasMeas=p.height||p.weight||p.wingspan;
+if(hasMeas){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">📏 MEASURABLES</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">';
+[['Height',p.height],['Weight',p.weight],['Wingspan',p.wingspan]].forEach(function(m){if(m[1])h+='<div style="text-align:center;padding:12px 6px;background:rgba(255,255,255,.02);border-radius:12px;border:1px solid rgba(255,255,255,.04)"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.5rem">'+esc(String(m[1]))+'</div><div style="font-size:.58rem;color:var(--gray);font-weight:600">'+m[0]+'</div></div>'});
+h+='</div></div>'}
+
+// COGNITIVE SCORES
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:4px">🧠 COGNITIVE SCORES</div><div style="font-size:.58rem;color:var(--green);margin-bottom:12px">✓ Verified by Hooporia</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">';
+['react','recall','reflex','replay','ritmo','beat'].forEach(function(t){
+var m=DM[t],s=cogScores[t];
+var level=s?'L'+s.level:'—';
+var rating=s?(RL[s.level]||''):'—';
+var sub=currentLang==='es'?m.sEs:m.s;
+h+='<div style="text-align:center;padding:18px 8px;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:var(--surface);position:relative;overflow:hidden">';
+h+='<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+m.c+'"></div>';
+h+='<div style="font-size:1.4rem;margin-bottom:6px">'+m.e+'</div>';
+h+='<div style="font-family:\'Bebas Neue\',sans-serif;font-size:.78rem;letter-spacing:2px;color:'+m.c+';margin-bottom:4px">'+m.n+'</div>';
+h+='<div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.7rem;letter-spacing:2px">'+level+'</div>';
+h+='<div style="font-size:.58rem;color:var(--gray);font-weight:600">'+rating+'</div>';
+h+='<div style="font-size:.52rem;color:var(--gray);margin-top:4px">'+sub+'</div></div>';
+});
+h+='</div>';
+h+='<div style="margin-top:14px;text-align:center;padding:16px;background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.04));border:1px solid var(--gold-border);border-radius:14px"><div style="font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px">BPM OVERALL</div><div style="font-family:\'Bebas Neue\',sans-serif;font-size:2.4rem;color:var(--gold);letter-spacing:3px">L'+data.overall_level+' — '+esc(data.overall_rating).toUpperCase()+'</div><div style="font-size:.65rem;color:var(--gray)">'+data.tests_completed+' of 6 drills</div></div></div>';
+
+// AI REPORT
+h+='<div style="background:var(--card);border:1.5px solid var(--gold-border);border-radius:22px;overflow:hidden;margin-bottom:16px;box-shadow:0 20px 80px rgba(255,215,0,.04)">';
+h+='<div style="background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,107,53,.05));padding:22px 28px;border-bottom:1px solid rgba(255,215,0,.1)"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px"><span style="font-family:\'Bebas Neue\',sans-serif;font-size:.95rem;letter-spacing:3px;color:var(--gold)">📋 AI COGNITIVE SCOUTING REPORT</span><span style="padding:3px 8px;border-radius:5px;font-size:.48rem;font-weight:800;background:rgba(34,197,94,.15);color:var(--green)">✓ VERIFIED</span><span style="padding:3px 8px;border-radius:5px;font-size:.48rem;font-weight:800;background:rgba(255,215,0,.15);color:var(--gold)">PREMIUM</span><span style="padding:3px 8px;border-radius:5px;font-size:.48rem;font-weight:800;background:rgba(155,89,182,.15);color:var(--purple)">CLAUDE AI</span><span style="font-size:.55rem;color:var(--gray);margin-left:auto">'+now+'</span></div>';
+h+='<div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.3rem;letter-spacing:2px">'+esc(fullName)+'</div>';
+h+='<div style="font-size:.72rem;color:var(--gray)">'+esc(meta)+(p.play_style?' · '+esc(p.play_style):'')+(p.competition_level?' · '+esc(p.competition_level):'')+'</div></div>';
+
+// Parse report text into sections
+var secs=[{k:'exec',e:'📊',t:'EXECUTIVE SUMMARY',col:'var(--gold)'},{k:'str',e:'💪',t:'COGNITIVE STRENGTHS',col:'var(--green)'},{k:'dev',e:'⚡',t:'AREAS FOR DEVELOPMENT',col:'var(--orange)'},{k:'court',e:'🏀',t:'ON-COURT TRANSLATION',col:'var(--cyan)'},{k:'coach',e:'🎯',t:'COACH RECOMMENDATION',col:'var(--purple)'},{k:'path',e:'📈',t:'DEVELOPMENT PATH',col:'var(--lime)'}];
+var parts={},curK=null;
+data.report.split('\n').forEach(function(line){
+var tr=line.trim();var matched=false;
+secs.forEach(function(sec){if(tr.indexOf(sec.e)===0||tr.toUpperCase().indexOf(sec.t)>-1){curK=sec.k;matched=true}});
+if(!matched&&curK){if(!parts[curK])parts[curK]='';if(tr)parts[curK]+=tr+'\n'}
+});
+secs.forEach(function(sec){
+var content=parts[sec.k]||'';if(!content.trim())return;
+h+='<div style="padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.03)"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1rem;letter-spacing:3px;color:'+sec.col+';margin-bottom:12px">'+sec.e+' '+sec.t+'</div>';
+content.trim().split('\n').filter(function(l){return l.trim()}).forEach(function(p){
+p=p.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+h+='<p style="font-size:.82rem;color:var(--gray-light);line-height:1.85;margin-bottom:10px">'+p+'</p>';
+});
+h+='</div>';
+});
+// closing quote - last line of report
+var lines=data.report.trim().split('\n').filter(function(l){return l.trim()});
+var lastLine=lines[lines.length-1]||'';
+if(lastLine.indexOf('"')===0||lastLine.indexOf('"')===0){
+h+='<div style="font-size:.88rem;font-weight:600;color:var(--gold);font-style:italic;padding:20px 28px;border-top:1px solid rgba(255,215,0,.08);background:rgba(255,215,0,.02)">'+esc(lastLine)+'</div>';
+}
+h+='</div>';
+
+// TIMELINE
+if(seasons.length){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">📅 BASKETBALL TIMELINE</div>';
+h+='<div style="position:relative;padding-left:20px"><div style="position:absolute;left:3px;top:8px;bottom:8px;width:2px;background:rgba(255,215,0,.12)"></div>';
+seasons.forEach(function(s){
+h+='<div style="position:relative;padding-left:20px;margin-bottom:20px"><div style="position:absolute;left:-5px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--gold);border:2px solid var(--black)"></div>';
+h+='<div style="font-family:\'Bebas Neue\',sans-serif;font-size:.82rem;color:var(--gold);letter-spacing:1px">'+(s.season_year||'')+'</div>';
+h+='<div style="font-size:.82rem;font-weight:700;margin-top:2px">'+esc(s.season_name||s.team_name||'')+'</div>';
+h+='<div style="font-size:.7rem;color:var(--gray)">'+esc(s.season_type||'')+' · '+(s.games_played||0)+' games</div>';
+var sts=[];if(s.stats_ppg)sts.push(s.stats_ppg+' PPG');if(s.stats_rpg)sts.push(s.stats_rpg+' RPG');if(s.stats_apg)sts.push(s.stats_apg+' APG');
+if(sts.length)h+='<div style="display:flex;gap:12px;margin-top:6px;flex-wrap:wrap">'+sts.map(function(st){return'<span style="font-size:.68rem;color:var(--gray-light);font-weight:600">'+st+'</span>'}).join('')+'</div>';
+if(s.awards)h+='<div style="font-size:.7rem;color:var(--gold);font-weight:600;margin-top:4px">🏆 '+esc(s.awards)+'</div>';
+h+='</div>';
+});
+h+='</div></div>'}
+
+// VIDEOS
+var hasHL=p.highlight_link,hasVL=p.video_links&&p.video_links.length;
+if(hasHL||hasVL){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">🎥 HIGHLIGHTS & VIDEOS</div>';
+if(hasHL)h+='<a href="'+esc(p.highlight_link)+'" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px;color:var(--white);font-size:.82rem;font-weight:600"><span style="font-size:1.3rem">▶</span>Watch Highlight Reel</a>';
+if(hasVL)p.video_links.forEach(function(vl){if(vl)h+='<a href="'+esc(vl)+'" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;margin-bottom:8px;color:var(--white);font-size:.82rem;font-weight:600"><span style="font-size:1.3rem">▶</span>'+esc(vl).substring(0,50)+'</a>'});
+h+='</div>'}
+
+// GALLERY
+if(p.gallery_urls&&p.gallery_urls.length){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">📷 PHOTOS</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
+p.gallery_urls.forEach(function(url){h+='<div style="aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.04)"><img src="'+esc(url)+'" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>'});
+h+='</div></div>'}
+
+// BIO
+if(p.nil_bio){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">💼 ABOUT</div>';
+h+='<div style="font-size:.84rem;color:var(--gray-light);line-height:1.7;padding:16px;background:rgba(255,255,255,.02);border-radius:12px;border-left:3px solid var(--gold)">'+esc(p.nil_bio)+'</div></div>'}
+
+// SOCIALS
+var hasSoc=p.instagram||p.tiktok||p.twitter||p.youtube;
+if(hasSoc){
+h+='<div style="background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;margin-bottom:16px"><div style="font-family:\'Bebas Neue\',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px">📣 SOCIALS</div><div style="display:flex;gap:6px;flex-wrap:wrap">';
+if(p.instagram)h+='<a href="https://instagram.com/'+esc(p.instagram.replace('@',''))+'" target="_blank" style="padding:8px 16px;border-radius:8px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.04);color:var(--gray-light);border:1px solid rgba(255,255,255,.04)">📸 '+esc(p.instagram)+'</a>';
+if(p.tiktok)h+='<a href="https://tiktok.com/@'+esc(p.tiktok.replace('@',''))+'" target="_blank" style="padding:8px 16px;border-radius:8px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.04);color:var(--gray-light);border:1px solid rgba(255,255,255,.04)">🎵 '+esc(p.tiktok)+'</a>';
+if(p.twitter)h+='<a href="https://x.com/'+esc(p.twitter.replace('@',''))+'" target="_blank" style="padding:8px 16px;border-radius:8px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.04);color:var(--gray-light);border:1px solid rgba(255,255,255,.04)">𝕏 '+esc(p.twitter)+'</a>';
+if(p.youtube)h+='<a href="'+esc(p.youtube)+'" target="_blank" style="padding:8px 16px;border-radius:8px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.04);color:var(--gray-light);border:1px solid rgba(255,255,255,.04)">📺 YouTube</a>';
+h+='</div></div>'}
+
+// ACTIONS
+h+='<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px">';
+h+='<button onclick="copyFullReport()" style="padding:12px 28px;border-radius:12px;font-size:.8rem;font-weight:700;background:var(--gold);color:var(--black);border:none;cursor:pointer;font-family:\'Outfit\',sans-serif">📋 Copy Report</button>';
+h+='<button onclick="shareFullReport()" style="padding:12px 28px;border-radius:12px;font-size:.8rem;font-weight:700;background:transparent;color:var(--gold);border:1.5px solid var(--gold-border);cursor:pointer;font-family:\'Outfit\',sans-serif">🔗 Share</button>';
+h+='<a href="/my-profile.html" style="padding:12px 28px;border-radius:12px;font-size:.8rem;font-weight:700;background:transparent;color:var(--gray-light);border:1.5px solid rgba(255,255,255,.1)">👤 Dashboard</a>';
+h+='<button onclick="generateReport()" style="padding:12px 28px;border-radius:12px;font-size:.8rem;font-weight:700;background:transparent;color:var(--gold);border:1.5px solid var(--gold-border);cursor:pointer;font-family:\'Outfit\',sans-serif">🔄 Regenerate</button>';
+h+='</div>';
+
+// POWERED
+h+='<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:20px 0 6px"><div style="width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pulse 1.5s ease-in-out infinite"></div><span style="font-size:.5rem;color:var(--gray);letter-spacing:2px">POWERED BY</span><span style="font-family:\'Bebas Neue\',sans-serif;color:var(--gold);font-size:.7rem;letter-spacing:3px">BPM BASKETBALL™</span></div>';
+h+='<div style="text-align:center;padding:4px 0 20px;font-size:.52rem;color:#444;max-width:600px;margin:0 auto">Report generated by AI based on verified cognitive drill performance on Hooporia™. Scores cannot be self-reported or manipulated.</div>';
+
+document.getElementById('reportContent').innerHTML=h;
+// Store report text for copy
+window._reportText=data.report;
+window._playerName=fullName;
+window._playerMeta=meta;
+window._overallLevel=data.overall_level;
+window._overallRating=data.overall_rating;
+window._testsCompleted=data.tests_completed;
+}
+
+function copyFullReport(){
+var text='AI COGNITIVE SCOUTING REPORT — HOOPORIA™\n';
+text+='Player: '+window._playerName+' | '+window._playerMeta+'\n';
+text+='Overall BPM: L'+window._overallLevel+' '+window._overallRating+' | '+window._testsCompleted+'/6 Drills\n';
+text+='Generated: '+new Date().toLocaleDateString()+'\n\n';
+text+='COGNITIVE SCORES:\n';
+['react','recall','reflex','replay','ritmo','beat'].forEach(function(t){
+var s=cogScores[t];if(s)text+=DM[t].n+' L'+s.level+' '+(RL[s.level]||'')+' | ';
+});
+text+='\n\n'+window._reportText+'\n\nPowered by BPM Basketball™ — hooporia.com';
+navigator.clipboard.writeText(text).then(function(){showToast(currentLang==='es'?'¡Reporte copiado!':'Report copied!')});
+}
+function shareFullReport(){
+if(navigator.share)navigator.share({title:'AI Scouting Report — '+window._playerName+' | Hooporia',url:window.location.href});
+else{navigator.clipboard.writeText(window.location.href).then(function(){showToast(currentLang==='es'?'¡Link copiado!':'Link copied!')})}
+}
+</script>
+<script src="/hooporia-chat.js"></script>
+</body>
+</html>
