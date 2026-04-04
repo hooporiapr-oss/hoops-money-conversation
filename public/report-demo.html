@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Cognitive Scouting Report — Marcus Rivera | Hooporia™</title>
+<meta name="description" content="AI-generated cognitive scouting report powered by BPM Basketball™. The first cognitive evaluation system in basketball.">
+<link rel="icon" href="/hooporia.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+var currentLang='en';
+function setLang(l){currentLang=l;document.documentElement.lang=l;
+document.querySelectorAll('[data-en]').forEach(function(el){var v=el.getAttribute('data-'+l);if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}});
+document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});
+try{localStorage.setItem('lc-lang',l)}catch(e){}}
+function toggleMenu(){var m=document.getElementById('mobileMenu');var b=document.getElementById('hamBtn');if(m.classList.contains('open')){m.classList.remove('open');b.textContent='☰'}else{m.classList.add('open');b.textContent='✕'}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0a0a0f;--black2:#111118;--surface:#16161e;--gold:#FFD700;--gold-dim:rgba(255,215,0,0.08);--gold-border:rgba(255,215,0,0.15);--orange:#FF6B35;--white:#fafaf9;--gray:#7a7a8a;--gray-light:#aaa;--green:#22c55e;--purple:#9B59B6;--cyan:#00CED1;--teal:#00D9A5;--lime:#9ACD32;--red:#ef4444;--blue:#3b82f6}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand img{height:30px}
+.nav-brand span{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:.75rem;font-weight:600;color:var(--gray);transition:color .2s}
+.nav-link:hover{color:var(--white)}
+.nav-login{padding:8px 12px;border-radius:8px}
+.nav-cta{padding:8px 16px;border-radius:8px;font-size:.72rem;font-weight:700;background:var(--gold);color:var(--black);border:none;cursor:pointer;font-family:'Outfit',sans-serif}
+.hamburger{background:none;border:none;color:var(--white);font-size:1.3rem;cursor:pointer;padding:6px 10px;border-radius:8px}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(10,10,15,.97);backdrop-filter:blur(20px);padding:16px 24px 24px;border-bottom:1px solid rgba(255,255,255,.06);z-index:99;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{display:block;padding:12px 16px;font-size:.85rem;font-weight:600;color:var(--gray-light);border-radius:10px}
+.mm-lang{display:flex;gap:4px;padding:12px 16px}
+.mm-cta{background:var(--gold)!important;color:var(--black)!important;text-align:center;font-weight:700!important;border-radius:10px!important;margin-top:8px}
+.lang-btn{padding:4px 9px;border-radius:5px;font-size:.6rem;font-weight:700;background:transparent;color:var(--gray);border:none;cursor:pointer}
+.lang-btn.active{background:var(--gold);color:var(--black)}
+@media(max-width:600px){.nav-link{display:none}.nav-cta{display:none}}
+
+/* PAGE */
+.page{max-width:800px;margin:0 auto;padding:80px 20px 60px}
+
+/* REPORT HEADER */
+.rpt-header{position:relative;background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.04),rgba(155,89,182,.03));border:1.5px solid var(--gold-border);border-radius:24px;padding:36px 32px 28px;margin-bottom:28px;overflow:hidden}
+.rpt-header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--orange),var(--cyan),var(--teal),var(--lime),var(--gold))}
+.rpt-badge{display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
+.rpt-badge-text{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--gold)}
+.rpt-tag{padding:4px 10px;border-radius:6px;font-size:.5rem;font-weight:800;letter-spacing:1px}
+.rpt-tag-v{background:rgba(34,197,94,.15);color:var(--green)}
+.rpt-tag-p{background:rgba(255,215,0,.15);color:var(--gold)}
+.rpt-tag-ai{background:rgba(155,89,182,.15);color:var(--purple)}
+.rpt-player{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,6vw,3.2rem);letter-spacing:3px;line-height:1;margin-bottom:6px}
+.rpt-meta{font-size:.82rem;color:var(--gray-light);margin-bottom:4px}
+.rpt-meta2{font-size:.72rem;color:var(--gray)}
+.rpt-overall{display:inline-flex;align-items:center;gap:12px;margin-top:16px;padding:12px 20px;background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,107,53,.06));border:1px solid var(--gold-border);border-radius:14px}
+.rpt-overall-level{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--gold)}
+.rpt-overall-label{font-size:.65rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px}
+.rpt-overall-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold)}
+.rpt-date{position:absolute;top:20px;right:28px;font-size:.6rem;color:var(--gray);letter-spacing:1px}
+
+/* DRILL SCORES */
+.drills-section{margin-bottom:28px}
+.drills-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--gray);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.drills-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.drills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.drill-card{text-align:center;padding:18px 10px;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:var(--surface);position:relative;overflow:hidden;transition:all .3s}
+.drill-card:hover{transform:translateY(-3px)}
+.drill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.drill-card.react::before{background:var(--purple)}
+.drill-card.recall::before{background:var(--orange)}
+.drill-card.reflex::before{background:var(--cyan)}
+.drill-card.replay::before{background:var(--teal)}
+.drill-card.ritmo::before{background:var(--lime)}
+.drill-card.beat::before{background:var(--gold)}
+.drill-emoji{font-size:1.4rem;margin-bottom:6px}
+.drill-name{font-family:'Bebas Neue',sans-serif;font-size:.8rem;letter-spacing:2px;margin-bottom:4px}
+.drill-card.react .drill-name{color:var(--purple)}
+.drill-card.recall .drill-name{color:var(--orange)}
+.drill-card.reflex .drill-name{color:var(--cyan)}
+.drill-card.replay .drill-name{color:var(--teal)}
+.drill-card.ritmo .drill-name{color:var(--lime)}
+.drill-card.beat .drill-name{color:var(--gold)}
+.drill-level{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--white)}
+.drill-rating{font-size:.6rem;color:var(--gray);font-weight:600}
+.drill-sub{font-size:.55rem;color:var(--gray);margin-top:4px}
+
+/* REPORT BODY */
+.rpt-body{background:var(--surface);border:1.5px solid rgba(255,255,255,.06);border-radius:24px;overflow:hidden;margin-bottom:28px}
+.rpt-section{padding:28px 32px;border-bottom:1px solid rgba(255,255,255,.04)}
+.rpt-section:last-child{border-bottom:none}
+.rpt-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.rpt-section-title .emoji{font-size:1.1rem}
+.rs-exec .rpt-section-title{color:var(--gold)}
+.rs-strengths .rpt-section-title{color:var(--green)}
+.rs-dev .rpt-section-title{color:var(--orange)}
+.rs-court .rpt-section-title{color:var(--cyan)}
+.rs-coach .rpt-section-title{color:var(--purple)}
+.rs-path .rpt-section-title{color:var(--lime)}
+.rpt-section p{font-size:.84rem;color:var(--gray-light);line-height:1.85;margin-bottom:12px}
+.rpt-section p:last-child{margin-bottom:0}
+.rpt-section strong{color:var(--white);font-weight:700}
+
+/* ACTIONS */
+.rpt-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:36px}
+.rpt-btn{padding:12px 28px;border-radius:12px;font-size:.8rem;font-weight:700;border:none;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .3s}
+.rpt-btn-copy{background:var(--gold);color:var(--black)}
+.rpt-btn-copy:hover{box-shadow:0 4px 20px rgba(255,215,0,.3)}
+.rpt-btn-share{background:transparent;color:var(--gold);border:1.5px solid var(--gold-border)}
+.rpt-btn-share:hover{border-color:var(--gold);background:rgba(255,215,0,.06)}
+.rpt-btn-profile{background:transparent;color:var(--gray-light);border:1.5px solid rgba(255,255,255,.1)}
+.rpt-btn-profile:hover{border-color:rgba(255,255,255,.2);color:var(--white)}
+
+/* DRILL EXPLAINER */
+.explainer{background:var(--surface);border:1.5px solid rgba(255,255,255,.06);border-radius:24px;padding:32px;margin-bottom:28px}
+.explainer-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;color:var(--gold);margin-bottom:20px;text-align:center}
+.explainer-grid{display:flex;flex-direction:column;gap:12px}
+.explainer-row{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04)}
+.explainer-emoji{font-size:1.3rem;min-width:32px;text-align:center}
+.explainer-info{flex:1;min-width:0}
+.explainer-name{font-size:.82rem;font-weight:700}
+.explainer-desc{font-size:.68rem;color:var(--gray);line-height:1.4}
+.explainer-row.react .explainer-name{color:var(--purple)}
+.explainer-row.recall .explainer-name{color:var(--orange)}
+.explainer-row.reflex .explainer-name{color:var(--cyan)}
+.explainer-row.replay .explainer-name{color:var(--teal)}
+.explainer-row.ritmo .explainer-name{color:var(--lime)}
+.explainer-row.beat .explainer-name{color:var(--gold)}
+
+/* POWERED */
+.powered-strip{display:flex;align-items:center;justify-content:center;gap:8px;padding:24px 0 8px}
+.powered-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+.powered-label{font-size:.5rem;color:var(--gray);letter-spacing:2px}
+.powered-brand{font-family:'Bebas Neue',sans-serif;color:var(--gold);font-size:.7rem;letter-spacing:3px}
+@keyframes pulse{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.3)}}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
+.footer-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:800px;margin:0 auto;padding:0 24px}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:.78rem;color:var(--gray)}
+.footer-copy{font-size:.65rem;color:#444}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);padding:12px 28px;background:var(--gold);color:var(--black);border-radius:12px;font-size:.8rem;font-weight:700;pointer-events:none;opacity:0;transition:all .4s;z-index:200}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* DISCLAIMER */
+.disclaimer{text-align:center;padding:4px 20px 20px;font-size:.55rem;color:#444;max-width:600px;margin:0 auto}
+
+@media(max-width:600px){
+.rpt-header{padding:28px 20px 24px}
+.rpt-player{font-size:2rem}
+.drills-grid{grid-template-columns:repeat(2,1fr)}
+.rpt-section{padding:24px 20px}
+.rpt-date{position:static;margin-bottom:12px}
+.rpt-actions{flex-direction:column}
+.rpt-btn{width:100%;text-align:center}
+.explainer{padding:24px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav><div class="nav-inner">
+<a href="/" class="nav-brand"><img src="/hooporia.png" alt="Hooporia"><span>HOOPORIA</span></a>
+<div class="nav-right">
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Drills" data-es="Drills">Drills</a>
+<a href="/cognitive-report.html" class="nav-link" data-en="Report" data-es="Reporte">Report</a>
+<a href="/discover.html" class="nav-link" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" class="nav-link" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<a href="/login.html" class="nav-link nav-login" data-en="Log In" data-es="Entrar">Log In</a>
+<button class="hamburger" id="hamBtn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+<a href="/join.html"><button class="nav-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</button></a>
+</div></div>
+<div class="mobile-menu" id="mobileMenu">
+<a href="/cognitive-hoops.html" data-en="Drills" data-es="Drills">Drills</a>
+<a href="/cognitive-report.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
+<a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
+<a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
+<a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
+<div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
+<a href="/join.html" class="mm-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</a>
+</div></nav>
+
+<div class="page">
+
+<!-- ======================== REPORT HEADER ======================== -->
+<div class="rpt-header">
+<div class="rpt-date">APRIL 4, 2026</div>
+<div class="rpt-badge">
+<span class="rpt-badge-text">📋 AI COGNITIVE SCOUTING REPORT</span>
+<span class="rpt-tag rpt-tag-v">✓ VERIFIED</span>
+<span class="rpt-tag rpt-tag-p">PREMIUM</span>
+<span class="rpt-tag rpt-tag-ai">CLAUDE AI</span>
+</div>
+<div class="rpt-player">MARCUS RIVERA</div>
+<div class="rpt-meta">PG · 6'1" · 175 lbs · Class of 2027 · Right-handed</div>
+<div class="rpt-meta2" data-en="Bayamón Basketball Academy · Bayamón, PR · Play Style: Floor General · Competition: Varsity" data-es="Bayamón Basketball Academy · Bayamón, PR · Estilo: Director de Juego · Competencia: Varsity">Bayamón Basketball Academy · Bayamón, PR · Play Style: Floor General · Competition: Varsity</div>
+<div class="rpt-overall">
+<div>
+<div class="rpt-overall-label" data-en="BPM OVERALL" data-es="BPM GENERAL">BPM OVERALL</div>
+<div class="rpt-overall-level">L7</div>
+</div>
+<div>
+<div class="rpt-overall-name">ALL-STAR</div>
+<div class="rpt-overall-label" data-en="5 of 6 drills completed" data-es="5 de 6 drills completados">5 of 6 drills completed</div>
+</div>
+</div>
+</div>
+
+<!-- ======================== DRILL SCORES ======================== -->
+<div class="drills-section">
+<div class="drills-title" data-en="COGNITIVE SCORES" data-es="PUNTAJES COGNITIVOS">COGNITIVE SCORES</div>
+<div class="drills-grid">
+<div class="drill-card react">
+<div class="drill-emoji">🟣</div>
+<div class="drill-name">REACT</div>
+<div class="drill-level">L8</div>
+<div class="drill-rating">MVP</div>
+<div class="drill-sub" data-en="Reaction & Rhythm" data-es="Reacción y Ritmo">Reaction & Rhythm</div>
+</div>
+<div class="drill-card recall">
+<div class="drill-emoji">🟠</div>
+<div class="drill-name">RECALL</div>
+<div class="drill-level">L7</div>
+<div class="drill-rating">All-Star</div>
+<div class="drill-sub" data-en="Working Memory" data-es="Memoria de Trabajo">Working Memory</div>
+</div>
+<div class="drill-card reflex">
+<div class="drill-emoji">🔵</div>
+<div class="drill-name">REFLEX</div>
+<div class="drill-level">L9</div>
+<div class="drill-rating">Hall of Fame</div>
+<div class="drill-sub" data-en="Court Vision" data-es="Visión de Cancha">Court Vision</div>
+</div>
+<div class="drill-card replay">
+<div class="drill-emoji">🟢</div>
+<div class="drill-name">REPLAY</div>
+<div class="drill-level">L6</div>
+<div class="drill-rating">Pro</div>
+<div class="drill-sub" data-en="Play Recall" data-es="Memoria de Jugadas">Play Recall</div>
+</div>
+<div class="drill-card ritmo">
+<div class="drill-emoji">🟡</div>
+<div class="drill-name">RITMO</div>
+<div class="drill-level">L7</div>
+<div class="drill-rating">All-Star</div>
+<div class="drill-sub" data-en="Change Detection" data-es="Detección de Cambios">Change Detection</div>
+</div>
+<div class="drill-card beat">
+<div class="drill-emoji">🏀</div>
+<div class="drill-name">BEAT</div>
+<div class="drill-level">—</div>
+<div class="drill-rating" data-en="Not Yet Played" data-es="Sin Jugar">Not Yet Played</div>
+<div class="drill-sub" data-en="Game Rhythm" data-es="Ritmo de Juego">Game Rhythm</div>
+</div>
+</div>
+</div>
+
+<!-- ======================== AI REPORT BODY ======================== -->
+<div class="rpt-body">
+
+<div class="rpt-section rs-exec">
+<div class="rpt-section-title"><span class="emoji">📊</span> EXECUTIVE SUMMARY</div>
+<p data-en="Marcus Rivera is a <strong>high-IQ floor general</strong> with elite visual processing and above-average reactive timing. His cognitive profile suggests a player who sees the play develop before it happens — the kind of point guard who makes everyone around him better. His primary cognitive identity is a <strong>court vision specialist with clutch-level reaction speed</strong>." data-es="Marcus Rivera es un <strong>base con alto IQ</strong> y procesamiento visual elite con timing reactivo superior al promedio. Su perfil cognitivo sugiere un jugador que ve la jugada antes de que suceda — el tipo de base que hace mejor a todos a su alrededor. Su identidad cognitiva principal es la de un <strong>especialista en visión de cancha con velocidad de reacción de nivel clutch</strong>.">Marcus Rivera is a <strong>high-IQ floor general</strong> with elite visual processing and above-average reactive timing. His cognitive profile suggests a player who sees the play develop before it happens — the kind of point guard who makes everyone around him better. His primary cognitive identity is a <strong>court vision specialist with clutch-level reaction speed</strong>.</p>
+</div>
+
+<div class="rpt-section rs-strengths">
+<div class="rpt-section-title"><span class="emoji">💪</span> COGNITIVE STRENGTHS</div>
+<p data-en="<strong>Court Vision (L9 Reflex — Hall of Fame):</strong> In the 99th percentile for visual processing. This player captures the entire floor in a split second. In transition, expect him to find cutters and trailing shooters that most guards miss entirely. He reads 5-out spacing before the defense rotates." data-es="<strong>Visión de Cancha (L9 Reflex — Hall of Fame):</strong> En el percentil 99 de procesamiento visual. Este jugador captura toda la cancha en un instante. En transición, espera que encuentre cortadores y tiradores que la mayoría de bases no ven."><strong>Court Vision (L9 Reflex — Hall of Fame):</strong> In the 99th percentile for visual processing. This player captures the entire floor in a split second. In transition, expect him to find cutters and trailing shooters that most guards miss entirely. He reads 5-out spacing before the defense rotates.</p>
+<p data-en="<strong>Reaction Speed (L8 React — MVP):</strong> Processes tempo changes at elite speed. Can operate effectively at 120 BPM game pace. This translates to steal anticipation, fast break decision-making, and the ability to adjust mid-play when the defense shifts." data-es="<strong>Velocidad de Reacción (L8 React — MVP):</strong> Procesa cambios de tempo a velocidad elite. Opera efectivamente a ritmo de juego de 120 BPM. Esto se traduce en anticipación de robos, toma de decisiones en contraataque y la habilidad de ajustar a media jugada cuando la defensa cambia."><strong>Reaction Speed (L8 React — MVP):</strong> Processes tempo changes at elite speed. Can operate effectively at 120 BPM game pace. This translates to steal anticipation, fast break decision-making, and the ability to adjust mid-play when the defense shifts.</p>
+</div>
+
+<div class="rpt-section rs-dev">
+<div class="rpt-section-title"><span class="emoji">⚡</span> <span data-en="AREAS FOR DEVELOPMENT" data-es="ÁREAS DE DESARROLLO">AREAS FOR DEVELOPMENT</span></div>
+<p data-en="<strong>Play Recall (L6 Replay — Pro):</strong> While above average, complex 12+ step sequences show slight degradation under speed pressure. In late-game situations with intricate inbound plays or multi-action sets, execution may falter. Recommend drilling THE REPLAY at Tempo and Elite speeds — focus on full offensive sets with 8+ positions until they become automatic." data-es="<strong>Memoria de Jugadas (L6 Replay — Pro):</strong> Aunque por encima del promedio, las secuencias complejas de 12+ pasos muestran ligera degradación bajo presión de velocidad. En situaciones de final de partido con jugadas de saque complejas, la ejecución puede fallar. Se recomienda practicar THE REPLAY a velocidades Tempo y Elite."><strong>Play Recall (L6 Replay — Pro):</strong> While above average, complex 12+ step sequences show slight degradation under speed pressure. In late-game situations with intricate inbound plays or multi-action sets, execution may falter. Recommend drilling THE REPLAY at Tempo and Elite speeds — focus on full offensive sets with 8+ positions until they become automatic.</p>
+</div>
+
+<div class="rpt-section rs-court">
+<div class="rpt-section-title"><span class="emoji">🏀</span> ON-COURT TRANSLATION</div>
+<p data-en="<strong>Transition:</strong> Elite. Expect this player to push tempo and find the open man before the defense sets. His L9 Reflex means he captures the entire floor layout in under a second — in a 4-on-3 fast break, he's already identified the trailer and the weak-side cutter before crossing half court." data-es="<strong>Transición:</strong> Elite. Espera que este jugador empuje el tempo y encuentre al hombre abierto antes de que la defensa se organice. Su L9 Reflex significa que captura todo el plano de la cancha en menos de un segundo."><strong>Transition:</strong> Elite. Expect this player to push tempo and find the open man before the defense sets. His L9 Reflex means he captures the entire floor layout in under a second — in a 4-on-3 fast break, he's already identified the trailer and the weak-side cutter before crossing half court.</p>
+<p data-en="<strong>Half-Court:</strong> Strong. Reads pick-and-roll coverage effectively with his right hand driving to create angles. His L7 Recall means he holds play assignments well in standard sets. His L7 Ritmo allows him to detect when a defender switches or hedges — he'll hit the pocket pass before the big recovers." data-es="<strong>Media Cancha:</strong> Fuerte. Lee la cobertura del pick-and-roll efectivamente con su mano derecha creando ángulos. Su L7 Recall significa que retiene bien las asignaciones de jugadas en sets estándar."><strong>Half-Court:</strong> Strong. Reads pick-and-roll coverage effectively with his right hand driving to create angles. His L7 Recall means he holds play assignments well in standard sets. His L7 Ritmo allows him to detect when a defender switches or hedges — he'll hit the pocket pass before the big recovers.</p>
+<p data-en="<strong>Pressure Situations:</strong> Above average reaction time (L8 React) suggests clutch performance under tight clock situations. This is a player you want with the ball in the final two minutes." data-es="<strong>Situaciones de Presión:</strong> El tiempo de reacción superior al promedio (L8 React) sugiere rendimiento clutch en situaciones de reloj apretado. Este es un jugador que quieres con el balón en los últimos dos minutos."><strong>Pressure Situations:</strong> Above average reaction time (L8 React) suggests clutch performance under tight clock situations. This is a player you want with the ball in the final two minutes.</p>
+</div>
+
+<div class="rpt-section rs-coach">
+<div class="rpt-section-title"><span class="emoji">🎯</span> <span data-en="COACH RECOMMENDATION" data-es="RECOMENDACIÓN PARA COACHES">COACH RECOMMENDATION</span></div>
+<p data-en="Run this player as the <strong>primary ball-handler in transition</strong>. In half-court sets, position him as the decision-maker on pick-and-roll actions — his right-hand drive combined with L9 court vision creates scoring opportunities for the entire unit. <strong>Defensive assignment: put him on the opposing team's best playmaker</strong> — his L8 reaction time and L7 change detection will disrupt offensive flow and force turnovers." data-es="Usa a este jugador como <strong>manejador principal del balón en transición</strong>. En media cancha, posiciónalo como el tomador de decisiones en acciones de pick-and-roll — su penetración con mano derecha combinada con L9 de visión crea oportunidades de anotación para toda la unidad. <strong>Asignación defensiva: ponlo contra el mejor playmaker rival</strong>.">Run this player as the <strong>primary ball-handler in transition</strong>. In half-court sets, position him as the decision-maker on pick-and-roll actions — his right-hand drive combined with L9 court vision creates scoring opportunities for the entire unit. <strong>Defensive assignment: put him on the opposing team's best playmaker</strong> — his L8 reaction time and L7 change detection will disrupt offensive flow and force turnovers.</p>
+</div>
+
+<div class="rpt-section rs-path">
+<div class="rpt-section-title"><span class="emoji">📈</span> <span data-en="DEVELOPMENT PATH" data-es="RUTA DE DESARROLLO">DEVELOPMENT PATH</span></div>
+<p data-en="Current overall: <strong>L7 All-Star</strong>. Target: <strong>L9 Hall of Fame</strong>. To get there: Focus on THE REPLAY at Tempo and Elite speeds — drill complex sequences until they become automatic. Additionally, THE RITMO training will sharpen defensive rotation reads from L7 to L9 range. Complete THE BEAT to unlock the 6th dimension and get a full cognitive profile. Estimated timeline: 4-6 weeks of focused training." data-es="Nivel actual: <strong>L7 All-Star</strong>. Objetivo: <strong>L9 Hall of Fame</strong>. Para lograrlo: Enfócate en THE REPLAY a velocidades Tempo y Elite — practica secuencias complejas hasta que sean automáticas. Además, entrenar THE RITMO afinará las lecturas de rotación defensiva de L7 a rango L9. Completa THE BEAT para desbloquear la 6ta dimensión. Tiempo estimado: 4-6 semanas de entrenamiento enfocado.">Current overall: <strong>L7 All-Star</strong>. Target: <strong>L9 Hall of Fame</strong>. To get there: Focus on THE REPLAY at Tempo and Elite speeds — drill complex sequences until they become automatic. Additionally, THE RITMO training will sharpen defensive rotation reads from L7 to L9 range. Complete THE BEAT to unlock the 6th dimension and get a full cognitive profile. Estimated timeline: 4-6 weeks of focused training.</p>
+<p style="font-size:.9rem;font-weight:600;color:var(--gold);font-style:italic;margin-top:8px" data-en="\"A floor general who reads the defense before it reads itself. Give him the ball and get out of the way.\"" data-es="\"Un director de juego que lee la defensa antes de que ella misma se lea. Dale el balón y quítate del camino.\"">"A floor general who reads the defense before it reads itself. Give him the ball and get out of the way."</p>
+</div>
+
+</div>
+
+<!-- ======================== ACTIONS ======================== -->
+<div class="rpt-actions">
+<button class="rpt-btn rpt-btn-copy" onclick="copyReport()">📋 <span data-en="Copy Report" data-es="Copiar Reporte">Copy Report</span></button>
+<button class="rpt-btn rpt-btn-share" onclick="shareReport()">🔗 <span data-en="Share Link" data-es="Compartir Link">Share Link</span></button>
+<a href="/player/marcus-rivera" class="rpt-btn rpt-btn-profile">👤 <span data-en="View Player Profile" data-es="Ver Perfil del Jugador">View Player Profile</span></a>
+</div>
+
+<!-- ======================== DRILL EXPLAINER ======================== -->
+<div class="explainer">
+<div class="explainer-title" data-en="THE 6 BPM DIMENSIONS" data-es="LAS 6 DIMENSIONES BPM">THE 6 BPM DIMENSIONS</div>
+<div class="explainer-grid">
+<div class="explainer-row react"><div class="explainer-emoji">🟣</div><div class="explainer-info"><div class="explainer-name">THE REACT</div><div class="explainer-desc" data-en="Rhythm reaction — tap cells on the beat. Measures reaction time and rhythmic timing under pressure." data-es="Reacción rítmica — toca las celdas en el ritmo. Mide tiempo de reacción y sincronización rítmica bajo presión.">Rhythm reaction — tap cells on the beat. Measures reaction time and rhythmic timing under pressure.</div></div></div>
+<div class="explainer-row recall"><div class="explainer-emoji">🟠</div><div class="explainer-info"><div class="explainer-name">THE RECALL</div><div class="explainer-desc" data-en="Number recall — memorize and tap back in order. Measures working memory and play execution capacity." data-es="Recall numérico — memoriza y toca en orden. Mide memoria de trabajo y capacidad de ejecución de jugadas.">Number recall — memorize and tap back in order. Measures working memory and play execution capacity.</div></div></div>
+<div class="explainer-row reflex"><div class="explainer-emoji">🔵</div><div class="explainer-info"><div class="explainer-name">THE REFLEX</div><div class="explainer-desc" data-en="Flash memory — capture the whole picture in a split second. Measures court vision and spatial awareness." data-es="Memoria flash — captura la imagen completa en un instante. Mide visión de cancha y conciencia espacial.">Flash memory — capture the whole picture in a split second. Measures court vision and spatial awareness.</div></div></div>
+<div class="explainer-row replay"><div class="explainer-emoji">🟢</div><div class="explainer-info"><div class="explainer-name">THE REPLAY</div><div class="explainer-desc" data-en="Sequence replay — replay exact order from memory. Measures sequential memory and play recall." data-es="Repetición de secuencia — repite el orden exacto de memoria. Mide memoria secuencial y recall de jugadas.">Sequence replay — replay exact order from memory. Measures sequential memory and play recall.</div></div></div>
+<div class="explainer-row ritmo"><div class="explainer-emoji">🟡</div><div class="explainer-info"><div class="explainer-name">THE RITMO</div><div class="explainer-desc" data-en="Spot the change — find the one cell that moved. Measures change detection and defensive read speed." data-es="Encuentra el cambio — encuentra la celda que se movió. Mide detección de cambios y velocidad de lectura defensiva.">Spot the change — find the one cell that moved. Measures change detection and defensive read speed.</div></div></div>
+<div class="explainer-row beat"><div class="explainer-emoji">🏀</div><div class="explainer-info"><div class="explainer-name">THE BEAT</div><div class="explainer-desc" data-en="Rhythm training with Latin beats — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Measures game tempo and flow state." data-es="Entrenamiento de ritmo con beats Latinos — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Mide tempo de juego y estado de flujo.">Rhythm training with Latin beats — Reggaeton, Bomba, Plena, Salsa, Clave, Merengue. Measures game tempo and flow state.</div></div></div>
+</div>
+</div>
+
+<!-- POWERED -->
+<div class="powered-strip">
+<div class="powered-dot"></div>
+<span class="powered-label">POWERED BY</span>
+<span class="powered-brand">BPM BASKETBALL™</span>
+</div>
+
+<div class="disclaimer" data-en="This report is generated by AI based on verified cognitive drill performance on the Hooporia™ platform. Scores cannot be self-reported or manipulated. Report generated by Anthropic Claude AI." data-es="Este reporte es generado por IA basado en rendimiento verificado de drills cognitivos en la plataforma Hooporia™. Los puntajes no pueden ser auto-reportados o manipulados. Reporte generado por Anthropic Claude AI.">This report is generated by AI based on verified cognitive drill performance on the Hooporia™ platform. Scores cannot be self-reported or manipulated. Report generated by Anthropic Claude AI.</div>
+
+</div>
+
+<footer><div class="footer-inner">
+<div class="footer-links"><a href="/privacy.html" data-en="Privacy" data-es="Privacidad">Privacy</a><a href="/terms.html" data-en="Terms" data-es="Términos">Terms</a></div>
+<div class="footer-copy">© 2026 GoStar Digital LLC. All Rights Reserved.</div>
+</div></footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
+
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2500)}
+
+function copyReport(){
+var sections=document.querySelectorAll('.rpt-section');
+var text='';
+sections.forEach(function(s){
+var title=s.querySelector('.rpt-section-title');
+var ps=s.querySelectorAll('p');
+if(title)text+=title.textContent.trim()+'\n';
+ps.forEach(function(p){text+=p.textContent.trim()+'\n\n'});
+});
+var header='AI COGNITIVE SCOUTING REPORT — HOOPORIA™\n';
+header+='Player: Marcus Rivera | PG | 6\'1" | Class of 2027\n';
+header+='Overall BPM: L7 All-Star | 5/6 Drills Completed\n';
+header+='Generated: April 4, 2026\n\n';
+navigator.clipboard.writeText(header+text.trim()+'\n\nPowered by BPM Basketball™ — hooporia.com').then(function(){
+showToast(currentLang==='es'?'¡Reporte copiado!':'Report copied!');
+});
+}
+
+function shareReport(){
+var url=window.location.href;
+if(navigator.share){navigator.share({title:'AI Cognitive Scouting Report — Marcus Rivera',url:url})}
+else{navigator.clipboard.writeText(url).then(function(){showToast(currentLang==='es'?'¡Link copiado!':'Link copied!')})}
+}
+</script>
+<script src="/hooporia-chat.js"></script>
+</body>
+</html>
