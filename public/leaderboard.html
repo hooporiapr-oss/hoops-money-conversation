@@ -200,7 +200,12 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0;margin-top:40px
 <option value="" data-en="All Positions" data-es="Todas las Posiciones">All Positions</option>
 <option value="PG">PG</option><option value="SG">SG</option><option value="SF">SF</option><option value="PF">PF</option><option value="C">C</option><option value="G">G</option><option value="F">F</option>
 </select>
-<select class="filter-select" id="fGrad" onchange="renderBoard()">
+<select class="filter-select" id="fGender" onchange="renderBoard()">
+<option value="">Male & Female</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+  <select class="filter-select" id="fGrad" onchange="renderBoard()">
 <option value="" data-en="All Grad Years" data-es="Todos los Años">All Grad Years</option>
 <option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option>
 </select>
