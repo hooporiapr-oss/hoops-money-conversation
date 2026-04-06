@@ -157,6 +157,11 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
         <option value="ppg">Sort: Points High→Low</option>
         <option value="name">Sort: Name A→Z</option>
       </select>
+      <select class="filter-input" id="fGender" onchange="filterPlayers()">
+        <option value="">Male & Female</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
       <select class="filter-input" id="fNIL" onchange="filterPlayers()">
         <option value="">All Players</option>
         <option value="nil">📣 Open for Opportunities Only</option>
@@ -245,6 +250,8 @@ function filterPlayers(){
     if(search&&!(p.first_name+' '+p.last_name).toLowerCase().includes(search))return false;
     if(pos&&p.position!==pos)return false;
     if(nilOnly==='nil'&&!p.nil_contact_email)return false;
+    var gender=document.getElementById('fGender').value;
+    if(gender&&p.gender!==gender)return false;
     return true;
   });
 
@@ -280,6 +287,7 @@ function renderPlayers(players){
       '</div>'+
       '<div class="player-meta">'+
         (p.position?'<span class="player-tag pos">'+p.position+'</span>':'')+
+        (p.gender?'<span class="player-tag">'+p.gender+'</span>':'')+
         (p.age?'<span class="player-tag">Age '+p.age+'</span>':'')+
         (p.weight?'<span class="player-tag">'+esc(p.weight)+'</span>':'')+
         (p._cogLevel?'<span class="player-tag" style="background:rgba(155,89,182,.1);color:#9B59B6">🧠 Mindset L'+p._cogLevel+'</span>':'')+
