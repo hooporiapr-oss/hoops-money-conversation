@@ -170,7 +170,7 @@ h+='<div style="margin-top:-56px;position:relative;z-index:2;margin-bottom:14px"
 if(p.avatar_url)h+='<img src="'+esc(p.avatar_url)+'" style="width:96px;height:96px;border-radius:22px;border:3px solid var(--gold);object-fit:cover;flex-shrink:0;box-shadow:0 4px 30px rgba(255,215,0,.2)">';
 else h+='<div style="width:96px;height:96px;border-radius:22px;background:linear-gradient(135deg,rgba(255,215,0,.15),rgba(255,107,53,.08));border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:\'Bebas Neue\',sans-serif;font-size:2.2rem;color:var(--gold);flex-shrink:0;box-shadow:0 4px 30px rgba(255,215,0,.2)">#'+(p.jersey_number||'—')+'</div>';
 h+='<div style="flex:1;padding-bottom:4px"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px"><h1 style="font-family:\'Bebas Neue\',sans-serif;font-size:clamp(1.8rem,5vw,2.4rem);letter-spacing:3px;line-height:1">'+esc(fullName)+'</h1><span style="background:var(--gold);color:var(--black);padding:2px 8px;border-radius:6px;font-size:.5rem;font-weight:800;letter-spacing:.5px">✓ VERIFIED</span></div>';
-var meta=[p.position,p.height,p.weight?p.weight+' lbs':'',p.dominant_hand?p.dominant_hand+'-handed':''].filter(Boolean).join(' · ');
+var meta=[p.position,p.gender||'',p.height,p.weight?p.weight+' lbs':'',p.dominant_hand?p.dominant_hand+'-handed':''].filter(Boolean).join(' · ');
 h+='<div style="font-size:.8rem;color:var(--gray-light)">'+esc(meta)+'</div>';
 var school=[p.school,p.city&&p.state?p.city+', '+p.state:'',p.grad_year?'Class of '+p.grad_year:''].filter(Boolean).join(' · ');
 h+='<div style="font-size:.72rem;color:var(--gray)">'+esc(school)+'</div></div></div></div>';
@@ -338,6 +338,6 @@ if(navigator.share)navigator.share({title:'AI Scouting Report — '+window._play
 else{navigator.clipboard.writeText(window.location.href).then(function(){showToast(currentLang==='es'?'¡Link copiado!':'Link copied!')})}
 }
 </script>
-<script src="/hooporia-chat.js"></script>
+<script src="/bpm-chat.js"></script>
 </body>
 </html>
