@@ -197,5 +197,6 @@ async function submitProfile(){
 document.addEventListener('keydown',function(e){if(e.key==='Enter'){if(currentStep===1)goStep(2);else if(currentStep===2)goStep(3);else if(currentStep===3)submitProfile()}});
 try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
 </script>
+<script src="/bpm-chat.js"></script>
 </body>
 </html>
