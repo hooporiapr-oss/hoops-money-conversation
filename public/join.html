@@ -52,7 +52,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;background:rg
 .form-group input::placeholder,.form-group textarea::placeholder{color:#aaa;font-weight:400}
 .form-group textarea{resize:vertical;min-height:60px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.section-label{font-size:.8rem;font-weight:800;color:var(--purple);margin:20px 0 12px;padding-top:16px;border-top:1px solid #eee}
 .btn-row{display:flex;gap:12px;margin-top:24px}
 .btn-primary{width:100%;padding:14px;background:var(--orange);color:#fff;border-radius:10px;font-size:.95rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;transition:all .25s;text-align:center}
 .btn-primary:hover{background:var(--orange-light)}
@@ -69,10 +68,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 24px;background:rg
 .link-box{background:#f5f5f5;border:2px solid #ddd;border-radius:10px;padding:14px;font-size:.95rem;font-weight:700;color:var(--orange);word-break:break-all;margin-bottom:20px}
 .login-link{text-align:center;margin-top:20px;font-size:.85rem;color:#666}
 .login-link a{color:var(--orange);font-weight:700}
-.info-toggle{font-size:.7rem;color:var(--orange);cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:4px;margin-top:4px;user-select:none}
-.info-toggle:hover{text-decoration:underline}
-.info-dropdown{font-size:.75rem;color:#555;background:#f8f8f8;border:1px solid #eee;border-radius:8px;padding:10px 12px;margin-top:6px;display:none;line-height:1.5}
-.info-dropdown.open{display:block}
 
 /* FOOTER */
 footer{position:fixed;bottom:0;left:0;right:0;padding:16px 0}
@@ -95,7 +90,6 @@ function setLang(l){currentLang=l;document.documentElement.lang=l;
 document.querySelectorAll('[data-en]').forEach(function(el){var v=el.getAttribute('data-'+l);if(v){if(v.indexOf('<')!==-1)el.innerHTML=v;else el.textContent=v}});
 document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.dataset.l===l)});
 try{localStorage.setItem('lc-lang',l)}catch(e){}}
-function toggleInfo(id){document.getElementById(id).classList.toggle('open')}
 </script>
 </head>
 <body>
@@ -115,7 +109,7 @@ function toggleInfo(id){document.getElementById(id).classList.toggle('open')}
 <a href="/index.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
 <a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
 <a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
-<a href="/faq.html" data-en="FAQ" data-es="Drills">FAQ</a>
+<a href="/faq.html" data-en="FAQ" data-es="FAQ">FAQ</a>
 <a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
 <div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
 <a href="/join.html" class="mm-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</a>
@@ -126,10 +120,10 @@ function toggleInfo(id){document.getElementById(id).classList.toggle('open')}
     <div class="step-dot active" id="dot1">1</div>
     <div class="step-line" id="line1"></div>
     <div class="step-dot" id="dot2">2</div>
-    <div class="step-line" id="line2"></div>
-    <div class="step-dot" id="dot3">3</div>
   </div>
   <div class="error-msg" id="errorMsg"></div>
+
+  <!-- STEP 1: Account -->
   <div class="step-panel active" id="step1">
     <h1 class="en">Create Your Profile</h1><h1 class="es">Crea Tu Perfil</h1>
     <p class="subtitle en">Step 1 — Your account</p><p class="subtitle es">Paso 1 — Tu cuenta</p>
@@ -139,26 +133,24 @@ function toggleInfo(id){document.getElementById(id).classList.toggle('open')}
     <button class="btn-primary" onclick="goStep(2)"><span class="en">Next</span><span class="es">Siguiente</span></button>
     <div class="login-link"><span class="en">Already have a profile? <a href="/login.html">Log in</a></span><span class="es">¿Ya tienes perfil? <a href="/login.html">Entra aquí</a></span></div>
   </div>
+
+  <!-- STEP 2: Player Info + Submit -->
   <div class="step-panel" id="step2">
     <h1 class="en">Player Info</h1><h1 class="es">Info del Jugador</h1>
     <p class="subtitle en">Step 2 — Tell us about you</p><p class="subtitle es">Paso 2 — Cuéntanos de ti</p>
     <div class="form-row"><div class="form-group"><label class="en">First Name</label><label class="es">Nombre</label><input type="text" id="firstName" placeholder="First name"></div><div class="form-group"><label class="en">Last Name</label><label class="es">Apellido</label><input type="text" id="lastName" placeholder="Last name"></div></div>
     <div class="form-group"><label class="en">Profile URL</label><label class="es">URL del Perfil</label><input type="text" id="slug" placeholder="your-name" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')"><div style="font-size:.7rem;color:#888;margin-top:4px">bpmbasketball.com/player/<strong id="slugPreview">your-name</strong></div><script>document.getElementById('slug').addEventListener('input',function(){document.getElementById('slugPreview').textContent=this.value||'your-name'})</script></div>
-    <div class="form-row"><div class="form-group"><label class="en">Position</label><label class="es">Posición</label><select id="position"><option value="PG">PG — Point Guard</option><option value="SG">SG — Shooting Guard</option><option value="SF">SF — Small Forward</option><option value="PF">PF — Power Forward</option><option value="C">C — Center</option><option value="G">G — Guard</option><option value="F">F — Forward</option></select></div><div class="form-group"><label>Male / Female</label><select id="gender"><option value="Male">Male</option><option value="Female">Female</option></select></div></div> <div class="form-row"><div class="form-group"><label class="en">Age</label><label class="es">Edad</label><input type="number" id="age" placeholder="16" min="13" max="99"></div><div class="form-group"><label class="en">Jersey #</label><label class="es">Número</label><input type="text" id="jersey" placeholder="23" maxlength="3"></div></div>
+    <div class="form-row"><div class="form-group"><label class="en">Position</label><label class="es">Posición</label><select id="position"><option value="PG">PG — Point Guard</option><option value="SG">SG — Shooting Guard</option><option value="SF">SF — Small Forward</option><option value="PF">PF — Power Forward</option><option value="C">C — Center</option><option value="G">G — Guard</option><option value="F">F — Forward</option></select></div><div class="form-group"><label>Male / Female</label><select id="gender"><option value="Male">Male</option><option value="Female">Female</option></select></div></div>
+    <div class="form-row"><div class="form-group"><label class="en">Age</label><label class="es">Edad</label><input type="number" id="age" placeholder="16" min="13" max="99"></div><div class="form-group"><label class="en">Jersey #</label><label class="es">Número</label><input type="text" id="jersey" placeholder="23" maxlength="3"></div></div>
     <div class="form-row"><div class="form-group"><label class="en">Height</label><label class="es">Altura</label><input type="text" id="height" placeholder="6'2&quot;"></div><div class="form-group"><label class="en">Weight</label><label class="es">Peso</label><input type="text" id="weight" placeholder="185 lbs"></div></div>
     <div class="form-group"><label class="en">Highlight Video Link</label><label class="es">Link de Video Highlight</label><input type="url" id="highlight" placeholder="https://youtube.com/watch?v=..."></div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">&#8592;</button><button class="btn-primary" onclick="goStep(3)" style="flex:1"><span class="en">Next</span><span class="es">Siguiente</span></button></div>
-  </div>
-  <div class="step-panel" id="step3">
-    <h1 class="en">NIL Profile</h1><h1 class="es">Perfil NIL</h1>
-    <p class="subtitle en">Step 3 — Your brand</p><p class="subtitle es">Paso 3 — Tu marca</p>
-    <div class="form-group"><label class="en">NIL Contact Email</label><label class="es">Email de Contacto NIL</label><input type="email" id="nilEmail" placeholder="Optional — defaults to signup email"><span class="info-toggle" onclick="toggleInfo('nilEmailInfo')">ℹ️ <span class="en">What is this?</span><span class="es">¿Qué es esto?</span></span><div class="info-dropdown" id="nilEmailInfo"><span class="en">This is the email coaches, scouts, and brands will see on your public profile. If left blank, we'll use your signup email.</span><span class="es">Este es el correo que coaches, scouts y marcas verán en tu perfil público. Si lo dejas vacío, usaremos tu correo de registro.</span></div></div>
-    <div class="form-group"><label class="en">NIL Bio</label><label class="es">Bio NIL</label><textarea id="nilBio" rows="3" placeholder="Tell coaches, scouts, and brands about yourself..."></textarea><span class="info-toggle" onclick="toggleInfo('nilBioInfo')">ℹ️ <span class="en">Tips for a great bio</span><span class="es">Tips para una buena bio</span></span><div class="info-dropdown" id="nilBioInfo"><span class="en">Your nil bio is a short personal statement that tells coaches, scouts, and brands who you are — on and off the court. Mention your playing style, achievements, goals, community involvement, and what makes you unique. Think of it as your elevator pitch to anyone looking to recruit or partner with you.</span><span class="es">Tu bio NIL es una breve declaración personal que le dice a coaches, scouts y marcas quién eres — dentro y fuera de la cancha. Menciona tu estilo de juego, logros, metas, participación comunitaria y lo que te hace único. Piénsalo como tu presentación rápida para cualquiera que quiera reclutarte o asociarse contigo.</span></div></div>
     <div style="display:flex;align-items:flex-start;gap:10px;margin:20px 0 0;padding-top:16px;border-top:1px solid #eee"><input type="checkbox" id="ageConsent" style="width:20px;height:20px;margin-top:2px;accent-color:var(--orange);flex-shrink:0"><label for="ageConsent" style="font-size:.8rem;color:#555;font-weight:500;line-height:1.5"><span class="en">I am 13 years or older, or my parent/guardian is creating this profile with me. I agree to the <a href="/terms.html" style="color:var(--orange);font-weight:600">Terms of Service</a> and <a href="/privacy.html" style="color:var(--orange);font-weight:600">Privacy Policy</a>.</span><span class="es">Tengo 13 años o más, o mi padre/tutor está creando este perfil conmigo. Acepto los <a href="/terms.html" style="color:var(--orange);font-weight:600">Términos de Servicio</a> y la <a href="/privacy.html" style="color:var(--orange);font-weight:600">Política de Privacidad</a>.</span></label></div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">&#8592;</button><button class="btn-primary" onclick="submitProfile()" id="submitBtn" style="flex:1"><span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span></button></div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">&#8592;</button><button class="btn-primary" onclick="submitProfile()" id="submitBtn" style="flex:1"><span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span></button></div>
   </div>
-  <div class="step-panel" id="step4">
-    <div class="success-screen"><div class="check">&#11088;</div><h2 class="en">You're Live!</h2><h2 class="es">¡Estás en Vivo!</h2><p class="en">Your NIL profile is live. Share this link with coaches, scouts, and brands:</p><p class="es">Tu perfil NIL está activo. Comparte este enlace con coaches, scouts y marcas:</p><div class="link-box" id="profileLink"></div><a href="/my-profile.html" class="btn-primary" style="display:inline-block;width:100%"><span class="en">Go to My Dashboard</span><span class="es">Ir a Mi Panel</span></a></div>
+
+  <!-- SUCCESS SCREEN -->
+  <div class="step-panel" id="step3">
+    <div class="success-screen"><div class="check">&#11088;</div><h2 class="en">You're In!</h2><h2 class="es">¡Estás Dentro!</h2><p class="en">Your player profile is live. Start training your cognitive game.</p><p class="es">Tu perfil de jugador está activo. Empieza a entrenar tu juego cognitivo.</p><div class="link-box" id="profileLink"></div><a href="/my-profile.html" class="btn-primary" style="display:inline-block;width:100%"><span class="en">Go to My Dashboard</span><span class="es">Ir a Mi Panel</span></a></div>
   </div>
 </div>
 
@@ -178,23 +170,26 @@ function hideError(){document.getElementById('errorMsg').style.display='none'}
 function goStep(step){
   hideError();
   if(step===2&&currentStep===1){var email=document.getElementById('email').value.trim();var pw=document.getElementById('password').value;var pw2=document.getElementById('confirmPw').value;if(!email||!email.includes('@'))return showError(currentLang==='es'?'Correo inválido':'Valid email required');if(pw.length<8)return showError(currentLang==='es'?'Mínimo 8 caracteres':'Password must be at least 8 characters');if(pw!==pw2)return showError(currentLang==='es'?'Las contraseñas no coinciden':'Passwords do not match')}
-  if(step===3&&currentStep===2){var fn=document.getElementById('firstName').value.trim();var ln=document.getElementById('lastName').value.trim();var slug=document.getElementById('slug').value.trim();if(!fn||!ln)return showError(currentLang==='es'?'Nombre y apellido requeridos':'First and last name required');if(!slug||slug.length<3)return showError(currentLang==='es'?'Slug mínimo 3 caracteres':'Slug must be at least 3 characters')}
   currentStep=step;document.querySelectorAll('.step-panel').forEach(function(p){p.classList.remove('active')});document.getElementById('step'+step).classList.add('active');
-  for(var i=1;i<=3;i++){var dot=document.getElementById('dot'+i);dot.classList.remove('active','done');if(i<step)dot.classList.add('done');else if(i===step)dot.classList.add('active')}
-  for(var i=1;i<=2;i++)document.getElementById('line'+i).classList.toggle('active',i<step);
+  for(var i=1;i<=2;i++){var dot=document.getElementById('dot'+i);dot.classList.remove('active','done');if(i<step)dot.classList.add('done');else if(i===step)dot.classList.add('active')}
+  document.getElementById('line1').classList.toggle('active',step>=2);
 }
 async function submitProfile(){
-  hideError();if(!document.getElementById('ageConsent').checked)return showError(currentLang==='es'?'Debes aceptar los términos':'You must agree to the terms');
+  hideError();
+  var fn=document.getElementById('firstName').value.trim();var ln=document.getElementById('lastName').value.trim();var slug=document.getElementById('slug').value.trim();
+  if(!fn||!ln)return showError(currentLang==='es'?'Nombre y apellido requeridos':'First and last name required');
+  if(!slug||slug.length<3)return showError(currentLang==='es'?'Slug mínimo 3 caracteres':'Slug must be at least 3 characters');
+  if(!document.getElementById('ageConsent').checked)return showError(currentLang==='es'?'Debes aceptar los términos':'You must agree to the terms');
   var btn=document.getElementById('submitBtn');btn.disabled=true;btn.textContent=currentLang==='es'?'Creando...':'Creating...';
-  try{var client=await loadSB();var email=document.getElementById('email').value.trim();var password=document.getElementById('password').value;var slug=document.getElementById('slug').value.trim();
+  try{var client=await loadSB();var email=document.getElementById('email').value.trim();var password=document.getElementById('password').value;
   var{data:existing}=await client.from('players').select('id').eq('slug',slug).maybeSingle();
   if(existing){btn.disabled=false;btn.innerHTML='<span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span>';return showError(currentLang==='es'?'Este slug ya está en uso':'This profile URL is already taken')}
   var{data:authData,error:authErr}=await client.auth.signUp({email,password});if(authErr)throw authErr;
-  var{error:insertErr}=await client.from('players').insert({auth_user_id:authData.user.id,slug:slug,first_name:document.getElementById('firstName').value.trim(),last_name:document.getElementById('lastName').value.trim(),position:document.getElementById('position').value,gender:document.getElementById('gender').value,height:document.getElementById('height').value.trim(),weight:document.getElementById('weight').value.trim(),age:parseInt(document.getElementById('age').value)||null,jersey_number:document.getElementById('jersey').value.trim()||null,highlight_link:document.getElementById('highlight').value.trim(),nil_available:true,nil_contact_email:document.getElementById('nilEmail').value.trim()||email,nil_bio:document.getElementById('nilBio').value.trim(),profile_tier:'free'});
-  if(insertErr)throw insertErr;document.getElementById('profileLink').textContent='bpmbasketball.com/player/'+slug;goStep(4);
+  var{error:insertErr}=await client.from('players').insert({auth_user_id:authData.user.id,slug:slug,first_name:document.getElementById('firstName').value.trim(),last_name:document.getElementById('lastName').value.trim(),position:document.getElementById('position').value,gender:document.getElementById('gender').value,height:document.getElementById('height').value.trim(),weight:document.getElementById('weight').value.trim(),age:parseInt(document.getElementById('age').value)||null,jersey_number:document.getElementById('jersey').value.trim()||null,highlight_link:document.getElementById('highlight').value.trim(),profile_tier:'free'});
+  if(insertErr)throw insertErr;document.getElementById('profileLink').textContent='bpmbasketball.com/player/'+slug;goStep(3);
   }catch(e){btn.disabled=false;btn.innerHTML='<span class="en">Create My Profile</span><span class="es">Crear Mi Perfil</span>';showError(e.message||'Something went wrong')}
 }
-document.addEventListener('keydown',function(e){if(e.key==='Enter'){if(currentStep===1)goStep(2);else if(currentStep===2)goStep(3);else if(currentStep===3)submitProfile()}});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'){if(currentStep===1)goStep(2);else if(currentStep===2)submitProfile()}});
 try{var sl=localStorage.getItem('lc-lang');if(sl)setLang(sl);else setLang('en')}catch(e){setLang('en')}
 </script>
 <script src="/bpm-chat.js"></script>
