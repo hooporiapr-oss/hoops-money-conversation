@@ -56,6 +56,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(255,215,0,.08),transparent 70%),radial-gradient(ellipse 40% 40% at 20% 70%,rgba(155,89,182,.06),transparent),radial-gradient(ellipse 40% 40% at 80% 60%,rgba(0,206,209,.05),transparent);pointer-events:none}
+.hero-logo{width:100px;height:auto;margin-bottom:20px;filter:drop-shadow(0 0 30px rgba(255,215,0,.3));animation:fadeUp .6s ease both}
 .hero-first{display:inline-block;padding:8px 20px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);border-radius:30px;font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:3px;color:#ef4444;margin-bottom:24px;animation:fadeUp .8s ease both}
 .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,7rem);line-height:.88;margin-bottom:12px;animation:fadeUp .8s ease .1s both}
 .hero h1 .gold{color:var(--gold)}
@@ -85,6 +86,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .section-pill.purple{background:rgba(155,89,182,.08);color:var(--purple);border:1px solid rgba(155,89,182,.15)}
 .section-pill.red{background:rgba(239,68,68,.08);color:#ef4444;border:1px solid rgba(239,68,68,.15)}
 .section-pill.green{background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.15)}
+.section-pill.cyan{background:rgba(0,206,209,.08);color:var(--cyan);border:1px solid rgba(0,206,209,.15)}
+.section-pill.orange{background:rgba(255,107,53,.08);color:var(--orange);border:1px solid rgba(255,107,53,.15)}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3rem);letter-spacing:2px;margin-bottom:12px;line-height:1.05}
 .section-sub{color:var(--gray-light);font-size:.95rem;max-width:560px;margin:0 auto 44px;line-height:1.7;text-align:center}
 .text-center{text-align:center}
@@ -120,6 +123,49 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .cog-mini.rp .cog-mini-name{color:var(--teal)}
 .cog-mini.rt .cog-mini-name{color:var(--lime)}
 .cog-mini.bt .cog-mini-name{color:var(--gold)}
+
+/* LEADERBOARD SECTION */
+.leaderboard-section{padding:80px 0;position:relative}
+.leaderboard-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(255,215,0,.04),transparent);pointer-events:none}
+.lb-preview{max-width:700px;margin:0 auto;background:var(--surface);border:1.5px solid var(--gold-border);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.lb-header-bar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.03));border-bottom:1px solid rgba(255,215,0,.1)}
+.lb-header-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold);display:flex;align-items:center;gap:8px}
+.lb-header-badge{padding:3px 8px;border-radius:5px;font-size:.5rem;font-weight:700;background:rgba(34,197,94,.12);color:var(--green);letter-spacing:1px}
+.lb-row{display:grid;grid-template-columns:32px 1fr auto auto;align-items:center;gap:14px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.03);transition:background .2s}
+.lb-row:hover{background:rgba(255,255,255,.02)}
+.lb-row.gold-row{background:rgba(255,215,0,.03)}
+.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gray);text-align:center;min-width:24px}
+.lb-rank.top{color:var(--gold)}
+.lb-player{display:flex;flex-direction:column;gap:1px;min-width:0}
+.lb-player-name{font-weight:700;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-player-meta{font-size:.62rem;color:var(--gray)}
+.lb-level{font-family:'Bebas Neue',sans-serif;font-size:.78rem;letter-spacing:1px;padding:4px 10px;border-radius:6px;background:rgba(255,215,0,.08);color:var(--gold);text-align:center;white-space:nowrap}
+.lb-bpm{font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:var(--white);letter-spacing:1px;text-align:right;min-width:50px}
+.lb-footer{padding:16px 24px;text-align:center}
+.lb-footer a{font-size:.78rem;font-weight:700;color:var(--gold);border-bottom:1px dashed rgba(255,215,0,.3);padding-bottom:2px;transition:all .2s}
+.lb-footer a:hover{border-bottom-style:solid}
+
+/* DISCOVER SECTION */
+.discover-section{padding:80px 0;position:relative}
+.discover-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 30% 50%,rgba(0,206,209,.03),transparent),radial-gradient(ellipse 50% 60% at 70% 50%,rgba(255,107,53,.03),transparent);pointer-events:none}
+.discover-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:800px;margin:0 auto}
+.discover-card{background:var(--surface);border:1px solid rgba(255,255,255,.04);border-radius:16px;padding:24px 20px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.discover-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--orange));opacity:0;transition:opacity .3s}
+.discover-card:hover{border-color:rgba(255,215,0,.15);transform:translateY(-4px)}
+.discover-card:hover::before{opacity:1}
+.discover-avatar{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;margin:0 auto 12px;flex-shrink:0}
+.discover-card:nth-child(1) .discover-avatar{background:rgba(155,89,182,.1);border:1.5px solid rgba(155,89,182,.2);color:var(--purple)}
+.discover-card:nth-child(2) .discover-avatar{background:rgba(0,206,209,.1);border:1.5px solid rgba(0,206,209,.2);color:var(--cyan)}
+.discover-card:nth-child(3) .discover-avatar{background:rgba(255,107,53,.1);border:1.5px solid rgba(255,107,53,.2);color:var(--orange)}
+.discover-name{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:1px;margin-bottom:2px}
+.discover-meta{font-size:.65rem;color:var(--gray);margin-bottom:10px}
+.discover-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:12px}
+.discover-tag{padding:2px 8px;border-radius:10px;font-size:.52rem;font-weight:700;letter-spacing:.5px}
+.discover-tag.pos{background:rgba(255,107,53,.1);color:var(--orange)}
+.discover-tag.level{background:rgba(255,215,0,.08);color:var(--gold)}
+.discover-tag.grad{background:rgba(59,130,246,.1);color:var(--blue)}
+.discover-bpm{font-family:'Bebas Neue',sans-serif;font-size:.7rem;letter-spacing:1px;color:var(--gray);margin-bottom:2px}
+.discover-bpm span{color:var(--gold)}
 
 /* FINAL CTA */
 .final-cta{text-align:center;padding:80px 24px 100px;position:relative}
@@ -157,6 +203,10 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 .hero h1{font-size:clamp(2.5rem,9vw,5rem)}
 .final-btns{flex-direction:column;max-width:300px;margin-left:auto;margin-right:auto}
 .btn-gold,.btn-outline{width:100%;text-align:center}
+.discover-grid{grid-template-columns:1fr}
+.lb-row{grid-template-columns:28px 1fr auto auto;gap:10px;padding:12px 16px}
+.lb-header-bar{padding:14px 16px}
+.lb-footer{padding:14px 16px}
 }
 </style>
 </head>
@@ -166,29 +216,31 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <nav><div class="nav-inner">
 <a href="/" class="nav-brand"><img src="/bpm-basketball.png" alt="BPM Basketball"><span>BPM BASKETBALL</span></a>
 <div class="nav-right">
+<a href="/cognitive-hoops.html" class="nav-link" data-en="Drills" data-es="Drills">Drills</a>
 <a href="/index.html" class="nav-link" data-en="AI Report" data-es="Reporte IA">Report</a>
 <a href="/discover.html" class="nav-link" data-en="Discover" data-es="Descubrir">Discover</a>
 <a href="/leaderboard.html" class="nav-link" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
-<a href="/faq.html" class="nav-link" data-en="FAQ" data-es="FAQ">FAQ</a>
 <a href="/login.html" class="nav-link nav-login" data-en="Log In" data-es="Entrar">Log In</a>
 <button class="hamburger" id="hamBtn" onclick="toggleMenu()" aria-label="Menu">☰</button>
 <a href="/join.html"><button class="nav-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</button></a>
 </div></div>
 <div class="mobile-menu" id="mobileMenu">
+<a href="/cognitive-hoops.html" data-en="Drills" data-es="Drills">Drills</a>
 <a href="/index.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
 <a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
 <a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
-<a href="/faq.html" data-en="FAQ" data-es="Drills">FAQ</a>
 <a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
 <div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
 <a href="/join.html" class="mm-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</a>
 </div></nav>
 
+<!-- HERO -->
 <section class="hero">
+<img src="/bpm-basketball.png" alt="BPM Basketball" class="hero-logo">
 <div class="hero-first" data-en="🏀 THIS ISN'T STATS - THIS IS YOUR BASKETBALL DNA" data-es="🏀 ESTO NO SON ESTADÍSTICAS - ESTE ES TU ADN DE BALONCESTO">🏀 THIS ISN'T STATS - THIS IS YOUR BASKETBALL DNA</div>
 <h1 data-en="THE AI COGNITIVE<br><span class='gold'>SCOUTING REPORT</span><br><span class='line2'>See How You Really Think the Game.</span>" data-es="EL REPORTE COGNITIVO<br><span class='gold'>CON INTELIGENCIA ARTIFICIAL</span><br><span class='line2'>Mira cómo de verdad piensas el juego.</span>">THE AI COGNITIVE<br><span class="gold">SCOUTING REPORT</span><br><span class="line2">SEE HOW YOU REALLY THINK THE GAME</span></h1>
-<p class="hero-sub" data-en="6 cognitive drills. AI-powered breakdown. A scouting report that separates you from everyone else." data-es="J6 ejercicios cognitivos. Análisis impulsado por IA. Un informe de scouting que te separa de todos los demás. — tiene esto.">6 cognitive drills. AI-powered breakdown. A scouting report that separates you from everyone else.</p>
-</div></div>
+<p class="hero-sub" data-en="6 cognitive drills. AI-powered breakdown. A scouting report that separates you from everyone else." data-es="6 ejercicios cognitivos. Análisis impulsado por IA. Un informe de scouting que te separa de todos los demás.">6 cognitive drills. AI-powered breakdown. A scouting report that separates you from everyone else.</p>
+</section>
 
 <!-- SAMPLE REPORT -->
 <div class="report-showcase" id="sample"><div class="wrap text-center">
@@ -197,6 +249,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <p class="section-sub" data-en="AI-generated from real cognitive data. Personalized to your position, scores, and playing style." data-es="Generado por IA con datos cognitivos reales. Personalizado a tu posición, puntajes y estilo de juego.">AI-generated from real cognitive data. Personalized to your position, scores, and playing style.</p>
 <div class="hero-btns">
 <a href="/preview-premium.html" class="btn-gold" data-en="🏀 View The AI Premium-Report" data-es="Ver el Reporte IA-Premium">🏀 View the AI Report</a>
+</div>
 </div></div>
 
 <!-- 6 DRILLS -->
@@ -205,13 +258,107 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <h2 class="section-title" data-en="The Data Behind Your Report" data-es="Los Datos Detrás de Tu Reporte">The Data Behind Your Report</h2>
 <p class="section-sub" data-en="Each drill measures a different cognitive function critical to basketball. Your scores feed the AI to generate your personalized report. Create your free profile. Play the drills. Go premium. Generate your report. Share it with the world." data-es="Cada drill mide una función cognitiva diferente. Tus puntajes alimentan la IA para generar tu reporte personalizado. Crea tu perfil gratis. Practica los drills. Hazte Premium. Genera tu reporte. Compártelo con el mundo.">Each drill measures a different cognitive function critical to basketball. Your scores feed the AI to generate your personalized report.</p>
 <a href="/cognitive-hoops.html" class="btn-gold" data-en="Start Training — Create Your Profile" data-es="Empieza Gratis — Crear su Profile">Start Training — Create Your Profile</a>
-</div></div>
+</div></section>
+
+<!-- LEADERBOARD -->
+<section class="leaderboard-section"><div class="wrap text-center">
+<div class="section-pill gold" data-en="Leaderboard" data-es="Clasificación">Leaderboard</div>
+<h2 class="section-title" data-en="Who Has the Strongest Basketball Mind?" data-es="¿Quién Tiene la Mente de Baloncesto Más Fuerte?">Who Has the Strongest Basketball Mind?</h2>
+<p class="section-sub" data-en="Ranked by verified cognitive performance. No faking it. See where you stand against players worldwide." data-es="Clasificado por rendimiento cognitivo verificado. Sin trucos. Mira dónde estás comparado con jugadores de todo el mundo.">Ranked by verified cognitive performance. No faking it. See where you stand against players worldwide.</p>
+
+<div class="lb-preview reveal">
+<div class="lb-header-bar">
+<div class="lb-header-title">🏆 BPM LEADERBOARD</div>
+<div class="lb-header-badge" data-en="LIVE" data-es="EN VIVO">LIVE</div>
 </div>
+<div class="lb-row gold-row">
+<div class="lb-rank top">1</div>
+<div class="lb-player"><div class="lb-player-name">Marcus C.</div><div class="lb-player-meta">PG · Bayamón, PR</div></div>
+<div class="lb-level">L7 ALL-STAR</div>
+<div class="lb-bpm">118 BPM</div>
+</div>
+<div class="lb-row">
+<div class="lb-rank top">2</div>
+<div class="lb-player"><div class="lb-player-name">Jaylen T.</div><div class="lb-player-meta">SG · Miami, FL</div></div>
+<div class="lb-level">L6 PRO</div>
+<div class="lb-bpm">105 BPM</div>
+</div>
+<div class="lb-row">
+<div class="lb-rank top">3</div>
+<div class="lb-player"><div class="lb-player-name">Sofia R.</div><div class="lb-player-meta">PG · Carolina, PR</div></div>
+<div class="lb-level">L6 PRO</div>
+<div class="lb-bpm">102 BPM</div>
+</div>
+<div class="lb-row">
+<div class="lb-rank">4</div>
+<div class="lb-player"><div class="lb-player-name">DeAndre W.</div><div class="lb-player-meta">SF · Atlanta, GA</div></div>
+<div class="lb-level">L5 ELITE</div>
+<div class="lb-bpm">97 BPM</div>
+</div>
+<div class="lb-row">
+<div class="lb-rank">5</div>
+<div class="lb-player"><div class="lb-player-name">Ana M.</div><div class="lb-player-meta">SG · San Juan, PR</div></div>
+<div class="lb-level">L5 ELITE</div>
+<div class="lb-bpm">94 BPM</div>
+</div>
+<div class="lb-footer">
+<a href="/leaderboard.html" data-en="View Full Leaderboard →" data-es="Ver Clasificación Completa →">View Full Leaderboard →</a>
+</div>
+</div>
+</div></section>
+
+<!-- DISCOVER -->
+<section class="discover-section"><div class="wrap text-center">
+<div class="section-pill cyan" data-en="Discover" data-es="Descubrir">Discover</div>
+<h2 class="section-title" data-en="Find Players. See Their Minds." data-es="Encuentra Jugadores. Mira Sus Mentes.">Find Players. See Their Minds.</h2>
+<p class="section-sub" data-en="The only basketball database where you can search players by cognitive performance. Coaches, scouts, and programs — this is how you find the next one." data-es="La única base de datos de baloncesto donde puedes buscar jugadores por rendimiento cognitivo. Coaches, scouts y programas — así es como encuentras al próximo.">The only basketball database where you can search players by cognitive performance. Coaches, scouts, and programs — this is how you find the next one.</p>
+
+<div class="discover-grid">
+<div class="discover-card reveal">
+<div class="discover-avatar">#23</div>
+<div class="discover-name">MARCUS C.</div>
+<div class="discover-meta">Bayamón Basketball Academy · 2027</div>
+<div class="discover-tags">
+<span class="discover-tag pos">PG</span>
+<span class="discover-tag level">🧠 L7 All-Star</span>
+<span class="discover-tag grad">2027</span>
+</div>
+<div class="discover-bpm" data-en="BPM: <span>118</span> · 6 drills completed" data-es="BPM: <span>118</span> · 6 drills completados">BPM: <span>118</span> · 6 drills completed</div>
+</div>
+<div class="discover-card reveal">
+<div class="discover-avatar">#7</div>
+<div class="discover-name">JAYLEN T.</div>
+<div class="discover-meta">South Beach Elite · 2026</div>
+<div class="discover-tags">
+<span class="discover-tag pos">SG</span>
+<span class="discover-tag level">🧠 L6 Pro</span>
+<span class="discover-tag grad">2026</span>
+</div>
+<div class="discover-bpm" data-en="BPM: <span>105</span> · 6 drills completed" data-es="BPM: <span>105</span> · 6 drills completados">BPM: <span>105</span> · 6 drills completed</div>
+</div>
+<div class="discover-card reveal">
+<div class="discover-avatar">#11</div>
+<div class="discover-name">SOFIA R.</div>
+<div class="discover-meta">Carolina Hoops · 2028</div>
+<div class="discover-tags">
+<span class="discover-tag pos">PG</span>
+<span class="discover-tag level">🧠 L6 Pro</span>
+<span class="discover-tag grad">2028</span>
+</div>
+<div class="discover-bpm" data-en="BPM: <span>102</span> · 5 drills completed" data-es="BPM: <span>102</span> · 5 drills completados">BPM: <span>102</span> · 5 drills completed</div>
+</div>
+</div>
+
+<div style="margin-top:32px">
+<a href="/discover.html" class="btn-outline" style="padding:14px 36px;font-size:.85rem" data-en="🔍 Explore the Database" data-es="🔍 Explorar la Base de Datos">🔍 Explore the Database</a>
+</div>
+</div></section>
 
 <!-- QUOTE -->
 <div class="quote-section"><div class="quote">
-<div class="quote-text" data-en="A player averaging 8 PPG with <span class='gold'>elite basketball WMI: Winning Mindset Index</span> is more valuable than a 20 PPG scorer who can't read a defense." data-es="Un jugador promediando 8 PPG con <span class='gold'>IQ de baloncesto elite</span> es más valioso que uno de 20 PPG que no puede leer una defensa.">"A player averaging 8 PPG with <span class="gold">elite basketball WMI: Winning Mindet Index</span> is more valuable than a 20 PPG scorer who can't read a defense."</div>
+<div class="quote-text" data-en="A player averaging 8 PPG with <span class='gold'>elite basketball WMI: Winning Mindset Index</span> is more valuable than a 20 PPG scorer who can't read a defense." data-es="Un jugador promediando 8 PPG con <span class='gold'>IQ de baloncesto elite</span> es más valioso que uno de 20 PPG que no puede leer una defensa.">"A player averaging 8 PPG with <span class="gold">elite basketball WMI: Winning Mindset Index</span> is more valuable than a 20 PPG scorer who can't read a defense."</div>
 <div class="quote-attr" data-en="— The insight every scout knows but no platform measured. Until now." data-es="— Lo que todo scout sabe pero ninguna plataforma medía. Hasta ahora.">— The insight every scout knows but no platform measured. Until now.</div>
+</div></div>
 
 <!-- FINAL CTA -->
 <div style="margin-top:24px;display:flex;align-items:center;justify-content:center;gap:8px">
