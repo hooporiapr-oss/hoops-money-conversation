@@ -182,22 +182,9 @@ html,body{height:100%;overflow-x:hidden;overflow-y:auto;font-family:'Outfit',san
 .overlay-btn{min-height:46px;padding:14px 28px;border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;cursor:pointer;margin:5px;background:linear-gradient(135deg,var(--orange),#E55A2B);color:var(--text)}
 .overlay-btn:active{transform:scale(0.95)}
 
-@media(max-height:650px){
-.demo-court{width:200px;height:200px}
-.demo-cell{font-size:0.9rem}
-.play-court{width:min(100%,calc(100dvh - 280px),280px);height:min(100%,calc(100dvh - 280px),280px)}
-.play-cell .cell-num{font-size:1.2rem}
-}
-@media(max-height:550px){
-.demo-court{width:180px;height:180px}
-.play-stats{padding:4px 8px;gap:10px}
-.play-stat-value{font-size:0.95rem}
-.play-message{padding:5px}
-.play-message-text{font-size:0.8rem}
-.play-court{width:min(100%,calc(100dvh - 240px),240px);height:min(100%,calc(100dvh - 240px),240px);min-width:160px;min-height:160px}
-.play-cell .cell-num{font-size:1rem}
-.play-action-btn{padding:10px;font-size:1rem}
-}
+@media(max-height:650px){.demo-court{width:200px;height:200px}.play-court-wrap{max-width:300px}}
+@media(max-height:550px){.demo-court{width:180px;height:180px}.play-court-wrap{max-width:260px}.play-stat-value{font-size:1.3rem}.play-message-text{font-size:.8rem}.play-action-btn{padding:10px;font-size:1rem}}
+@media(max-width:360px){.play-court-wrap{max-width:280px}.play-court{gap:3px;padding:6px}.demo-court{width:180px;height:180px}}
 </style>
 </head>
 <body>
