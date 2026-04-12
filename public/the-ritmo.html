@@ -139,10 +139,9 @@ html,body{height:100%;overflow-x:hidden;overflow-y:auto;font-family:'Outfit',san
 .timer-bar{height:100%;width:100%;background:var(--lime);border-radius:3px;transition:none}
 .timer-bar.warning{background:var(--gold)}
 .timer-bar.danger{background:var(--pink)}
-.play-court-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
-.play-court{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:8px;background:#1a1a24;background-image:url('icon.png');background-size:80%;background-position:center;background-repeat:no-repeat;border-radius:16px;border:none;width:min(100%,calc(100dvh - 340px),320px);height:min(100%,calc(100dvh - 340px),320px);min-width:200px;min-height:200px;aspect-ratio:1;position:relative;transition:border-color 0.15s,box-shadow 0.15s}
-.play-court::before{content:'';position:absolute;inset:0;background:rgba(10,10,15,0.6);border-radius:13px;pointer-events:none}
-.play-court.beat-pulse{border-color:var(--gold)!important;box-shadow:0 0 15px rgba(255,215,0,0.4)}
+.play-court-wrap{width:100%;max-width:340px;margin:0 auto}
+.play-court{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:10px;background:var(--card);border:2px solid var(--border);border-radius:16px;aspect-ratio:1;position:relative;transition:border-color 0.15s,box-shadow 0.15s}
+.play-court.beat-pulse{border-color:var(--gold)!important;box-shadow:0 0 15px rgba(255,215,0,0.3)}
 .play-cell{aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;z-index:1;transition:all 0.1s}
 .play-cell:active:not(.disabled){transform:scale(0.95)}
 .play-cell .cell-num{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--dark);opacity:0;transition:opacity 0.1s}
