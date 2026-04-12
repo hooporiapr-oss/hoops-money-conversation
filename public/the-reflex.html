@@ -130,13 +130,14 @@ html,body{height:100%;overflow-x:hidden;overflow-y:auto;font-family:'Outfit',san
 .play-progress-star.earned{opacity:1;transform:scale(1.2);filter:drop-shadow(0 0 4px var(--cyan))}
 .play-court-wrap{width:100%;max-width:340px;margin:0 auto}
 .play-court{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:10px;background:var(--card);border:2px solid var(--border);border-radius:16px;aspect-ratio:1;position:relative;transition:border-color 0.15s,box-shadow 0.15s}
-.play-cell{aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;z-index:1;transition:all 0.15s}
+.play-cell{aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;z-index:1;transition:all 0.12s}
 .play-cell:active:not(.disabled){transform:scale(0.95)}
-.play-cell.lit{background:var(--cyan)!important;border-color:var(--cyan)!important;box-shadow:0 0 20px var(--cyan);transform:scale(1.08)}
-.play-cell.selected{background:rgba(0,206,209,0.4)!important;border-color:var(--cyan)!important}
-.play-cell.correct{background:var(--teal)!important;border-color:var(--teal)!important;box-shadow:0 0 12px var(--teal)}
-.play-cell.wrong{background:var(--pink)!important;border-color:var(--pink)!important;box-shadow:0 0 12px var(--pink)}
-.play-cell.missed{border:3px dashed var(--cyan)!important;background:rgba(0,206,209,0.2)!important}
+.play-cell.lit{background:var(--cyan)!important;border-color:var(--cyan)!important;box-shadow:0 0 22px var(--cyan);transform:scale(1.08)}
+.play-cell.selected{background:rgba(0,206,209,0.3)!important;border-color:var(--cyan)!important}
+.play-cell.correct{background:var(--teal)!important;border-color:var(--teal)!important;box-shadow:0 0 12px rgba(0,217,165,0.5);transform:scale(1.02)}
+.play-cell.wrong{background:rgba(255,20,147,0.3)!important;border-color:var(--pink)!important;box-shadow:0 0 12px var(--pink)}
+.play-cell.missed{border:3px dashed var(--cyan)!important;background:rgba(0,206,209,0.15)!important}
+.play-court.joy-pulse{animation:joyPulse 0.5s ease-out}
 .play-court.joy-pulse{animation:joyPulse 0.5s ease-out}
 .play-info{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--card);border-radius:8px;margin:6px 0}
 .play-info-badge{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--cyan)}
