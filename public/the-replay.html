@@ -110,14 +110,14 @@ html,body{height:100%;overflow-x:hidden;overflow-y:auto;font-family:'Outfit',san
 .letsgo-btn{width:100%;padding:16px 24px;border:none;border-radius:12px;font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:4px;cursor:pointer;background:linear-gradient(135deg,var(--teal),#00B894);color:var(--dark);box-shadow:0 4px 20px rgba(0,217,165,0.3);transition:all 0.3s}
 .letsgo-btn:active{transform:scale(0.98)}
 
-#screen-play{background:var(--dark);overflow:hidden}
-.play-container{width:100%;max-width:420px;height:calc(100dvh - var(--nav-height) - env(safe-area-inset-top));margin:0 auto;padding:8px 10px;display:flex;flex-direction:column}
-.play-stats{display:flex;justify-content:center;gap:15px;padding:6px 10px;background:var(--card);border-radius:8px;margin-bottom:6px}
+#screen-play{background:var(--dark)}
+.play-container{display:flex;flex-direction:column;align-items:center;max-width:420px;margin:0 auto;min-height:calc(100dvh - var(--nav-height) - env(safe-area-inset-top) - 40px)}
+.play-stats{display:flex;justify-content:center;gap:16px;margin-bottom:10px;width:100%}
 .play-stat{text-align:center}
-.play-stat-value{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--teal);line-height:1}
-.play-stat-label{font-size:0.45rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
-.play-message{background:var(--card);border:2px solid var(--teal);border-radius:8px;padding:8px;text-align:center;margin-bottom:6px}
-.play-message-text{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:2px;color:var(--text)}
+.play-stat-value{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--teal)}
+.play-stat-label{font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.play-message{text-align:center;min-height:28px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.play-message-text{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:2px;color:var(--text);transition:all 0.2s}
 .play-message-text.watch{color:var(--gold)}
 .play-message-text.go{color:var(--teal)}
 .play-message-text.error{color:var(--pink)}
