@@ -138,13 +138,13 @@ html,body{height:100%;overflow-x:hidden;overflow-y:auto;font-family:'Outfit',san
 @keyframes correctPulse{50%{transform:scale(1.15)}}
 @keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .play-court.joy-pulse{animation:joyPulse 0.5s ease-out}
-.play-info{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--card);border-radius:8px;margin:6px 0}
-.play-info-badge{font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--teal)}
-.play-info-cells{font-family:'Bebas Neue',sans-serif;font-size:0.9rem;color:var(--teal)}
-.play-info-score{font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--gold)}
-.play-action-btn{width:100%;padding:14px;border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:4px;cursor:pointer;background:linear-gradient(135deg,var(--teal),#00B894);color:var(--dark);transition:all 0.3s}
-.play-action-btn:disabled{opacity:0.5;cursor:not-allowed}
-.play-action-btn:active:not(:disabled){transform:scale(0.98)}
+.play-info{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:340px;margin:10px auto 8px;padding:0 4px}
+.play-info-badge{font-family:'Bebas Neue',sans-serif;font-size:0.8rem;color:var(--teal);letter-spacing:1px}
+.play-info-cells{font-family:'Bebas Neue',sans-serif;font-size:0.75rem;color:var(--muted);letter-spacing:1px}
+.play-info-score{font-family:'Bebas Neue',sans-serif;font-size:0.8rem;color:var(--gold)}
+.play-action-btn{width:100%;max-width:340px;padding:16px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--teal),#00B894);color:var(--dark);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;cursor:pointer;margin-top:auto;box-shadow:0 4px 16px rgba(0,217,165,0.3)}
+.play-action-btn:active{transform:scale(0.97)}
+.play-action-btn:disabled{opacity:0.4;cursor:not-allowed}
 .emoji-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden}
 .burst-emoji{position:absolute;font-size:1.6rem;animation:emojiBurst 1.2s ease-out forwards}
 @keyframes emojiBurst{0%{opacity:1;transform:translate(-50%,-50%) scale(0.3)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.2)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0.8) rotate(var(--rot))}}
