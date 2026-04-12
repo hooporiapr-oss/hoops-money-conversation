@@ -55,10 +55,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .hero{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(70px + env(safe-area-inset-top,0px)) 20px 40px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(255,215,0,.08),transparent 70%),radial-gradient(ellipse 40% 40% at 20% 70%,rgba(155,89,182,.05),transparent),radial-gradient(ellipse 40% 40% at 80% 60%,rgba(0,206,209,.04),transparent);pointer-events:none}
 
-.hero-logo{margin-bottom:28px;animation:fadeUp .6s ease both}
-.hero-logo img{height:100px;filter:drop-shadow(0 0 40px rgba(255,215,0,.25));animation:logoFloat 4s ease-in-out infinite}
+.hero-logo{margin-bottom:12px;animation:fadeUp .6s ease both}
+.hero-logo img{height:160px;filter:drop-shadow(0 0 50px rgba(255,215,0,.3));animation:logoFloat 4s ease-in-out infinite}
 
-.hero-first{display:inline-block;padding:7px 16px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:24px;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;color:#ef4444;margin-bottom:20px;animation:fadeUp .7s ease .1s both}
+.hero-first{display:inline-block;padding:7px 16px;background:rgba(255,107,53,.1);border:1px solid rgba(255,107,53,.25);border-radius:24px;font-size:.58rem;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;color:var(--orange);margin-bottom:20px;animation:fadeUp .7s ease .1s both}
 
 .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,9vw,6.5rem);line-height:.88;margin-bottom:14px;animation:fadeUp .7s ease .15s both}
 .hero h1 .gold{color:var(--gold)}
@@ -123,7 +123,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:24px 0;padding-bottom:
   .nav-link{display:none}
   .nav-cta{display:none}
   .hero{padding:calc(64px + env(safe-area-inset-top,0px)) 16px 32px}
-  .hero-logo img{height:80px}
+  .hero-logo img{height:130px}
   .hero-btns{flex-direction:column;max-width:300px;margin-left:auto;margin-right:auto}
   .btn-gold,.btn-outline{width:100%;text-align:center;padding:14px 20px;font-size:.88rem}
   .drills-mini{grid-template-columns:repeat(3,1fr);gap:6px;max-width:320px}
