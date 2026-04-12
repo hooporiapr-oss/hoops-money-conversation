@@ -26,7 +26,6 @@ html{scroll-behavior:smooth}
 body{font-family:'Outfit',sans-serif;background:var(--black);color:var(--white);-webkit-font-smoothing:antialiased;min-height:100vh}
 a{text-decoration:none;color:inherit}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
 .nav-brand{display:flex;align-items:center;gap:10px}
@@ -47,10 +46,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .lang-btn.active{background:var(--gold);color:var(--black)}
 @media(max-width:600px){.nav-link{display:none}.nav-cta{display:none}}
 
-/* PAGE */
 .page{max-width:720px;margin:0 auto;padding:60px 0 40px}
 
-/* HERO — no cover photo on free */
 .hero-card{margin:76px 20px 0}
 .hero-top{display:flex;align-items:center;gap:18px;margin-bottom:14px}
 .hero-avatar{width:80px;height:80px;border-radius:20px;background:rgba(255,107,53,.08);border:2px solid rgba(255,107,53,.3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--orange);flex-shrink:0}
@@ -67,17 +64,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .tag-nil{background:rgba(34,197,94,.1);color:var(--green)}
 .tag-cog{background:rgba(155,89,182,.1);color:var(--purple)}
 
-/* DEMO BANNER */
 .demo-banner{margin:0 20px 16px;text-align:center;padding:10px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;font-size:.75rem;color:var(--gray)}
 .demo-banner strong{color:var(--white)}
 .demo-banner a{color:var(--gold);font-weight:700}
 
-/* SECTION CARDS */
 .s{margin:0 20px 14px;background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;overflow:hidden}
 .s-title{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:3px;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .s-note{font-size:.58rem;color:var(--gray);font-weight:400;letter-spacing:0;font-family:'Outfit',sans-serif}
 
-/* LOCKED CARD */
 .s.locked{position:relative;pointer-events:none}
 .s.locked::after{content:'';position:absolute;inset:0;background:rgba(10,10,15,.75);border-radius:18px;z-index:1}
 .lock-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;gap:6px;padding:20px;text-align:center}
@@ -88,7 +82,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .lock-sub{font-size:.6rem;color:var(--gray);pointer-events:auto}
 .lock-sub a{color:var(--gold)}
 
-/* COGNITIVE SCORES — free shows 3, locks 3 */
 .cog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .cog-card{text-align:center;padding:16px 8px;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:var(--surface);position:relative;overflow:hidden}
 .cog-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
@@ -99,21 +92,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .cog-level{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px}
 .cog-rating{font-size:.58rem;color:var(--gray);font-weight:600}
 .cog-sub{font-size:.52rem;color:var(--gray);margin-top:2px}
+.cog-bpm{font-size:.5rem;color:var(--gray-light);font-weight:700;margin-top:2px}
 .cog-card.is-locked{opacity:.35}
 .cog-card.is-locked .cog-level{color:var(--gold);font-size:.75rem}
 .cog-overall{margin-top:14px;text-align:center;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:14px}
 .cog-overall-big{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:3px}
+.cog-overall-bpm{font-size:.7rem;color:var(--gray);margin-top:2px}
 .cog-overall-sub{font-size:.6rem;color:var(--gray);text-transform:uppercase;letter-spacing:2px}
 
-/* HIGHLIGHT LINK */
 .hl-card{display:flex;align-items:center;gap:12px;padding:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:12px;color:var(--white);font-size:.82rem;font-weight:600}
 .hl-icon{font-size:1.3rem;flex-shrink:0}
 
-/* SOCIALS */
 .socials{display:flex;gap:6px;flex-wrap:wrap}
 .social-btn{padding:8px 16px;border-radius:8px;font-size:.75rem;font-weight:700;background:rgba(255,255,255,.04);color:var(--gray-light);border:1px solid rgba(255,255,255,.04)}
 
-/* BLURRED AI REPORT PREVIEW */
 .report-preview{position:relative;margin:0 20px 14px;background:var(--card);border-radius:18px;border:1px solid rgba(255,255,255,.04);padding:24px;overflow:hidden}
 .report-blur{filter:blur(4px);pointer-events:none;user-select:none}
 .report-blur .rp-title{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:2px;margin-bottom:8px}
@@ -124,7 +116,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .report-lock .lock-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:var(--gold)}
 .report-lock .lock-desc{font-size:.72rem;color:var(--gray)}
 
-/* UPGRADE BANNER */
 .upgrade{margin:0 20px 20px;background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,107,53,.04));border:1.5px solid var(--gold-border);border-radius:20px;padding:32px 24px;text-align:center}
 .upgrade h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:3px;margin-bottom:8px}
 .upgrade p{font-size:.8rem;color:var(--gray);margin-bottom:16px}
@@ -135,7 +126,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92
 .up-btn-sub{display:inline-block;padding:10px 24px;border-radius:10px;font-size:.78rem;font-weight:600;color:var(--gray-light);border:1.5px solid rgba(255,255,255,.1)}
 .up-note{font-size:.6rem;color:var(--gray);margin-top:12px}
 
-/* POWERED / FOOTER */
 .powered{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px 0 6px}
 .powered-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
 .powered-label{font-size:.5rem;color:var(--gray);letter-spacing:2px}
@@ -161,7 +151,6 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </head>
 <body>
 
-<!-- NAV -->
 <nav><div class="nav-inner">
 <a href="/" class="nav-brand"><img src="/bpm-basketball.png" alt="BPM Basketball"><span>BPM BASKETBALL</span></a>
 <div class="nav-right">
@@ -177,7 +166,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <a href="/index.html" data-en="AI Report" data-es="Reporte IA">AI Report</a>
 <a href="/discover.html" data-en="Discover" data-es="Descubrir">Discover</a>
 <a href="/leaderboard.html" data-en="Leaderboard" data-es="Clasificación">Leaderboard</a>
-<a href="/faq.html" data-en="FAQ" data-es="Drills">FAQ</a>
+<a href="/faq.html" data-en="FAQ" data-es="FAQ">FAQ</a>
 <a href="/login.html" data-en="Log In" data-es="Entrar">Log In</a>
 <div class="mm-lang"><button class="lang-btn active" data-l="en" onclick="setLang('en')">EN</button><button class="lang-btn" data-l="es" onclick="setLang('es')">ES</button></div>
 <a href="/join.html" class="mm-cta" data-en="Join Free" data-es="Únete Gratis">Join Free</a>
@@ -185,7 +174,6 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 
 <div class="page">
 
-<!-- HERO — no cover photo on free -->
 <div class="hero-card">
 <div class="hero-top">
 <div class="hero-avatar">#23</div>
@@ -202,12 +190,12 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <span class="tag tag-grad">2027</span>
 <span class="tag tag-ht">6'1"</span>
 <span class="tag tag-nil" data-en="📣 Open for Opportunities" data-es="📣 Abierto a Oportunidades">📣 Open for Opportunities</span>
-<span class="tag tag-cog">🧠 L7 All-Star</span>
+<span class="tag tag-cog">🧠 L8 MVP</span>
 </div>
 
 <div class="demo-banner" data-en="👁️ This is a preview of the <strong>FREE</strong> player profile. <a href='/preview-premium.html'>See Premium Report →</a>" data-es="👁️ Vista previa del perfil <strong>GRATIS</strong>. <a href='/preview-premium.html'>Ver Reporte Premium →</a>">👁️ This is a preview of the <strong>FREE</strong> player profile. <a href="/preview-premium.html">See Premium Report →</a></div>
 
-<!-- ══════ LOCKED: TIMELINE WITH STATS ══════ -->
+<!-- LOCKED: TIMELINE WITH STATS -->
 <div class="s locked">
 <div class="s-title">📅 <span data-en="BASKETBALL TIMELINE" data-es="HISTORIA DE BALONCESTO">BASKETBALL TIMELINE</span></div>
 <div style="font-size:.7rem;color:var(--gray);margin-top:-10px;margin-bottom:12px" data-en="Stats are self-reported by player" data-es="Stats auto-reportados por el jugador">Stats are self-reported by player</div>
@@ -221,7 +209,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ LOCKED: MEASURABLES ══════ -->
+<!-- LOCKED: MEASURABLES -->
 <div class="s locked">
 <div class="s-title">📏 MEASURABLES</div>
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
@@ -236,14 +224,14 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ COGNITIVE SCORES — 3 free, 3 locked ══════ -->
+<!-- COGNITIVE SCORES — 3 free, 3 locked -->
 <div class="s">
 <div class="s-title">🧠 <span data-en="COGNITIVE SCORES" data-es="PUNTAJES COGNITIVOS">COGNITIVE SCORES</span></div>
 <div style="font-size:.58rem;color:var(--green);margin-top:-10px;margin-bottom:12px" data-en="✓ Verified by BPM Basketball" data-es="✓ Verificado por BPM Basketball">✓ Verified by BPM Basketball</div>
 <div class="cog-grid">
-<div class="cog-card react"><div class="cog-emoji">🟣</div><div class="cog-name">REACT</div><div class="cog-level">L8</div><div class="cog-rating">MVP</div><div class="cog-sub" data-en="Reaction & Rhythm" data-es="Reacción y Ritmo">Reaction & Rhythm</div></div>
-<div class="cog-card recall"><div class="cog-emoji">🟠</div><div class="cog-name">RECALL</div><div class="cog-level">L7</div><div class="cog-rating">All-Star</div><div class="cog-sub" data-en="Working Memory" data-es="Memoria de Trabajo">Working Memory</div></div>
-<div class="cog-card reflex"><div class="cog-emoji">🔵</div><div class="cog-name">REFLEX</div><div class="cog-level">L9</div><div class="cog-rating">Hall of Fame</div><div class="cog-sub" data-en="Court Vision" data-es="Visión de Cancha">Court Vision</div></div>
+<div class="cog-card react"><div class="cog-emoji">🟣</div><div class="cog-name">REACT</div><div class="cog-level">L8</div><div class="cog-rating">MVP</div><div class="cog-bpm">120 BPM</div><div class="cog-sub" data-en="Reaction & Rhythm" data-es="Reacción y Ritmo">Reaction & Rhythm</div></div>
+<div class="cog-card recall"><div class="cog-emoji">🟠</div><div class="cog-name">RECALL</div><div class="cog-level">L7</div><div class="cog-rating">All-Star</div><div class="cog-bpm">90 BPM</div><div class="cog-sub" data-en="Working Memory" data-es="Memoria de Trabajo">Working Memory</div></div>
+<div class="cog-card reflex"><div class="cog-emoji">🔵</div><div class="cog-name">REFLEX</div><div class="cog-level">L9</div><div class="cog-rating">Hall of Fame</div><div class="cog-bpm">120 BPM</div><div class="cog-sub" data-en="Court Vision" data-es="Visión de Cancha">Court Vision</div></div>
 <div class="cog-card replay is-locked"><div class="cog-emoji">🟢</div><div class="cog-name">REPLAY</div><div class="cog-level">🔒 PREMIUM</div><div class="cog-rating"></div><div class="cog-sub" data-en="Play Recall" data-es="Memoria de Jugadas">Play Recall</div></div>
 <div class="cog-card ritmo is-locked"><div class="cog-emoji">🟡</div><div class="cog-name">RITMO</div><div class="cog-level">🔒 PREMIUM</div><div class="cog-rating"></div><div class="cog-sub" data-en="Change Detection" data-es="Detección de Cambios">Change Detection</div></div>
 <div class="cog-card beat is-locked"><div class="cog-emoji">🏀</div><div class="cog-name">BEAT</div><div class="cog-level">🔒 PREMIUM</div><div class="cog-rating"></div><div class="cog-sub" data-en="Game Rhythm" data-es="Ritmo de Juego">Game Rhythm</div></div>
@@ -251,19 +239,20 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <div class="cog-overall">
 <div class="cog-overall-sub" data-en="OVERALL (3 of 6 drills)" data-es="GENERAL (3 de 6 drills)">OVERALL (3 of 6 drills)</div>
 <div class="cog-overall-big">L8 — MVP</div>
+<div class="cog-overall-bpm">120 BPM</div>
 <div class="cog-overall-sub" data-en="Unlock all 6 drills for full BPM profile" data-es="Desbloquea los 6 drills para perfil BPM completo">Unlock all 6 drills for full BPM profile</div>
 </div>
 </div>
 
-<!-- ══════ LOCKED: AI SCOUTING REPORT (blurred preview) ══════ -->
+<!-- LOCKED: AI SCOUTING REPORT (blurred preview) -->
 <div class="report-preview">
 <div class="report-blur">
 <div class="rp-title rp-exec">📊 EXECUTIVE SUMMARY</div>
-<p>Marcus Cirino is a high-IQ floor general with elite visual processing and above-average reactive timing. His cognitive profile suggests a player who sees the play develop before it happens.</p>
+<p>Marcus Cirino is a high-IQ floor general operating at 120 BPM with elite visual processing and above-average reactive timing. His cognitive profile suggests a player who sees the play develop before it happens.</p>
 <div class="rp-title rp-str">💪 COGNITIVE STRENGTHS</div>
-<p>Court Vision (L9 Reflex — Hall of Fame): In the 99th percentile for visual processing. This player captures the entire floor in a split second.</p>
+<p>Court Vision (L9 Reflex at 120 BPM — Hall of Fame): In the 99th percentile for visual processing at elite speed. This player captures the entire floor in a split second.</p>
 <div class="rp-title rp-dev">⚡ AREAS FOR DEVELOPMENT</div>
-<p>Play Recall (L6 Replay — Pro): Complex sequences show slight degradation under speed pressure. Recommend drilling THE REPLAY at Tempo and Elite speeds...</p>
+<p>Play Recall (L6 Replay at 90 BPM — Pro): Complex sequences show slight degradation under speed pressure. Progressing to 120 BPM would unlock elite execution...</p>
 </div>
 <div class="report-lock">
 <div class="lock-icon">🔒</div>
@@ -274,13 +263,13 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ HIGHLIGHT (free: 1 link) ══════ -->
+<!-- HIGHLIGHT (free: 1 link) -->
 <div class="s">
 <div class="s-title">🎥 <span data-en="HIGHLIGHT" data-es="HIGHLIGHT">HIGHLIGHT</span></div>
 <a href="#" class="hl-card"><span class="hl-icon">▶</span> <span data-en="Watch Highlight Reel" data-es="Ver Highlights">Watch Highlight Reel</span></a>
 </div>
 
-<!-- ══════ LOCKED: PHOTOS ══════ -->
+<!-- LOCKED: PHOTOS -->
 <div class="s locked">
 <div class="s-title">📷 <span data-en="PHOTOS" data-es="FOTOS">PHOTOS</span></div>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
@@ -294,7 +283,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ LOCKED: VIDEOS ══════ -->
+<!-- LOCKED: VIDEOS -->
 <div class="s locked">
 <div class="s-title">🎬 <span data-en="VIDEO CLIPS" data-es="CLIPS DE VIDEO">VIDEO CLIPS</span></div>
 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
@@ -307,7 +296,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ LOCKED: BIO ══════ -->
+<!-- LOCKED: BIO -->
 <div class="s locked">
 <div class="s-title">💼 <span data-en="ABOUT" data-es="ACERCA DE">ABOUT</span></div>
 <p style="font-size:.82rem;color:var(--gray-light);line-height:1.6">Floor general with elite court vision and a pass-first mentality. 3x All-Tournament...</p>
@@ -317,7 +306,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ SOCIALS (free) ══════ -->
+<!-- SOCIALS (free) -->
 <div class="s">
 <div class="s-title">📣 <span data-en="SOCIALS" data-es="REDES">SOCIALS</span></div>
 <div class="socials">
@@ -327,7 +316,7 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 </div>
 </div>
 
-<!-- ══════ UPGRADE BANNER ══════ -->
+<!-- UPGRADE BANNER -->
 <div class="upgrade">
 <h3 data-en="⭐ GO PREMIUM" data-es="⭐ HAZTE PREMIUM">⭐ GO PREMIUM</h3>
 <p data-en="Unlock everything you see locked above" data-es="Desbloquea todo lo que ves bloqueado arriba">Unlock everything you see locked above</p>
@@ -353,7 +342,6 @@ footer{border-top:1px solid rgba(255,255,255,.04);padding:28px 0}
 <a href="/cognitive-hoops.html" style="display:inline-block;padding:14px 32px;border-radius:12px;font-size:.88rem;font-weight:700;border:1.5px solid rgba(255,255,255,.1);color:var(--white);transition:all .3s" data-en="🧠 Train Your Mindset — Free" data-es="🧠 Entrena Tu Mentalidad — Gratis">🧠 Train Your Mindset — Free</a>
 </div>
 
-<!-- POWERED -->
 <div class="powered">
 <div class="powered-dot"></div>
 <span class="powered-label">POWERED BY</span>
