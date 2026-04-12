@@ -246,6 +246,17 @@ module.exports = async function handler(req, res) {
   var overallLevel = testCount > 0 ? Math.round(totalLevel / testCount) : 0;
   var overallRating = ratingLabels[overallLevel] || 'Not Rated';
 
+  // Calculate dominant BPM speed across all drills
+  var speedCount = { slow: 0, med: 0, fast: 0 };
+  ['react', 'recall', 'reflex', 'replay', 'ritmo', 'beat'].forEach(function(t) {
+    if (scores[t] && scores[t].speed) speedCount[scores[t].speed]++;
+  });
+  var dominantSpeed = 'slow';
+  if (speedCount.fast >= speedCount.med && speedCount.fast >= speedCount.slow) dominantSpeed = 'fast';
+  else if (speedCount.med >= speedCount.slow) dominantSpeed = 'med';
+  var dominantSpeedLabel = speedLabels[dominantSpeed] || 'Training (60 BPM)';
+  var dominantBPM = dominantSpeed === 'fast' ? '120' : dominantSpeed === 'med' ? '90' : '60';
+
   if (scoreLines.length === 0) {
     return res.status(400).json({ error: 'No cognitive scores to analyze' });
   }
@@ -330,7 +341,8 @@ module.exports = async function handler(req, res) {
     'Ritmo (Change Detection)\n' +
     'Beat (Game Rhythm & Timing)\n\n' +
 
-    'Scale: L1 (Rookie) → L10 (GOAT). Each level is earned through verified drill performance — players cannot fake these scores.\n\n' +
+    'Scale: L1 (Rookie) → L10 (GOAT). Each level is earned through verified drill performance — players cannot fake these scores.\n' +
+    'BPM Speeds: Training (60 BPM), Tempo (90 BPM), Elite (120 BPM). The speed at which a player achieved their level matters — an L7 at 120 BPM is significantly more impressive than an L7 at 60 BPM. Always mention the BPM speed alongside the level.\n\n' +
 
     profileContext +
     timelineContext +
@@ -340,24 +352,24 @@ module.exports = async function handler(req, res) {
     percentileContext + '\n' +
 
     'BPM COGNITIVE SCORES:\n' +
-    'Overall: L' + overallLevel + ' (' + overallRating + ') | Tests Completed: ' + testCount + '/6\n\n' +
+    'Overall: L' + overallLevel + ' (' + overallRating + ') @ ' + dominantBPM + ' BPM | Dominant Speed: ' + dominantSpeedLabel + ' | Tests Completed: ' + testCount + '/6\n\n' +
     scoreLines.join('\n\n') + '\n\n' +
 
     'GENERATE THE REPORT using these exact section headers:\n\n' +
 
     '🧠 COGNITIVE SCOUTING REPORT\n' +
-    'Player: [name] | Position: [pos] | Overall BPM: L[X] [Rating]\n' +
+    'Player: [name] | Position: [pos] | Overall BPM: L[X] [Rating] @ [BPM Speed]\n' +
     (dominantHand ? 'Hand: [hand] | ' : '') +
     (playStyle ? 'Style: [style] | ' : '') +
     (competitionLevel ? 'Level: [competition] | ' : '') +
     (yearsPlaying ? 'Experience: [X] years' : '') + '\n\n' +
 
     '📊 EXECUTIVE SUMMARY\n' +
-    '3-4 sentences. Define this player\'s cognitive identity. What kind of basketball mind are they? How do they process the game differently from average players at their competition level? Be specific to their position' + (position ? ' (' + position + ')' : '') + '. Include their overall percentile ranking prominently.\n\n' +
+    '3-4 sentences. Define this player\'s cognitive identity. What kind of basketball mind are they? How do they process the game differently from average players at their competition level? Be specific to their position' + (position ? ' (' + position + ')' : '') + '. Include their overall percentile ranking prominently. Mention the BPM speed they operate at — a player processing at 120 BPM thinks the game at elite tempo.\n\n' +
 
     '💪 COGNITIVE STRENGTHS\n' +
     'Top 2-3 strengths. For EACH strength:\n' +
-    '- Name the BPM dimension and level\n' +
+    '- Name the BPM dimension, level, AND the BPM speed it was achieved at (e.g., "L8 React at 120 BPM")\n' +
     '- Include the percentile ranking (e.g., "94th percentile among point guards on BPM Basketball")\n' +
     '- Translate into 2-3 specific basketball scenarios where this shows up\n' +
     '- Reference their position, ' + (dominantHand ? 'dominant hand (' + dominantHand + '), ' : '') + 'and competition level\n' +
@@ -365,10 +377,10 @@ module.exports = async function handler(req, res) {
 
     '⚡ AREAS FOR DEVELOPMENT\n' +
     '1-2 weakest dimensions. For EACH:\n' +
-    '- Name the BPM dimension and level\n' +
+    '- Name the BPM dimension, level, AND the BPM speed\n' +
     '- Include the percentile ranking to show where they stand\n' +
     '- Explain what this means on the court (specific game situations where this shows)\n' +
-    '- Give a specific training recommendation using BPM Basketball drills\n' +
+    '- Give a specific training recommendation using BPM Basketball drills — suggest increasing BPM speed as a progression path\n' +
     '- Frame constructively — development opportunity, not weakness\n\n' +
 
     '🏀 ON-COURT TRANSLATION\n' +
@@ -391,16 +403,18 @@ module.exports = async function handler(req, res) {
     '\n' +
 
     '📈 DEVELOPMENT PATH\n' +
-    '- Current overall: L' + overallLevel + '. Target: L' + Math.min(overallLevel + 2, 10) + '\n' +
+    '- Current overall: L' + overallLevel + ' @ ' + dominantBPM + ' BPM. Target: L' + Math.min(overallLevel + 2, 10) + ' @ ' + (dominantSpeed === 'fast' ? '120' : dominantSpeed === 'med' ? '120' : '90') + ' BPM\n' +
     '- Specific BPM Basketball drills to prioritize (name THE REACT, THE RECALL, etc.)\n' +
+    '- Recommend progressing to the next BPM speed tier as a key development goal\n' +
     '- Recommended training frequency and duration\n' +
-    '- What reaching the next level would unlock on the court\n' +
+    '- What reaching the next level AND speed would unlock on the court\n' +
     '- How their percentile ranking would change with improvement\n' +
     '- Timeline estimate (e.g., "4-6 weeks of focused training")\n\n' +
 
     'WRITING RULES:\n' +
     '- Write like an elite professional scout, not an AI — direct, confident, specific\n' +
     '- Every sentence must reference a basketball scenario, play, or situation\n' +
+    '- ALWAYS pair a level with its BPM speed — never say "L7 React" without also saying the BPM speed (e.g., "L7 React at 90 BPM")\n' +
     '- NEVER use generic phrases like "shows promise" or "has potential" without specific context\n' +
     '- Use basketball terminology naturally: pick-and-roll, iso, drive-and-kick, weak-side, help defense, closeout, skip pass, outlet, drag screen, etc.\n' +
     '- Reference their BPM dimensions by drill name (React, Recall, Reflex, Replay, Ritmo, Beat)\n' +
@@ -413,7 +427,7 @@ module.exports = async function handler(req, res) {
     '- Keep total report between 500-700 words\n' +
     '- Do NOT use markdown formatting — use plain text with the emoji headers\n' +
     '- This report will be shared with coaches, scouts, and family — make it worth the premium price\n' +
-    '- End with a memorable one-line summary of this player\'s cognitive identity';
+    '- End with a memorable one-line summary of this player\'s cognitive identity that includes their BPM speed';
 
   try {
     var response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -450,6 +464,8 @@ module.exports = async function handler(req, res) {
       report: reportText,
       overall_level: overallLevel,
       overall_rating: overallRating,
+      dominant_speed: dominantSpeedLabel,
+      dominant_bpm: dominantBPM,
       tests_completed: testCount,
       percentiles: percentiles,
       strengths: strengthTests.map(function(s) { return s.name + ' L' + s.level; }),
