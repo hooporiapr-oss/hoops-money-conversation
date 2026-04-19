@@ -13,29 +13,29 @@ var lang = (localStorage.getItem('lc-lang') || 'en');
 
 var t = {
   en: {
-    greeting: "Hey! 🏀 I'm the BPM Basketball assistant. Ask me anything — drills, BPM scores, pricing, programs, whatever you need.",
+    greeting: "Basketball is a braking sport. BPM measures yours. Ask me anything — drills, The Brake, Reaction Lights, pricing, or how any of it works.",
     placeholder: 'Ask me anything...',
-    quickDrills: '🧠 What are the drills?',
-    quickFree: '🆓 What\'s free?',
-    quickProgram: '🏀 For my program',
-    quickPricing: '💰 Pricing',
-    quickReport: '📋 AI Report',
-    quickStart: '🚀 How to start',
+    quickDrills: 'What are the drills?',
+    quickFree: 'What\'s free?',
+    quickProgram: 'For my program',
+    quickPricing: 'Pricing',
+    quickReport: 'The Brake',
+    quickStart: 'How to start',
     powered: 'BPM Basketball™',
-    error: 'Something went wrong. Try again!',
+    error: 'Something went wrong. Try again.',
     title: 'BPM BASKETBALL'
   },
   es: {
-    greeting: "¡Hey! 🏀 Soy el asistente de BPM Basketball. Pregúntame lo que quieras — drills, puntajes BPM, precios, programas, lo que necesites.",
+    greeting: "El baloncesto es un deporte de frenado. BPM mide el tuyo. Pregúntame lo que quieras — drills, The Brake, Reaction Lights, precios, o cómo funciona todo.",
     placeholder: 'Pregúntame lo que sea...',
-    quickDrills: '🧠 ¿Qué drills hay?',
-    quickFree: '🆓 ¿Qué es gratis?',
-    quickProgram: '🏀 Para mi programa',
-    quickPricing: '💰 Precios',
-    quickReport: '📋 Reporte IA',
-    quickStart: '🚀 Cómo empezar',
+    quickDrills: '¿Qué drills hay?',
+    quickFree: '¿Qué es gratis?',
+    quickProgram: 'Para mi programa',
+    quickPricing: 'Precios',
+    quickReport: 'The Brake',
+    quickStart: 'Cómo empezar',
     powered: 'BPM Basketball™',
-    error: '¡Algo falló! Intenta de nuevo.',
+    error: 'Algo falló. Intenta de nuevo.',
     title: 'BPM BASKETBALL'
   }
 };
@@ -246,7 +246,7 @@ async function sendMessage(text) {
     var resp = await fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: apiMessages })
+      body: JSON.stringify({ messages: apiMessages, lang: lang })
     });
 
     hideTyping();
