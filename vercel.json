@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/player/:slug", "destination": "/player.html" }
-  ]
-}
