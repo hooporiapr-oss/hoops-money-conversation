@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "rewrites": [
-    {
-      "source": "/player/:slug",
-      "destination": "/player.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -19,7 +13,7 @@
           "value": "SAMEORIGIN"
         },
         {
-          "key": "Referer-Policy",
+          "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
         }
       ]
