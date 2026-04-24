@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BPM Basketball — Reaction Training + Business Intelligence</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --black:#07070b;
+  --dark:#101018;
+  --gray:#1b1b27;
+  --gold:#e8b94a;
+  --white:#f4f1e8;
+  --muted:#b9b4a8;
+  --green:#7cff6b;
+  --blue:#48c6ff;
+  --red:#ff4f6d;
+  --purple:#b66cff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Barlow',sans-serif;
+  overflow-x:hidden;
+}
+
+a{text-decoration:none;color:inherit}
+
+section{
+  padding:80px 7%;
+}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(232,185,74,.18), transparent 28%),
+    radial-gradient(circle at 80% 30%, rgba(72,198,255,.16), transparent 28%),
+    radial-gradient(circle at 50% 90%, rgba(124,255,107,.12), transparent 30%),
+    linear-gradient(180deg,#09090e,#07070b);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:40px 40px;
+  opacity:.35;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:1000px;
+}
+
+.logo{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:26px;
+  letter-spacing:4px;
+  color:var(--gold);
+  margin-bottom:25px;
+  font-weight:800;
+}
+
+.hero h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(54px,10vw,118px);
+  line-height:.88;
+  text-transform:uppercase;
+  font-weight:900;
+  margin-bottom:25px;
+}
+
+.hero h1 span{
+  color:var(--gold);
+}
+
+.hero p{
+  font-size:clamp(18px,3vw,25px);
+  color:var(--muted);
+  max-width:760px;
+  margin:0 auto 35px;
+  line-height:1.45;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:16px 28px;
+  border-radius:40px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.btn.gold{
+  background:var(--gold);
+  color:#111;
+}
+
+.btn.outline{
+  border:1px solid rgba(255,255,255,.25);
+  color:var(--white);
+}
+
+.light-row{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  margin-top:50px;
+}
+
+.light{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  box-shadow:0 0 25px currentColor;
+}
+
+.green{color:var(--green);background:var(--green)}
+.blue{color:var(--blue);background:var(--blue)}
+.red{color:var(--red);background:var(--red)}
+.goldlight{color:var(--gold);background:var(--gold)}
+.purple{color:var(--purple);background:var(--purple)}
+
+.dark-section{
+  background:var(--dark);
+}
+
+.section-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(40px,7vw,76px);
+  line-height:.95;
+  text-transform:uppercase;
+  margin-bottom:25px;
+}
+
+.section-title span{
+  color:var(--gold);
+}
+
+.section-text{
+  font-size:20px;
+  color:var(--muted);
+  max-width:850px;
+  line-height:1.6;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+  margin-top:45px;
+}
+
+.card{
+  background:linear-gradient(180deg,#171722,#101018);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:28px;
+  min-height:220px;
+}
+
+.card h3{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:34px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:14px;
+}
+
+.card p,.card li{
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.5;
+}
+
+.card ul{
+  margin-left:20px;
+  margin-top:12px;
+}
+
+.split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+}
+
+.chat-box{
+  background:#11111b;
+  border:1px solid rgba(232,185,74,.35);
+  border-radius:28px;
+  padding:28px;
+  box-shadow:0 0 50px rgba(232,185,74,.08);
+}
+
+.chat-label{
+  color:var(--gold);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:26px;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+.bubble{
+  background:#1d1d2c;
+  padding:18px 20px;
+  border-radius:20px;
+  margin-bottom:16px;
+  color:var(--white);
+  font-size:18px;
+  line-height:1.45;
+}
+
+.bubble.user{
+  background:rgba(232,185,74,.15);
+  border:1px solid rgba(232,185,74,.25);
+  margin-left:40px;
+}
+
+.score-card{
+  background:linear-gradient(145deg,#181824,#0f0f16);
+  border-radius:28px;
+  padding:35px;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.score{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:82px;
+  color:var(--gold);
+  line-height:1;
+}
+
+.bar{
+  height:14px;
+  background:#2a2a38;
+  border-radius:30px;
+  overflow:hidden;
+  margin:20px 0;
+}
+
+.fill{
+  width:54%;
+  height:100%;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--green));
+}
+
+.level{
+  font-size:22px;
+  font-weight:700;
+  color:var(--white);
+}
+
+.quote-section{
+  text-align:center;
+  background:
+    radial-gradient(circle at center, rgba(232,185,74,.12), transparent 45%),
+    #08080d;
+}
+
+.quote-section h2{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(42px,8vw,88px);
+  text-transform:uppercase;
+  line-height:.95;
+}
+
+.quote-section p{
+  color:var(--gold);
+  font-size:24px;
+  margin-top:25px;
+}
+
+.footer{
+  padding:35px 7%;
+  background:#050508;
+  color:#888;
+  font-size:14px;
+  text-align:center;
+}
+
+@media(max-width:800px){
+  section{
+    padding:65px 6%;
+  }
+
+  .split{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:60px;
+  }
+
+  .btn{
+    width:100%;
+    text-align:center;
+  }
+
+  .bubble.user{
+    margin-left:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="logo">BPM BASKETBALL</div>
+
+    <h1>
+      Train Faster.<br>
+      React Smarter.<br>
+      <span>Think Differently.</span>
+    </h1>
+
+    <p>
+      Reaction Lights Training that sharpens your game — and opens your eyes to the business of basketball.
+    </p>
+
+    <div class="buttons">
+      <a href="#" class="btn gold">Start Reaction Training</a>
+      <a href="#bori" class="btn outline">Talk to Bori</a>
+    </div>
+
+    <div class="light-row">
+      <div class="light green"></div>
+      <div class="light blue"></div>
+      <div class="light red"></div>
+      <div class="light goldlight"></div>
+      <div class="light purple"></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark-section">
+  <h2 class="section-title">
+    You’re Training Your Game…<br>
+    <span>But Are You Training Your Thinking?</span>
+  </h2>
+
+  <p class="section-text">
+    You work on speed. You work on skill. You work on performance.
+    But nobody is asking you the questions that can change your future:
+    Do you understand your value? Do you know how opportunities actually work?
+    Are you making smart decisions off the court?
+  </p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Coaches Handle Drills</h3>
+      <p>They teach shooting, ball handling, footwork, defense, and game preparation.</p>
+    </div>
+
+    <div class="card">
+      <h3>We Handle The Rest</h3>
+      <p>BPM helps youth players understand decisions, value, exposure, branding, and the business side of basketball.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">
+    One System.<br>
+    <span>Two Sides of the Game.</span>
+  </h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Reaction Lights Training</h3>
+      <ul>
+        <li>Faster reactions</li>
+        <li>Better decisions</li>
+        <li>Game-speed awareness</li>
+        <li>Sharper visual response</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Ask Bori</h3>
+      <ul>
+        <li>The business of basketball</li>
+        <li>NIL explained simply</li>
+        <li>Player value and exposure</li>
+        <li>Smart decision-making</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="bori" class="dark-section">
+  <div class="split">
+    <div>
+      <h2 class="section-title">
+        Not Lessons.<br>
+        <span>Real Talk.</span>
+      </h2>
+
+      <p class="section-text">
+        Bori is the conversation young players need but rarely get.
+        It does not teach drills. It asks the questions that make players wake up.
+      </p>
+    </div>
+
+    <div class="chat-box">
+      <div class="chat-label">Ask Bori</div>
+
+      <div class="bubble">
+        You’re getting faster. That’s good.
+        But let me ask you something…
+      </div>
+
+      <div class="bubble">
+        Do you understand what actually makes a player valuable?
+      </div>
+
+      <div class="bubble user">
+        Not really.
+      </div>
+
+      <div class="bubble">
+        That’s the difference. Most players train.
+        Very few understand the business.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">
+    We Don’t Just Measure<br>
+    <span>How You Play.</span>
+  </h2>
+
+  <p class="section-text">
+    We measure how you think. The Player Intelligence Score combines performance awareness with decision intelligence.
+  </p>
+
+  <div class="grid">
+    <div class="score-card">
+      <h3 style="font-family:'Barlow Condensed';font-size:34px;color:var(--gold);text-transform:uppercase;">
+        Player Intelligence Score
+      </h3>
+
+      <div class="score">54</div>
+      <div class="bar"><div class="fill"></div></div>
+      <div class="level">Level: Aware Player</div>
+
+      <p style="color:var(--muted);font-size:18px;line-height:1.5;margin-top:15px;">
+        You’re improving on the court, but your decision awareness still needs work.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>What It Measures</h3>
+      <ul>
+        <li>Value awareness</li>
+        <li>Opportunity awareness</li>
+        <li>Brand and behavior</li>
+        <li>Focus and priorities</li>
+        <li>Future thinking</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="dark-section">
+  <h2 class="section-title">
+    What Players<br>
+    <span>Start To Realize.</span>
+  </h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>“It’s Not Just Skill.”</h3>
+      <p>Players start understanding that talent matters, but decisions shape opportunities.</p>
+    </div>
+
+    <div class="card">
+      <h3>“My Image Matters.”</h3>
+      <p>How a player acts, posts, speaks, and responds can affect how others see them.</p>
+    </div>
+
+    <div class="card">
+      <h3>“I Need To Think Bigger.”</h3>
+      <p>The game is not only about today’s performance. It is about building a future.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">
+    Built For The Next<br>
+    <span>Generation of Players.</span>
+  </h2>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Youth Players</h3>
+      <p>For players starting to understand that basketball is bigger than the court.</p>
+    </div>
+
+    <div class="card">
+      <h3>High School Athletes</h3>
+      <p>For serious players thinking about exposure, opportunities, and their future.</p>
+    </div>
+
+    <div class="card">
+      <h3>Parents</h3>
+      <p>For families who want their player to be prepared, aware, and protected.</p>
+    </div>
+  </div>
+</section>
+
+<section class="quote-section">
+  <h2>
+    Train Your Reactions.<br>
+    Train Your Decisions.<br>
+    <span style="color:var(--gold);">Train Your Future.</span>
+  </h2>
+
+  <p>Start thinking like a complete player.</p>
+
+  <div class="buttons" style="margin-top:35px;">
+    <a href="#" class="btn gold">Start Reaction Training</a>
+    <a href="#bori" class="btn outline">Talk to Bori</a>
+  </div>
+</section>
+
+<div class="footer">
+  BPM Basketball provides training and educational content only. We do not provide legal, financial, contract, or representation advice.
+</div>
+
+</body>
+</html>
